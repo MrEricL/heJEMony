@@ -6,7 +6,8 @@
  *       -------------------------------
  *   end |  --->   Q U E U E   --->    | front
  *       -------------------------------
- *
+ * 
+ * index 0 of ArrayList is front of queue
  ******************************************************/
 
 import java.util.ArrayList;
@@ -16,49 +17,49 @@ public class ALQueue<T> implements Queue<T>
     private ArrayList<T> _queue;
 
     // default constructor
-    public ALQueue() { 
-	/* YOUR IMPLEMENTATION HERE */
-    }
+    public ALQueue() 
+	{ 
+	    _queue = new ArrayList<T>(); 
+	}
 
 
     // means of adding an item to collection 
     public void enqueue( T x ) 
     {
-	/* YOUR IMPLEMENTATION HERE */
-    }//O(?)
+	_queue.add(x);
+    }//O(1) expected, O(n) rarely
 
 
     // means of removing an item from collection 
     public T dequeue() 
     {
-	/* YOUR IMPLEMENTATION HERE */
-    }//O(?)
+	return _queue.remove(0);
+    }//O(n) bc n-1 shifted
 
 
     // means of "peeking" at the front item
     public T peekFront() 
     {
-	/* YOUR IMPLEMENTATION HERE */
-    }//O(?)
+	return _queue.get(0);
+    }//O(1)
 
 
     // means of checking to see if collection is empty
     public boolean isEmpty() 
     {
-	/* YOUR IMPLEMENTATION HERE */
-    }//O(?)
+	return _queue.isEmpty();
+    }//O(1)
 
 
     public String toString() 
     {
-	/* YOUR IMPLEMENTATION HERE */
-    }//O(?)
+	return "front->" + _queue.toString() + "<-end";
+    }//O(n)
 
 
     //main method for testing
     public static void main( String[] args ) 
     {
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	  Queue<String> ALBSure = new ALQueue<String>();
 
 	  System.out.println("\nnow enqueuing thrice..."); 
@@ -76,9 +77,8 @@ public class ALQueue<T> implements Queue<T>
 
 	  System.out.println("\nDequeuing from empty queue should yield error..."); 
 	  System.out.println( ALBSure.dequeue() );
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
     }//end main
-
 
 }//end class ALQueue
