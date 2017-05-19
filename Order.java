@@ -30,4 +30,9 @@ public class Order {
 	return ret.substring (7, ret.length() -5);
     } 
 
+    public boolean equals(Object c) {
+	Order o=(Order) c;
+	return this.toString().equals(o.toString());
+    }
+
 } 
