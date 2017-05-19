@@ -6,7 +6,7 @@ public abstract class Food {
     public int num() {
 	return _num;
     }
-    public int name() {
+    public String name() {
 	return _name;
     }
 
