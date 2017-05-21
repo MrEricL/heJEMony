@@ -2,7 +2,8 @@ ALDeque<Order> _orders=new ALDeque<Order>();
 int time=0;//time variable
 int y=170;//for printing orders
 Order currOrder = new Order();
-int placeForFood=700;
+int placeForFood=700;//where you add food to
+int currOrdNum=1;//which order currently on
 
 void setup() {
   size(750, 750);
@@ -10,8 +11,9 @@ void setup() {
   fill(0);
   rect(0, 0, 750, 100);
   fill(255);
-  rect(600, 100, 150, 650); 
   textSize(32);
+  text("Correct:", 20, 40);
+  rect(600, 100, 150, 650); 
   fill(0);
   text("Orders", 620, 150);
   drawButtons();
@@ -24,6 +26,11 @@ void draw() {
 }
 
 void mouseClicked() {
+  buttons();
+  checkOrder();
+}
+
+void buttons() {
   if (overButton(35, 365, 110, 50)) {
     fill(#F4A460);
     ellipse(375, placeForFood, 200, 65);
@@ -94,12 +101,41 @@ void drawButtons() {
   rect(35, 170, 110, 50);
   fill(#FF0000);//red 1
   rect(35, 105, 110, 50);
+  fill(255);
+  rect(35, 430, 110, 50);
   fill(0);
   text("Bun", 45, 400);
   text("Patty", 45, 335);
   text("Cheese", 45, 270);
   text("Lettuce", 45, 205);
   text("Tomato", 45, 140);
+  text("Finish", 45, 465);
+}
+
+void checkOrder() {
+  if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
+    if (_orders.pollFirst().equals(currOrder)) {
+      fill(#00FF00);
+      textSize(16);
+      text(currOrdNum, 30+currOrdNum*8, 55);
+    } else {
+      fill(#FF0000);
+      textSize(16);
+      text(currOrdNum, 30+currOrdNum*8, 55);
+    }
+    currOrder=new Order();
+    placeForFood=700;
+    fill(150);
+    strokeWeight(0);
+    rect(146, 101, 450, 650);
+    strokeWeight(1);
+    //to cross out orders
+    fill(0);
+    text("-----------------", 620, 170+(currOrdNum-1)*60);
+    text("-----------------", 620, 190+(currOrdNum-1)*60);
+    text("-----------------", 620, 210+(currOrdNum-1)*60);
+    currOrdNum+=1;
+  }
 }
 
 boolean overButton(int x, int y, int width, int height) {
