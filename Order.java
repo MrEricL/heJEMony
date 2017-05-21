@@ -2,6 +2,7 @@ public class Order {
     private ALQueue<Food> _order;
 
     public Order (int items) {
+	_order=new ALQueue<Food>();
 	_order.enqueue (new Bun());
 	for (int i = 0; i < items; i ++ ) {
 	    _order.enqueue (randomFood());
@@ -34,5 +35,8 @@ public class Order {
 	Order o=(Order) c;
 	return this.toString().equals(o.toString());
     }
-
+    public static void main(String[] args) {
+	Order o=new Order(3);
+	System.out.println(o);
+    }
 } 

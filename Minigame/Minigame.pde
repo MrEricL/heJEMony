@@ -1,6 +1,6 @@
 ALDeque<Order> _orders=new ALDeque<Order>();
-int time=0;
-int y=170;
+int time=0;//time variable
+int y=170;//for printing orders
 
 void setup() {
   size(750, 750);
@@ -14,18 +14,24 @@ void setup() {
   text("Orders", 620, 150);
 }
 
+
 void draw() {
+  //happens once every 10 seconds
   if (time%600==0 && time<6000) {
+    
+    //holds place in the substring
     int place=0;
     _orders.addLast(new Order(4));
     textSize(12);
+    //gets most recent order
     String currOrder=_orders.peekLast().toString();
-    text ((time/600+1)+". "+currOrder.substring(place,place+19), 620, y);
-    place+=19;
+    //text is added in subsets of 18 characters so it doesnt go off the screen
+    text ((time/600+1)+". "+currOrder.substring(place,place+18), 620, y);
+    place+=18;
     y+=20;
-    while (place<currOrder.length()-19) {
-      text(currOrder.substring(place,place+19),620,y);
-      place+=19;
+    while (place<currOrder.length()-18) {
+      text(currOrder.substring(place,place+18),620,y);
+      place+=18;
       y+=20;
     }
     text(currOrder.substring(place),620,y);
