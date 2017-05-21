@@ -16,9 +16,12 @@ void setup() {
 
 
 void draw() {
-  //happens once every 10 seconds
-  if (time%600==0 && time<6000) {
-    
+  loadScreen();
+  time+=1;
+}
+
+void loadScreen() {
+    if (time%600==0 && time<6000) {
     //holds place in the substring
     int place=0;
     _orders.addLast(new Order(4));
@@ -37,5 +40,5 @@ void draw() {
     text(currOrder.substring(place),620,y);
     y+=20;
   }
-  time+=1;
+  
 }
