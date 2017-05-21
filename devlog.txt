@@ -77,10 +77,10 @@ Eric :: Order.java and Foods
 Jenny :: Order.java and Foods
 Matteo :: Order.java and Foods
 ==============================================================
-2017-05-
+2017-05-20
 --------------------------------------------------------------
 Eric :: 
 Jenny :: 
-Matteo :: 
+Matteo :: beginnings of minigame
 ==============================================================
 
