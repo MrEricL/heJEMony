@@ -26,7 +26,8 @@ void draw() {
 }
 
 void mouseClicked() {
-  buttons();
+  if (currOrder.size()<9) {
+  buttons(); }
   checkOrder();
 }
 

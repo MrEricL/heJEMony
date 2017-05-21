@@ -22,6 +22,9 @@ public class ALQueue<T> implements Queue<T>
 	    _queue = new ArrayList<T>(); 
 	}
 
+    public int size() {
+	return _queue.size();
+    }
 
     // means of adding an item to collection 
     public void enqueue( T x ) 

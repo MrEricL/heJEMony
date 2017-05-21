@@ -5,7 +5,10 @@ public class Order {
     _order=new ALQueue<Food>();
   }
 
-  void add(Food f) {
+  public int size() {
+    return _order.size();
+  }
+  public void add(Food f) {
     _order.enqueue(f);
   }
   public Order (int items) {
