@@ -1,6 +1,13 @@
 public class Order {
   private ALQueue<Food> _order;
 
+  public Order() {
+    _order=new ALQueue<Food>();
+  }
+
+  void add(Food f) {
+    _order.enqueue(f);
+  }
   public Order (int items) {
     _order=new ALQueue<Food>();
     _order.enqueue (new Bun());
