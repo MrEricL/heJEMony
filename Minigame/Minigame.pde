@@ -5,6 +5,10 @@ Order currOrder = new Order();
 int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
 
+//printing time
+int realTime=0;
+int counterT=0;
+
 
 //images
 PImage tomato;
@@ -26,12 +30,34 @@ void setup() {
   fill(0);
   text("Orders", 620, 150);
   drawButtons();
+  
+  //time
+    fill(255);
+  textSize(32);
+  text("Time:", 620, 40);
+
 }
 
 
 void draw() {
   loadOrders();
   time+=1;
+  counterT+=1;
+  if (counterT==60){
+    fill(0);
+    rect(615,50,100,40);
+    counterT=0;
+    realTime+=1;
+    fill(255);
+  textSize(28);    
+    text(realTime,620,70);
+  }
+
+}
+
+void timeP(){
+
+  
 }
 
 void mouseClicked() {
