@@ -1,3 +1,4 @@
+import java.util.ArrayList; 
 //****state variables
 int state=0;
 boolean hasBeenSetUp;
@@ -10,6 +11,7 @@ boolean hasBeenSetUp;
 
 //*****Minigame variables
 ALDeque<Order> _orders=new ALDeque<Order>();
+ArrayList<Integer> burgerTimes = new ArrayList <Integer>(); 
 int time=0;//time variable
 int y=170;//for printing orders
 Order currOrder = new Order();
@@ -73,15 +75,22 @@ void drawMinigame() {
   loadOrders();
   time+=1;
   counterT+=1;
+  
   if (counterT==60) {
     fill(0);
     rect(615, 48, 100, 40);
     counterT=0;
     realTime+=1;
+    for (int i = 0; i < burgerTimes.size(); i ++ ) { 
+    burgerTimes.set (i, burgerTimes.get (i) + 1); 
+  } 
     fill(255);
     textSize(28);    
     text(realTime, 620, 70);
   }
+  if (time % 11 == 0){
+    burgerTimes.add (new Integer (0)); 
+  } 
   fill(0);
   rect(40, 50, 100, 40);
   fill(#00FF00);
@@ -152,7 +161,7 @@ void loadOrders() {
     //holds place in the substring
     fill(0);
     int place=0;
-    _orders.addLast(new Order(4));
+    _orders.addLast(new Order(4)); 
     textSize(12);
     //gets most recent order
     String currOrder=_orders.peekLast().toString();
@@ -199,7 +208,17 @@ void drawButtons() {
 void checkOrder() {
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
     if (_orders.peekFirst().equals(currOrder)) {
-      cash+=_orders.pollFirst().getPrice();
+      if (burgerTimes.get(0) > 10*currOrdNum) { 
+        double decrease = (burgerTimes.get(0) - 10*currOrdNum) * 0.1; 
+        double realPrice = _orders.pollFirst().getPrice() - decrease; 
+        if (realPrice < 0) { 
+          realPrice = 0; 
+        } 
+        cash += realPrice; 
+        burgerTimes.remove(0); 
+      } 
+      else { 
+      cash+=_orders.pollFirst().getPrice();}
       /*fill(#00FF00);
        textSize(16);
        text(currOrdNum, 30+currOrdNum*8, 55);*/
@@ -215,6 +234,7 @@ void checkOrder() {
       text("-----------------", 620, 190+(currOrdNum-1)*60);
       text("-----------------", 620, 210+(currOrdNum-1)*60);
       currOrdNum+=1;
+      
     }
     currOrder=new Order();
     placeForFood=500;
