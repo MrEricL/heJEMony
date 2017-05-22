@@ -1,5 +1,6 @@
 public class Order {
   private ALQueue<Food> _order;
+  private double price;
 
   public Order() {
     _order=new ALQueue<Food>();
@@ -11,12 +12,19 @@ public class Order {
   public void add(Food f) {
     _order.enqueue(f);
   }
+  
+  public double getPrice() {
+    return price;
+  }
   public Order (int items) {
     _order=new ALQueue<Food>();
     _order.enqueue (new Bun());
     for (int i = 0; i < items; i ++ ) {
-      _order.enqueue (randomFood());
+      Food f = randomFood();
+      price+=f.getCost();
+      _order.enqueue (f);
     }
+    price+=3;
     _order.enqueue (new Bun());
   } 
 
@@ -42,4 +50,6 @@ public class Order {
     Order o=(Order) c;
     return this.toString().equals(o.toString());
   }
+  
+  
 } 
