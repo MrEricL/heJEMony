@@ -30,6 +30,8 @@ PImage cheese;
 
 
 void setup() {
+  size(750,750);
+  state=1;
   if (state==0) {
   }
   else if (state==1) {
@@ -49,7 +51,6 @@ void draw() {
 
 
 void setupMinigame() {
-  size(750, 750);
   background(150);
   fill(0);
   rect(0, 0, 750, 100);
