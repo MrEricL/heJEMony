@@ -2,8 +2,17 @@ ALDeque<Order> _orders=new ALDeque<Order>();
 int time=0;//time variable
 int y=170;//for printing orders
 Order currOrder = new Order();
-int placeForFood=700;//where you add food to
+int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
+
+
+//images
+PImage tomato;
+PImage lettuce;
+PImage patty;
+PImage bun;
+PImage cheese;
+
 
 void setup() {
   size(750, 750);
@@ -33,34 +42,44 @@ void mouseClicked() {
 
 void buttons() {
   if (overButton(35, 365, 110, 50)) {
-    fill(#F4A460);
-    ellipse(375, placeForFood, 200, 65);
+    //fill(#F4A460);
+    //ellipse(375, placeForFood, 200, 65);
+    bun = loadImage("bun.png");
+    image(bun,300,placeForFood+10);    
     currOrder.add(new Bun());
     placeForFood-=65;
   }
   if (overButton(35, 300, 110, 50)) {
-    fill(#8B5A2B);
-    ellipse(375, placeForFood, 200, 65);
+   // fill(#8B5A2B);
+   // ellipse(375, placeForFood, 200, 65);
+    patty = loadImage("burger.png");
+    image(patty,300,placeForFood+35);   
     currOrder.add(new Patty());
-    placeForFood-=65;
+    placeForFood-=25;
   }
   if (overButton(35, 235, 110, 50)) {
-    fill(#FFD700);
-    ellipse(375, placeForFood, 200, 65);
+   // fill(#FFD700);
+    //ellipse(375, placeForFood, 200, 65);
+        cheese = loadImage("cheese.png");
+    image(cheese,300,placeForFood+55);
     currOrder.add(new Cheese());
-    placeForFood-=65;
+    placeForFood-=10;
   }
   if (overButton(35, 170, 110, 50)) {
-    fill(#00FF00);
-    ellipse(375, placeForFood, 200, 65);
+    //fill(#00FF00);
+    //ellipse(375, placeForFood, 200, 65);
+    lettuce = loadImage("lettuce.png");
+    image(lettuce,300,placeForFood+35);
     currOrder.add(new Lettuce());
-    placeForFood-=65;
+    placeForFood-=20;
   }
   if (overButton(35, 105, 110, 50)) {
-    fill(#FF0000);
-    ellipse(375, placeForFood, 200, 65);
+    //fill(#FF0000);
+    //ellipse(375, placeForFood, 200, 65);
+    tomato = loadImage("tomato.png");
+    image(tomato,300,placeForFood+30);    
     currOrder.add(new Tomato());
-    placeForFood-=65;
+    placeForFood-=35;
   }
 }
 
