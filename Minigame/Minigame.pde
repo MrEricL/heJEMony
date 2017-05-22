@@ -170,7 +170,7 @@ void checkOrder() {
       text(currOrdNum, 30+currOrdNum*8, 55);
     }
     currOrder=new Order();
-    placeForFood=700;
+    placeForFood=500;
     fill(150);
     strokeWeight(0);
     rect(146, 101, 450, 650);
