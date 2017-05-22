@@ -10,7 +10,7 @@ public class Employee {
 	return _name;
     }
 
-    public String getSatisfaction() {
+    public int getSatisfaction() {
 	return _satisfaction;
     }
 }
