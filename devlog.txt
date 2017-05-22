@@ -85,14 +85,14 @@ Matteo :: beginnings of minigame
 ==============================================================
 2017-05-21
 --------------------------------------------------------------
-Eric :: minigame
+Eric :: minigame visuals
 Jenny :: minigame
 Matteo :: minigame basics
 ==============================================================
 2017-05-22
 --------------------------------------------------------------
-Eric :: 
-Jenny :: 
-Matteo :: 
+Eric :: minigame timing, empire/store/employee classes
+Jenny :: minigame cost, empire/store/employee classes
+Matteo :: minigame cost, empire/store/employee classes
 ==============================================================
 
