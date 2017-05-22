@@ -1,68 +1,105 @@
+//****state variables
+int state=0;
+boolean hasBeenSetUp;
+/* 0=starter scren
+1= minigame
+2=empire
+...
+****state variables*/
+
+
+//*****Minigame variables
 ALDeque<Order> _orders=new ALDeque<Order>();
 int time=0;//time variable
 int y=170;//for printing orders
 Order currOrder = new Order();
 int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
+float cash=0;
 
 //printing time
 int realTime=0;
 int counterT=0;
-
-
 //images
 PImage tomato;
 PImage lettuce;
 PImage patty;
 PImage bun;
 PImage cheese;
+//****Minigame variables
 
 
 void setup() {
+  if (state==0) {
+  }
+  else if (state==1) {
+    setupMinigame();
+  }
+}
+
+void draw() {
+  if (state==1 && !hasBeenSetUp) {
+    setupMinigame();
+    hasBeenSetUp=true;
+  }
+  else if (state==1 && hasBeenSetUp) {
+    drawMinigame();
+  }
+}
+
+
+void setupMinigame() {
   size(750, 750);
   background(150);
   fill(0);
   rect(0, 0, 750, 100);
   fill(255);
   textSize(32);
-  text("Correct:", 20, 40);
+  text("Revenue:", 20, 40);
   rect(600, 100, 150, 650); 
   fill(0);
   text("Orders", 620, 150);
   drawButtons();
-  
+
   //time
-    fill(255);
+  fill(255);
   textSize(32);
   text("Time:", 620, 40);
-
 }
 
 
-void draw() {
+void drawMinigame() {
   loadOrders();
   time+=1;
   counterT+=1;
-  if (counterT==60){
+  if (counterT==60) {
     fill(0);
-    rect(615,50,100,40);
+    rect(615, 48, 100, 40);
     counterT=0;
     realTime+=1;
     fill(255);
-  textSize(28);    
-    text(realTime,620,70);
+    textSize(28);    
+    text(realTime, 620, 70);
   }
-
+  fill(0);
+  rect(40, 50, 100, 40);
+  fill(#00FF00);
+  textSize(24);
+  String cashStr=""+cash;
+  cashStr=cashStr.substring(0, cashStr.indexOf(".")+2);
+  if (cashStr.length()-cashStr.indexOf(".")==2) {
+    cashStr+="0";
+  }
+  text("$"+cashStr, 45, 75);
 }
 
-void timeP(){
-
-  
+void timeP() {
 }
 
 void mouseClicked() {
   if (currOrder.size()<9) {
-  buttons(); }
+    buttons();
+  }
   checkOrder();
 }
 
@@ -71,23 +108,23 @@ void buttons() {
     //fill(#F4A460);
     //ellipse(375, placeForFood, 200, 65);
     bun = loadImage("bun.png");
-    image(bun,300,placeForFood+10);    
+    image(bun, 300, placeForFood+10);    
     currOrder.add(new Bun());
     placeForFood-=65;
   }
   if (overButton(35, 300, 110, 50)) {
-   // fill(#8B5A2B);
-   // ellipse(375, placeForFood, 200, 65);
+    // fill(#8B5A2B);
+    // ellipse(375, placeForFood, 200, 65);
     patty = loadImage("burger.png");
-    image(patty,300,placeForFood+35);   
+    image(patty, 300, placeForFood+35);   
     currOrder.add(new Patty());
     placeForFood-=25;
   }
   if (overButton(35, 235, 110, 50)) {
-   // fill(#FFD700);
+    // fill(#FFD700);
     //ellipse(375, placeForFood, 200, 65);
-        cheese = loadImage("cheese.png");
-    image(cheese,300,placeForFood+55);
+    cheese = loadImage("cheese.png");
+    image(cheese, 300, placeForFood+55);
     currOrder.add(new Cheese());
     placeForFood-=10;
   }
@@ -95,7 +132,7 @@ void buttons() {
     //fill(#00FF00);
     //ellipse(375, placeForFood, 200, 65);
     lettuce = loadImage("lettuce.png");
-    image(lettuce,300,placeForFood+35);
+    image(lettuce, 300, placeForFood+35);
     currOrder.add(new Lettuce());
     placeForFood-=20;
   }
@@ -103,7 +140,7 @@ void buttons() {
     //fill(#FF0000);
     //ellipse(375, placeForFood, 200, 65);
     tomato = loadImage("tomato.png");
-    image(tomato,300,placeForFood+30);    
+    image(tomato, 300, placeForFood+30);    
     currOrder.add(new Tomato());
     placeForFood-=35;
   }
@@ -160,14 +197,23 @@ void drawButtons() {
 
 void checkOrder() {
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
-    if (_orders.pollFirst().equals(currOrder)) {
-      fill(#00FF00);
-      textSize(16);
-      text(currOrdNum, 30+currOrdNum*8, 55);
-    } else {
-      fill(#FF0000);
-      textSize(16);
-      text(currOrdNum, 30+currOrdNum*8, 55);
+    if (_orders.peekFirst().equals(currOrder)) {
+      cash+=_orders.pollFirst().getPrice();
+      /*fill(#00FF00);
+       textSize(16);
+       text(currOrdNum, 30+currOrdNum*8, 55);*/
+      /*else {
+       fill(#FF0000);
+       textSize(16);
+       text(currOrdNum, 30+currOrdNum*8, 55);
+       }*/
+      strokeWeight(1);
+      //to cross out orders
+      fill(0);
+      text("-----------------", 620, 170+(currOrdNum-1)*60);
+      text("-----------------", 620, 190+(currOrdNum-1)*60);
+      text("-----------------", 620, 210+(currOrdNum-1)*60);
+      currOrdNum+=1;
     }
     currOrder=new Order();
     placeForFood=500;
@@ -175,12 +221,6 @@ void checkOrder() {
     strokeWeight(0);
     rect(146, 101, 450, 650);
     strokeWeight(1);
-    //to cross out orders
-    fill(0);
-    text("-----------------", 620, 170+(currOrdNum-1)*60);
-    text("-----------------", 620, 190+(currOrdNum-1)*60);
-    text("-----------------", 620, 210+(currOrdNum-1)*60);
-    currOrdNum+=1;
   }
 }
 
