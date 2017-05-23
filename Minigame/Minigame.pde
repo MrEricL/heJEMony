@@ -2,8 +2,11 @@ import java.util.ArrayList;
 //****state variables
 int state=0;
 boolean hasBeenSetUp;
+
+PImage img;
 /* 0=starter scren
 1= minigame
+
 2=empire
 ...
 ****state variables*/
@@ -33,8 +36,10 @@ PImage cheese;
 
 void setup() {
   size(750,750);
-  state=1;
+  state=0;
   if (state==0) {
+    img = loadImage("hegemony splash art.png");
+    image(img,0,0);
   }
   else if (state==1) {
     setupMinigame();
@@ -49,7 +54,33 @@ void draw() {
   else if (state==1 && hasBeenSetUp) {
     drawMinigame();
   }
+  else if (state==0) drawMenu();
 }
+
+
+// MENU STUFF
+
+void drawMenu(){
+  noStroke();
+  noFill();
+  rect(21,290,185,106); 
+  rect(253,290,185,106);  
+  rect(21,463,185,106);   
+  rect(253,463,185,106);   
+  
+}
+boolean overButton1(int x, int y, int width, int height){
+   if (mouseX >= x && mouseX <= x+width && 
+      mouseY >= y && mouseY <= y+height) {
+    return true;
+  } else {
+    return false;
+  } 
+  
+  
+}
+// END MENU STUFF
+
 
 
 void setupMinigame() {
@@ -69,6 +100,8 @@ void setupMinigame() {
   textSize(32);
   text("Time:", 620, 40);
 }
+
+
 
 
 void drawMinigame() {
@@ -107,10 +140,21 @@ void timeP() {
 }
 
 void mouseClicked() {
+  if (state==1){
   if (currOrder.size()<9) {
     buttons();
   }
   checkOrder();
+  }
+  
+  //IF YOU CLICK PLAY BUTTON ON MENU
+  if (state==0){
+      if (overButton1(21,290,185,106)) {
+    setupMinigame();
+    state=1;
+  }
+  }
+  //END MENU PLAY
 }
 
 void buttons() {
@@ -118,9 +162,9 @@ void buttons() {
     //fill(#F4A460);
     //ellipse(375, placeForFood, 200, 65);
     bun = loadImage("bun.png");
-    image(bun, 300, placeForFood+10);    
+    image(bun, 300, placeForFood+20);    
     currOrder.add(new Bun());
-    placeForFood-=65;
+    placeForFood-=50;
   }
   if (overButton(35, 300, 110, 50)) {
     // fill(#8B5A2B);
@@ -150,9 +194,9 @@ void buttons() {
     //fill(#FF0000);
     //ellipse(375, placeForFood, 200, 65);
     tomato = loadImage("tomato.png");
-    image(tomato, 300, placeForFood+30);    
+    image(tomato, 300, placeForFood+35);    
     currOrder.add(new Tomato());
-    placeForFood-=35;
+    placeForFood-=30;
   }
 }
 
