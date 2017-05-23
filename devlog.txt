@@ -92,7 +92,7 @@ Matteo :: minigame basics
 2017-05-22
 --------------------------------------------------------------
 Eric :: minigame timing, empire/store/employee classes
-Jenny :: minigame cost, empire/store/employee classes
+Jenny :: minigame cost, empire/store/employee classes, burger timing
 Matteo :: minigame cost, empire/store/employee classes
 ==============================================================
 
