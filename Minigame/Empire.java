@@ -14,7 +14,7 @@ public class Empire {
 	_stores=new ArrayList<Store>();
     }
 
-    public buyStore(Store s, double d) {
+    public void buyStore(Store s, double d) {
 	_stores.add(s);
 	_budget-=d;
     }
