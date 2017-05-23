@@ -12,6 +12,7 @@ public class Empire {
 
     public Empire() {
 	_stores=new ArrayList<Store>();
+	_budget=100000;
     }
 
     public void buyStore(Store s, double d) {
@@ -19,6 +20,19 @@ public class Empire {
 	_budget-=d;
     }
 
+    public double getBudget() {
+	return _budget;
+    }
+
+    public void modifyBudget(double d) {
+	_budget+=d;
+    }
+
+    public void runOperations() {
+	for (Store s: _stores) {
+	    modifyBudget(s.setDailyRevenue());
+	}
+    }
 
 
 }

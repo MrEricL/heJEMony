@@ -11,13 +11,13 @@ public class Store {
     public Store() {
 	_employees=new ArrayList<Employee>();
 	hire(new Employee("Bob"));
-	_customerSatisfaction=10;
-	_salary=8.75;
+	_customerSatisfaction=3;
+	_salary=10.75;
 	_priceBurger=7.50;
     }
 
-    public void setDailyRevenue() {
-	_dailyRevenue= _customerSatisfaction*10*_priceBurger-_employees.size()*_salary;
+    public double setDailyRevenue() {
+	return _customerSatisfaction*_priceBurger-_employees.size()*_salary;
     }
     
     public double getDailyRevenue() {

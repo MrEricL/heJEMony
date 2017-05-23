@@ -33,6 +33,13 @@ PImage bun;
 PImage cheese;
 //****Minigame variables
 
+/*********EMPIRE VARIABLES************/
+Empire empire;
+int totalTime;
+
+
+/*********EMPIRE VARIABLES************/
+
 
 void setup() {
   size(750,750);
@@ -84,6 +91,7 @@ boolean overButton1(int x, int y, int width, int height){
 
 
 void setupMinigame() {
+  miniTime=0;
   background(150);
   fill(0);
   rect(0, 0, 750, 100);
@@ -291,4 +299,15 @@ void checkOrder() {
 
 boolean overButton(int x, int y, int width, int height) {
   return (mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height);
+}
+
+void beginEmpire() {
+  empire = new Empire();
+  empire.buyStore(new Store(), 50000);//you begin with one store, cost $50k
+}
+
+void runEmpire() {
+  if (totalTime%10==0) {
+    e.runOperations();
+  }
 }
