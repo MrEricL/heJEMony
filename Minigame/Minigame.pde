@@ -252,8 +252,8 @@ void drawButtons() {
 void checkOrder() {
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
     if (_orders.peekFirst().equals(currOrder)) {
-      if (burgerTimes.get(0) > 10*currOrdNum) { 
-        double decrease = (burgerTimes.get(0) - 10*currOrdNum) * 0.1; 
+      if (burgerTimes.get(0) > 11) { 
+        double decrease = (burgerTimes.get(0) - 11) * 0.1; 
         double realPrice = _orders.pollFirst().getPrice() - decrease; 
         if (realPrice < 0) { 
           realPrice = 0; 
