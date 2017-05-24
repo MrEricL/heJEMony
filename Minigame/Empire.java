@@ -7,17 +7,35 @@ public class Empire {
     private int _totalEmployeeSatisfaction;
     private int _totalCustomerSatisfaction;
     private int _percentMeat;
-    private ALQueue<String> _actionsList;
+    private ALQueue<int> _actionsList; //better to have codes + modifiers for different actions 
+    //buy store = 1
     private Deque<String> _milestones;//will be used as a stack
+    
+   
 
     public Empire() {
-	_stores=new ArrayList<Store>();
+	_stores=new ArrayList<Store>(0); 
 	_budget=100000;
+
     }
 
     public void buyStore(Store s, double d) {
 	_stores.add(s);
 	_budget-=d;
+    }
+    //adds to action list
+    public void queueBuyStore(){
+      _actionsList.get(1);
+    }
+    
+    public int peekActions(){
+       return _actionsList.get(0);
+      
+    }
+    
+  public int popActions(){
+       _actionsList.remove(0);
+      
     }
 
     public double getBudget() {
@@ -30,7 +48,7 @@ public class Empire {
 
     public void runOperations() {
 	for (Store s: _stores) {
-	    modifyBudget(s.setDailyRevenue());
+	    modifyBudget(s.getDailyRevenue());
 	}
     }
 
