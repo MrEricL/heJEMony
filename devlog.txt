@@ -95,4 +95,10 @@ Eric :: minigame timing, empire/store/employee classes
 Jenny :: minigame cost, empire/store/employee classes, burger timing
 Matteo :: minigame cost, empire/store/employee classes
 ==============================================================
+2017-05-23
+--------------------------------------------------------------
+Eric :: graphics, UML, 
+Jenny :: minigame timing, graphics
+Matteo :: empire, flow chart
+==============================================================
 
