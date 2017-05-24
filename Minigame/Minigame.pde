@@ -47,7 +47,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
-  state = -1; 
+  state = 0; 
   size(750,750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -156,6 +156,13 @@ void drawMinigame() {
     cashStr+="0";
   }
   text("$"+cashStr, 45, 75);
+  if (currOrdNum > 10) {
+    fill(255);
+    rect(35, 530, 135, 50);
+    fill (0); 
+    textSize(20); 
+    text("Finish game", 45, 565); 
+  } 
 }
 
 
