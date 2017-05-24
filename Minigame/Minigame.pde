@@ -15,7 +15,7 @@ PImage img;
 //*****Minigame variables
 ALDeque<Order> _orders=new ALDeque<Order>();
 ArrayList<Integer> burgerTimes = new ArrayList <Integer>(); 
-int time=0;//time variable
+int miniTime=0;//time variable
 int y=170;//for printing orders
 Order currOrder = new Order();
 int placeForFood=500;//where you add food to
@@ -43,7 +43,6 @@ int totalTime;
 
 void setup() {
   size(750,750);
-  state=0;
   if (state==0) {
     img = loadImage("hegemony splash art.png");
     image(img,0,0);
@@ -51,10 +50,18 @@ void setup() {
   else if (state==1) {
     setupMinigame();
   }
+  else if (state==-1) {
+    beginEmpire();
+    background(255);
+  }
 }
 
 void draw() {
-  if (state==1 && !hasBeenSetUp) {
+  if (state==-1) {
+    runEmpire();
+    printBudget();
+  }
+  else if (state==1 && !hasBeenSetUp) {
     setupMinigame();
     hasBeenSetUp=true;
   }
@@ -62,6 +69,7 @@ void draw() {
     drawMinigame();
   }
   else if (state==0) drawMenu();
+  totalTime++;
 }
 
 
@@ -114,7 +122,7 @@ void setupMinigame() {
 
 void drawMinigame() {
   loadOrders();
-  time+=1;
+  miniTime+=1;
   counterT+=1;
   
   if (counterT==60) {
@@ -129,7 +137,7 @@ void drawMinigame() {
     textSize(28);    
     text(realTime, 620, 70);
   }
-  if (time % 11 == 0){
+  if (miniTime % 11 == 0){
     burgerTimes.add (new Integer (0)); 
   } 
   fill(0);
@@ -209,7 +217,7 @@ void buttons() {
 }
 
 void loadOrders() {
-  if (time%600==0 && time<6000) {
+  if (miniTime%600==0 && miniTime<6000) {
     //holds place in the substring
     fill(0);
     int place=0;
@@ -218,7 +226,7 @@ void loadOrders() {
     //gets most recent order
     String currOrder=_orders.peekLast().toString();
     //text is added in subsets of 18 characters so it doesnt go off the screen
-    text ((time/600+1)+". "+currOrder.substring(place, place+18), 620, y);
+    text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 620, y);
     place+=18;
     y+=20;
     while (place<currOrder.length()-18) {
@@ -308,6 +316,13 @@ void beginEmpire() {
 
 void runEmpire() {
   if (totalTime%10==0) {
-    e.runOperations();
+    empire.runOperations();
   }
+}
+
+void printBudget() {
+  background(255);
+  fill(0);
+  textSize(32);
+  text(""+empire.getBudget(),200,200);
 }
