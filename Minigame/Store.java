@@ -16,8 +16,9 @@ public class Store {
 	_priceBurger=7.50;
     }
 
-    public double setDailyRevenue() {
-	return _customerSatisfaction*_priceBurger-_employees.size()*_salary;
+    public void setDailyRevenue() {
+	  _dailyRevenue= _customerSatisfaction*_priceBurger-_employees.size()*_salary;
+
     }
     
     public double getDailyRevenue() {
@@ -27,6 +28,22 @@ public class Store {
     public void hire(Employee e) {
 	_employees.add(e);
     }
+    
+    
+    public void setSalary(double s){
+      _salary=s; 
+    }
 
+  public double getSalary(){
+     return _salary; 
+  }
+  
+  public void setPrice (double s){
+    _priceBurger=s;
+  }
+  
+  public double getPrice(){
+    return _priceBurger;
+  }
 
 }

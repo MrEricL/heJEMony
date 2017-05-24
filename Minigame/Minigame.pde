@@ -4,7 +4,9 @@ int state=0;
 boolean hasBeenSetUp;
 
 PImage img;
-/* 0=starter scren
+/* 
+0=starter scren
+
 1= minigame
 
 2=empire
@@ -36,7 +38,9 @@ PImage cheese;
 /*********EMPIRE VARIABLES************/
 Empire empire;
 int totalTime;
-
+int timeAction; //for each action
+    
+double storeCost=50000; //store cost * random multiplier
 
 /*********EMPIRE VARIABLES************/
 
@@ -70,6 +74,7 @@ void draw() {
   }
   else if (state==0) drawMenu();
   totalTime++;
+  timeAction=0;
 }
 
 
@@ -97,7 +102,7 @@ boolean overButton1(int x, int y, int width, int height){
 // END MENU STUFF
 
 
-
+//MINI GAME STUFF
 void setupMinigame() {
   miniTime=0;
   background(150);
@@ -152,26 +157,6 @@ void drawMinigame() {
   text("$"+cashStr, 45, 75);
 }
 
-void timeP() {
-}
-
-void mouseClicked() {
-  if (state==1){
-  if (currOrder.size()<9) {
-    buttons();
-  }
-  checkOrder();
-  }
-  
-  //IF YOU CLICK PLAY BUTTON ON MENU
-  if (state==0){
-      if (overButton1(21,290,185,106)) {
-    setupMinigame();
-    state=1;
-  }
-  }
-  //END MENU PLAY
-}
 
 void buttons() {
   if (overButton(35, 365, 110, 50)) {
@@ -309,15 +294,56 @@ boolean overButton(int x, int y, int width, int height) {
   return (mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height);
 }
 
+
+//END MINIGAME
+
+
+//SAME METHOD FOR ALL
+void mouseClicked() {
+  if (state==1){
+  if (currOrder.size()<9) {
+    buttons();
+  }
+  checkOrder();
+  }
+  
+  //IF YOU CLICK PLAY BUTTON ON MENU
+  if (state==0){
+      if (overButton1(21,290,185,106)) {
+    setupMinigame();
+    state=1;
+  }
+  }
+  //END MENU PLAY
+}
+
+//END MOUSE CLICK
+
+
+//EMPIRE STUFF
+
 void beginEmpire() {
   empire = new Empire();
-  empire.buyStore(new Store(), 50000);//you begin with one store, cost $50k
+  empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
+  storeCost*=random(1)+1;
 }
 
 void runEmpire() {
   if (totalTime%10==0) {
     empire.runOperations();
   }
+  timeAction++;
+  int action = peekActions();
+  if (action == timeAction){
+    timeAction=0;
+    popActions();
+    if (action==1){
+      empire.buyStore(new Store(), storeCost);
+      storeCost*=random(1)+1;
+    }
+    
+  }
+  
 }
 
 void printBudget() {
@@ -326,3 +352,6 @@ void printBudget() {
   textSize(32);
   text(""+empire.getBudget(),200,200);
 }
+
+
+//END EMPIRE
