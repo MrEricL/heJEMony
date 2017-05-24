@@ -4,6 +4,7 @@ int state=0;
 boolean hasBeenSetUp;
 
 PImage img;
+PImage emp; 
 /* 
 0=starter scren
 
@@ -46,6 +47,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
+  state = -1; 
   size(750,750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -56,7 +58,6 @@ void setup() {
   }
   else if (state==-1) {
     beginEmpire();
-    background(255);
   }
 }
 
@@ -326,6 +327,8 @@ void beginEmpire() {
   empire = new Empire();
   empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
   storeCost*=random(1)+1;
+  emp = loadImage ("main.png"); 
+  image (emp, 0, 0); 
 }
 
 void runEmpire() {
@@ -333,15 +336,16 @@ void runEmpire() {
     empire.runOperations();
   }
   timeAction++;
-  int action = peekActions();
+  if (!empire.isEmpty()) { 
+  Integer action = empire.peekActions();
   if (action == timeAction){
     timeAction=0;
-    popActions();
+    empire.popActions();
     if (action==1){
       empire.buyStore(new Store(), storeCost);
       storeCost*=random(1)+1;
     }
-    
+  }
   }
   
 }
@@ -350,6 +354,7 @@ void printBudget() {
   background(255);
   fill(0);
   textSize(32);
+  strokeWeight(1);
   text(""+empire.getBudget(),200,200);
 }
 
