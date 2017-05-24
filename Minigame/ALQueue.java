@@ -43,6 +43,9 @@ public class ALQueue<T> implements Queue<T>
     // means of "peeking" at the front item
     public T peekFront() 
     {
+      if (isEmpty()) { 
+        return null; 
+      } 
 	return _queue.get(0);
     }//O(1)
 
