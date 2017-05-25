@@ -17,7 +17,7 @@ public class Store {
     }
 
     public void setDailyRevenue() {
-	  _dailyRevenue= _customerSatisfaction*_priceBurger-_employees.size()*_salary;
+	  _dailyRevenue= 10*(_customerSatisfaction*_priceBurger-_employees.size()*_salary);
 
     }
     
