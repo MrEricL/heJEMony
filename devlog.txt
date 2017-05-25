@@ -101,4 +101,22 @@ Eric :: graphics, UML,
 Jenny :: minigame timing, graphics
 Matteo :: empire, flow chart
 ==============================================================
+2017-05-24
+--------------------------------------------------------------
+Eric :: empire MVP, added cheat code
+Jenny :: empire MVP	
+Matteo :: empire MVP, fixed burger timing
+==============================================================
+2017-05-25
+--------------------------------------------------------------
+Eric :: empire MVP - buying stores
+Jenny :: empire MPV - buying stores	
+Matteo :: empire MVP - buying stores 
+==============================================================
+2017-05-26
+--------------------------------------------------------------
+Eric :: 
+Jenny :: 	
+Matteo :: 
+==============================================================
 
