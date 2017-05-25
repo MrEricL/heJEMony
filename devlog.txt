@@ -61,57 +61,60 @@ tales of wisdom gained...
 
 2017-05-17
 --------------------------------------------------------------
-Eric :: proposal
-Jenny :: proposal
-Matteo :: proposal
+All :: basic premises for game. A diner dash with a minigame at the beginning. Figured out which data structures to use, lots of queues for orders, foods in order, actions, etc. Possibly priorityQueue, deques
+Eric :: UMLs for Order, Food
+Jenny :: UMLs Employee
+Matteo :: UML Store, empire, flow chart
 ==============================================================
 2017-05-18
 --------------------------------------------------------------
-Eric :: plan, basic Processing template
-Jenny :: plan
-Matteo :: plan
+All :: worked out the plan, prioritized which features are essential and which ones are fun. figured out what MVPs will be for minigame and empire
+Eric :: basic Processing background
+Jenny :: 
+Matteo :: specific dates for completion
 ==============================================================
 2017-05-19
 --------------------------------------------------------------
+All: figured out how Foods will function in context of Order
 Eric :: Order.java and Foods
 Jenny :: Order.java and Foods
-Matteo :: Order.java and Foods
+Matteo :: Order.java and Foods, Order cost
 ==============================================================
 2017-05-20
 --------------------------------------------------------------
-Eric :: added time, tested the adding picture
-Jenny :: 
-Matteo :: beginnings of minigame
+Eric :: added timing to minigame, tested adding photos to the minigame
+Jenny :: loading screen minigame
+Matteo :: beginnings of minigame, loading screen, buttons on side that produce ellipses of different colors based on different foods, Orders load on side
 ==============================================================
 2017-05-21
 --------------------------------------------------------------
-Eric :: minigame visuals
-Jenny :: minigame
-Matteo :: minigame basics
+Eric :: minigame visuals, changed spacing so that they look better. the cheese is dope
+Jenny :: minigame printing money and time
+Matteo :: minigame basics, debugging burgers going infinitely high
 ==============================================================
 2017-05-22
 --------------------------------------------------------------
 Eric :: minigame timing, empire/store/employee classes
-Jenny :: minigame cost, empire/store/employee classes, burger timing
-Matteo :: minigame cost, empire/store/employee classes
+Jenny :: empire/store/employee classes, burger timing that makes money you earn decrease if you take too long
+Matteo :: adding money to the minigame per price, empire/store/employee classes
 ==============================================================
 2017-05-23
 --------------------------------------------------------------
-Eric :: graphics, UML, 
+Eric :: graphics, updating UML of Minigame.pde, 
 Jenny :: minigame timing, graphics
-Matteo :: empire, flow chart
+Matteo :: empire, MVP flow chart
 ==============================================================
 2017-05-24
 --------------------------------------------------------------
-Eric :: empire MVP, added cheat code
-Jenny :: empire MVP	
-Matteo :: empire MVP, fixed burger timing
+Eric :: empire MVP, added cheat code, worked on actionsList queue and how that will work/be processed by the draw() function
+Jenny :: empire MVP, processing money, how much you make
+Matteo :: empire MVP, fixed burger timing giving you $0 
 ==============================================================
 2017-05-25
 --------------------------------------------------------------
-Eric :: empire MVP - buying stores
-Jenny :: empire MPV - buying stores	
-Matteo :: empire MVP - buying stores 
+Eric :: empire MVP - buying stores. graphics for farm
+Jenny :: empire MPV - buying stores, storesScreen functions
+Matteo :: empire MVP - buying stores, storesScreen functions, made it so you earn money faster
 ==============================================================
 2017-05-26
 --------------------------------------------------------------

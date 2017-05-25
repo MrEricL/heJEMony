@@ -6,13 +6,15 @@ boolean hasBeenSetUp;
 PImage img;
 PImage emp; 
 /* 
-0=starter scren
-
-1= minigame
-
-2=empire
-...
-****state variables*/
+ 0=starter scren
+ 
+ 1= minigame
+ 
+ 2=empire
+ 
+ 3=empire
+ ...
+ ****state variables*/
 
 
 //*****Minigame variables
@@ -40,7 +42,7 @@ PImage cheese;
 Empire empire;
 int totalTime;
 int timeAction; //for each action
-    
+
 double storeCost=50000; //store cost * random multiplier
 
 /*********EMPIRE VARIABLES************/
@@ -48,57 +50,57 @@ double storeCost=50000; //store cost * random multiplier
 
 void setup() {
   state = 0; 
-  size(750,750);
+  size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
-    image(img,0,0);
-  }
-  else if (state==1) {
+    image(img, 0, 0);
+  } else if (state==1) {
     setupMinigame();
-  }
-  else if (state==-1) {
+  } else if (state==2) {
     beginEmpire();
+  } else if (state==3) {
+    storesScreen();
   }
 }
 
 void draw() {
-  if (state==-1) {
+  if (state==2) {
     runEmpire();
     printBudget();
-  }
-  else if (state==1 && !hasBeenSetUp) {
+  } else if (state==1 && !hasBeenSetUp) {
     setupMinigame();
     hasBeenSetUp=true;
-  }
-  else if (state==1 && hasBeenSetUp) {
+  } else if (state==1 && hasBeenSetUp) {
     drawMinigame();
+  } else if (state==0) {
+    drawMenu();
+  } else if (state==3) {
+    runEmpire();
+    updateStoresScreen();
   }
-  else if (state==0) drawMenu();
   totalTime++;
   timeAction=0;
+  
 }
 
 
 // MENU STUFF
 
-void drawMenu(){
+void drawMenu() {
   noStroke();
   noFill();
-  rect(21,290,185,106); 
-  rect(253,290,185,106);  
-  rect(21,463,185,106);   
-  rect(253,463,185,106);   
-  
+  rect(21, 290, 185, 106); 
+  rect(253, 290, 185, 106);  
+  rect(21, 463, 185, 106);   
+  rect(253, 463, 185, 106);
 }
-boolean overButton1(int x, int y, int width, int height){
-   if (mouseX >= x && mouseX <= x+width && 
-      mouseY >= y && mouseY <= y+height) {
+boolean overButton1(int x, int y, int width, int height) {
+  if (mouseX >= x && mouseX <= x+width && 
+    mouseY >= y && mouseY <= y+height) {
     return true;
   } else {
     return false;
-  } 
-  
-  
+  }
 }
 // END MENU STUFF
 
@@ -130,21 +132,21 @@ void drawMinigame() {
   loadOrders();
   miniTime+=1;
   counterT+=1;
-  
+
   if (counterT==60) {
     fill(0);
     rect(615, 48, 100, 40);
     counterT=0;
     realTime+=1;
     for (int i = 0; i < burgerTimes.size(); i ++ ) { 
-    burgerTimes.set (i, burgerTimes.get (i) + 1); 
-  } 
+      burgerTimes.set (i, burgerTimes.get (i) + 1);
+    } 
     fill(255);
     textSize(28);    
     text(realTime, 620, 70);
   }
-  if (miniTime % 11 == 0){
-    burgerTimes.add (0,new Integer (0)); 
+  if (miniTime % 11 == 0) {
+    burgerTimes.add (0, new Integer (0));
   } 
   fill(0);
   rect(40, 50, 100, 40);
@@ -161,8 +163,8 @@ void drawMinigame() {
     rect(35, 530, 135, 50);
     fill (0); 
     textSize(20); 
-    text("Finish game", 45, 565); 
-  } 
+    text("Finish game", 45, 565);
+  }
 }
 
 
@@ -265,13 +267,13 @@ void checkOrder() {
         double decrease = (burgerTimes.get(0) - 11) * 0.1; 
         double realPrice = _orders.pollFirst().getPrice() - decrease; 
         if (realPrice < 0) { 
-          realPrice = 0; 
+          realPrice = 0;
         } 
         cash += realPrice; 
-        burgerTimes.remove(0); 
-      } 
-      else { 
-      cash+=_orders.pollFirst().getPrice();}
+        burgerTimes.remove(0);
+      } else { 
+        cash+=_orders.pollFirst().getPrice();
+      }
       strokeWeight(1);
       //to cross out orders
       fill(0);
@@ -279,7 +281,6 @@ void checkOrder() {
       text("-----------------", 620, 190+(currOrdNum-1)*60);
       text("-----------------", 620, 210+(currOrdNum-1)*60);
       currOrdNum+=1;
-      
     }
     currOrder=new Order();
     placeForFood=500;
@@ -295,9 +296,8 @@ boolean overButton(int x, int y, int width, int height) {
 }
 
 //cheat code -- press a
-void keyPressed(){
+void keyPressed() {
   if (key==97) currOrdNum=11;
-  
 }
 
 //END MINIGAME
@@ -305,25 +305,35 @@ void keyPressed(){
 
 //SAME METHOD FOR ALL
 void mouseClicked() {
-  if (state==1){
-  if (currOrder.size()<9) {
-    buttons();
-  }
-  checkOrder();
-    if (overButton1(35, 530, 135, 50)){
-      state=-1;
+  if (state==1) {
+    if (currOrder.size()<9) {
+      buttons();
+    }
+    checkOrder();
+    if (overButton1(35, 530, 135, 50)) {
+      state=2;
       beginEmpire();
     }
   }
-  
+
   //IF YOU CLICK PLAY BUTTON ON MENU
-  if (state==0){
-      if (overButton1(21,290,185,106)) {
-    setupMinigame();
-    state=1;
-  }
+  if (state==0) {
+    if (overButton1(21, 290, 185, 106)) {
+      setupMinigame();
+      state=1;
+    }
   }
   //END MENU PLAY
+  if (state==2) {
+    if (overButton(111, 214, 154, 168)) {
+      state=3;
+    }
+  }
+  if (state==3) {
+    if (overButton(100,500,100,100)) {
+      empire.addAction(1);//1=buy store
+    }
+  }
 }
 
 //END MOUSE CLICK
@@ -336,7 +346,7 @@ void beginEmpire() {
   empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
   storeCost*=random(1)+1;
   emp = loadImage ("main.png"); 
-  image (emp, 0, 0); 
+  image (emp, 0, 0);
 }
 
 void runEmpire() {
@@ -345,17 +355,16 @@ void runEmpire() {
   }
   timeAction++;
   if (!empire.isEmpty()) { 
-  Integer action = empire.peekActions();
-  if (action == timeAction){
-    timeAction=0;
-    empire.popActions();
-    if (action==1){
-      empire.buyStore(new Store(), storeCost);
-      storeCost*=random(1)+1;
+    Integer action = empire.peekActions();
+    if (action == timeAction) {
+      timeAction=0;
+      empire.popActions();
+      if (action==1) {
+        empire.buyStore(new Store(), storeCost);
+        storeCost*=random(1)+1;
+      }
     }
   }
-  }
-  
 }
 
 void printBudget() {
@@ -363,19 +372,78 @@ void printBudget() {
   color c1 = #ffff00;
   noStroke();
   fill(c1);
-  rect(340,140,139,65);
-    fill(0);
+  rect(340, 140, 139, 65);
+  fill(0);
   textSize(30);
   strokeWeight(1);
-  text(""+empire.getBudget(),340,180);
-  
+  text(""+empire.getBudget(), 340, 180);
+
   //clickable area
- stroke(255);
- noFill();
- rect(111,214,154,168);
-  rect(500,214,154,168);
-   rect(111,505,154,168);
-  rect(500,505,154,168);
+  stroke(255);
+  noFill();
+  rect(111, 214, 154, 168);
+  rect(500, 214, 154, 168);
+  rect(111, 505, 154, 168);
+  rect(500, 505, 154, 168);
+}
+
+void storesScreen() {
+  background(255);
+  int i=0;
+  int xcor=25;//of size 100 w/ 25 spacing
+  int ycor=100;
+  textSize(20);
+  while (i<10) {
+    fill(100);
+    rect(xcor, ycor, 100, 50);
+    xcor+=125;
+    if (i==4) {
+      ycor=200;
+      xcor=25;
+    }
+    i++;
+  }
+  fill(100);
+  rect(100,500,100,100);
+  rect(300,500,100,100);
+  textSize(20);
+  fill(0);
+  text("Buy Store",100,550);
+}
+
+void updateStoresScreen() {
+  background(255);
+  int i=0;
+  int xcor=25;//of size 100 w/ 25 spacing
+  int ycor=100;
+  textSize(20);
+  while (i<10) {
+    fill(100);
+    rect(xcor, ycor, 100, 50);
+    if (i<empire.size()) {
+      fill(255);
+      text("Store "+(i+1), xcor+10, ycor+40);
+    }
+    xcor+=125;
+    if (i==4) {
+      ycor=200;
+      xcor=25;
+    }
+    i++;
+  }
+  fill(100);
+  rect(100,500,100,100);
+  rect(300,500,100,100);
+  textSize(20);
+  fill(0);
+  text("Buy Store",100,550);
+  noStroke();
+  fill(100);
+  rect(300, 500, 100, 100);
+  fill(0);
+  textSize(30);
+  strokeWeight(1);
+  text("$"+empire.getBudget(), 310, 580);
 }
 
 
