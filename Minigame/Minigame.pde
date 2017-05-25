@@ -47,7 +47,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
-  state = 0; 
+  state = -1; 
   size(750,750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -302,6 +302,11 @@ boolean overButton(int x, int y, int width, int height) {
   return (mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height);
 }
 
+//cheat code -- press a
+void keyPressed(){
+  if (key==97) currOrdNum=11;
+  
+}
 
 //END MINIGAME
 
@@ -313,6 +318,10 @@ void mouseClicked() {
     buttons();
   }
   checkOrder();
+    if (overButton1(35, 530, 135, 50)){
+      state=-1;
+      beginEmpire();
+    }
   }
   
   //IF YOU CLICK PLAY BUTTON ON MENU
@@ -358,11 +367,15 @@ void runEmpire() {
 }
 
 void printBudget() {
-  background(255);
-  fill(0);
-  textSize(32);
+
+  color c1 = #ffff00;
+  noStroke();
+  fill(c1);
+  rect(340,140,139,65);
+    fill(0);
+  textSize(30);
   strokeWeight(1);
-  text(""+empire.getBudget(),200,200);
+  text(""+empire.getBudget(),340,180);
 }
 
 
