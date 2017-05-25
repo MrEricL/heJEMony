@@ -47,7 +47,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
-  state = -1; 
+  state = 0; 
   size(750,750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -376,6 +376,14 @@ void printBudget() {
   textSize(30);
   strokeWeight(1);
   text(""+empire.getBudget(),340,180);
+  
+  //clickable area
+ stroke(255);
+ noFill();
+ rect(111,214,154,168);
+  rect(500,214,154,168);
+   rect(111,505,154,168);
+  rect(500,505,154,168);
 }
 
 
