@@ -144,7 +144,7 @@ void drawMinigame() {
     text(realTime, 620, 70);
   }
   if (miniTime % 11 == 0){
-    burgerTimes.add (new Integer (0)); 
+    burgerTimes.add (0,new Integer (0)); 
   } 
   fill(0);
   rect(40, 50, 100, 40);
@@ -272,14 +272,6 @@ void checkOrder() {
       } 
       else { 
       cash+=_orders.pollFirst().getPrice();}
-      /*fill(#00FF00);
-       textSize(16);
-       text(currOrdNum, 30+currOrdNum*8, 55);*/
-      /*else {
-       fill(#FF0000);
-       textSize(16);
-       text(currOrdNum, 30+currOrdNum*8, 55);
-       }*/
       strokeWeight(1);
       //to cross out orders
       fill(0);
