@@ -27,6 +27,8 @@ int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
 float cash=0;
 
+boolean bunClick=false;
+
 //printing time
 int realTime=0;
 int counterT=0;
@@ -35,6 +37,7 @@ PImage tomato;
 PImage lettuce;
 PImage patty;
 PImage bun;
+PImage topbun;
 PImage cheese;
 //****Minigame variables
 
@@ -52,7 +55,7 @@ void setup() {
   state = 0; 
   size(750, 750);
   if (state==0) {
-    img = loadImage("hegemony splash art.png");
+    img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
   } else if (state==1) {
     setupMinigame();
@@ -97,9 +100,9 @@ void mouseClicked() {
 
   //IF YOU CLICK PLAY BUTTON ON MENU
   if (state==0) {
-    if (overButton1(21, 290, 185, 106)) {
+    if (overButton1(282, 369, 185, 105)) {
+            state=1;
       setupMinigame();
-      state=1;
     }
   }
   //END MENU PLAY
@@ -126,12 +129,11 @@ void mouseClicked() {
 // MENU STUFF
 
 void drawMenu() {
-  noStroke();
+  stroke(0);
   noFill();
-  rect(21, 290, 185, 106); 
-  rect(253, 290, 185, 106);  
-  rect(21, 463, 185, 106);   
-  rect(253, 463, 185, 106);
+ 
+  rect(282, 369, 185, 105);  
+
 }
 boolean overButton1(int x, int y, int width, int height) {
   if (mouseX >= x && mouseX <= x+width && 
@@ -209,12 +211,22 @@ void drawMinigame() {
 
 void buttons() {
   if (overButton(35, 365, 110, 50)) {
+
     //fill(#F4A460);
     //ellipse(375, placeForFood, 200, 65);
-    bun = loadImage("bun.png");
+
+    if (bunClick==false){
+          bun = loadImage("bun.png");
     image(bun, 300, placeForFood+20);    
     currOrder.add(new Bun());
+    }
+    else{
+      ///FOR THE TOP BUN
+    topbun = loadImage("topbun.png");
+    image(topbun, 300, placeForFood+20); 
+    }
     placeForFood-=50;
+    bunClick=true;
   }
   if (overButton(35, 300, 110, 50)) {
     // fill(#8B5A2B);
@@ -300,6 +312,7 @@ void drawButtons() {
 }
 
 void checkOrder() {
+  bunClick=false;
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
     if (_orders.peekFirst().equals(currOrder)) {
       if (burgerTimes.get(0) > 11) { 
