@@ -109,7 +109,7 @@ void mouseClicked() {
     }
   }
   if (state==3) {
-    if (overButton(35, 650, 100, 75)) {
+    if (overButton(35, 650, 150, 75)) {
       if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
     }
