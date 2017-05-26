@@ -49,7 +49,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
-  state = 2; 
+  state = 0; 
   size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -112,6 +112,11 @@ void mouseClicked() {
     if (overButton(35, 650, 150, 75)) {
       if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
+    }
+    if (overButton(50,50,100,75)) {
+      state=2;
+      emp = loadImage ("main.png"); 
+  image (emp, 0, 0);
     }
   }
 }
@@ -376,7 +381,7 @@ void printBudget() {
   fill(0);
   textSize(30);
   strokeWeight(1);
-  text(""+empire.getBudget(), 340, 150);
+  text(""+dollarToStr(empire.getBudget()), 340, 150);
 
   //clickable area
   stroke(255);
@@ -412,9 +417,11 @@ void storesScreen() {
   //total money rectangle
   fill(#FFD700);
   rect(450, 50, 250, 75);
+  rect(50,50,100,75);
   textSize(20);
   fill(0);
   text("Buy Store", 45, 680);
+  text("Back",55,85);
   //text("Store",35,555);
 }
 
