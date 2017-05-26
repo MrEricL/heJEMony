@@ -19,6 +19,22 @@ public class Empire {
     _actionsList = new ALQueue <Integer> ();
   }
 
+  public int getTotalEmployeeSatisfaction() {
+    return _totalEmployeeSatisfaction;
+  }
+  
+  public int getTotalCustomerSatisfaction() {
+    return _totalCustomerSatisfaction;
+  }
+  
+  public void modTotalEmployeeSatisfaction(int i) {
+    _totalEmployeeSatisfaction+=i;
+  }
+  
+  public void modTotalCustomerSatisfaction(int i) {
+    _totalCustomerSatisfaction+=i;
+  }
+
   public void buyStore(Store s, double d) {
     _stores.add(s);
     _budget-=d;
@@ -52,6 +68,13 @@ public class Empire {
     for (Store s : _stores) {
       s.setDailyRevenue();
       modifyBudget(s.getDailyRevenue());
+      s.increaseOperationsCost();
+      if (s.areCustomersHappy()) {
+        s.modCustomerSatisfaction(1);
+      }
+      else {
+        s.modCustomerSatisfaction(-2);
+      }
     }
   }
 
@@ -62,9 +85,9 @@ public class Empire {
   public void addAction(int i) {
     _actionsList.enqueue(i);
   }
-  
-  
-    public void setBudget(double s) {
+
+
+  public void setBudget(double s) {
     _budget+=s;
   }
 }
