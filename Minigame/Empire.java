@@ -62,4 +62,9 @@ public class Empire {
   public void addAction(int i) {
     _actionsList.enqueue(i);
   }
+  
+  
+    public void setBudget(double s) {
+    _budget+=s;
+  }
 }

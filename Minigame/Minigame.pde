@@ -49,7 +49,7 @@ double storeCost=50000; //store cost * random multiplier
 
 
 void setup() {
-  state = 0; 
+  state = 2; 
   size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art.png");
@@ -104,13 +104,13 @@ void mouseClicked() {
   }
   //END MENU PLAY
   if (state==2) {
-    if (overButton(111, 214, 154, 168)) {
+    if (overButton(111, 314, 154, 168)) {
       state=3;
     }
   }
   if (state==3) {
     if (overButton(35, 650, 100, 75)) {
-      if (empire.getBudget()>0)
+      if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
     }
   }
@@ -330,8 +330,10 @@ boolean overButton(int x, int y, int width, int height) {
 }
 
 //cheat code -- press a
+//cheat code -- press s
 void keyPressed() {
   if (key==97) currOrdNum=11;
+  if (key==115) empire.setBudget(100000); 
 }
 
 //END MINIGAME
@@ -370,19 +372,19 @@ void printBudget() {
   color c1 = #ffff00;
   noStroke();
   fill(c1);
-  rect(340, 140, 139, 65);
+  rect(340, 113, 139, 65);
   fill(0);
   textSize(30);
   strokeWeight(1);
-  text(""+empire.getBudget(), 340, 180);
+  text(""+empire.getBudget(), 340, 150);
 
   //clickable area
   stroke(255);
   noFill();
-  rect(111, 214, 154, 168);
-  rect(500, 214, 154, 168);
-  rect(111, 505, 154, 168);
-  rect(500, 505, 154, 168);
+  rect(111, 314, 154, 168);
+  rect(500, 314, 154, 168);
+  rect(111, 535, 154, 168);
+  rect(500, 535, 154, 168);
 }
 
 void storesScreen() {
@@ -406,7 +408,7 @@ void storesScreen() {
   }
   fill(100);
   //buy store rectangle
-  rect(35, 650, 100, 75);
+  rect(35, 650, 150, 75);
   //total money rectangle
   fill(#FFD700);
   rect(450, 50, 250, 75);
