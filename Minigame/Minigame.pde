@@ -80,9 +80,43 @@ void draw() {
   }
   totalTime++;
   timeAction=0;
-  
 }
 
+//SAME METHOD FOR ALL
+void mouseClicked() {
+  if (state==1) {
+    if (currOrder.size()<9) {
+      buttons();
+    }
+    checkOrder();
+    if (overButton1(35, 530, 135, 50)) {
+      state=2;
+      beginEmpire();
+    }
+  }
+
+  //IF YOU CLICK PLAY BUTTON ON MENU
+  if (state==0) {
+    if (overButton1(21, 290, 185, 106)) {
+      setupMinigame();
+      state=1;
+    }
+  }
+  //END MENU PLAY
+  if (state==2) {
+    if (overButton(111, 214, 154, 168)) {
+      state=3;
+    }
+  }
+  if (state==3) {
+    if (overButton(35, 650, 100, 75)) {
+      if (empire.getBudget()>0)
+        empire.addAction(1);//1=buy store
+    }
+  }
+}
+
+//END MOUSE CLICK
 
 // MENU STUFF
 
@@ -303,42 +337,6 @@ void keyPressed() {
 //END MINIGAME
 
 
-//SAME METHOD FOR ALL
-void mouseClicked() {
-  if (state==1) {
-    if (currOrder.size()<9) {
-      buttons();
-    }
-    checkOrder();
-    if (overButton1(35, 530, 135, 50)) {
-      state=2;
-      beginEmpire();
-    }
-  }
-
-  //IF YOU CLICK PLAY BUTTON ON MENU
-  if (state==0) {
-    if (overButton1(21, 290, 185, 106)) {
-      setupMinigame();
-      state=1;
-    }
-  }
-  //END MENU PLAY
-  if (state==2) {
-    if (overButton(111, 214, 154, 168)) {
-      state=3;
-    }
-  }
-  if (state==3) {
-    if (overButton(100,500,100,100)) {
-      empire.addAction(1);//1=buy store
-    }
-  }
-}
-
-//END MOUSE CLICK
-
-
 //EMPIRE STUFF
 
 void beginEmpire() {
@@ -389,62 +387,72 @@ void printBudget() {
 
 void storesScreen() {
   background(255);
+  fill(0);
+  rect(0, 0, 750, 150);
+  rect(0, 600, 750, 150);
   int i=0;
-  int xcor=25;//of size 100 w/ 25 spacing
-  int ycor=100;
+  int xcor=35;//of size 100 w/ 25 spacing
+  int ycor=200;
   textSize(20);
   while (i<10) {
     fill(100);
-    rect(xcor, ycor, 100, 50);
-    xcor+=125;
+    rect(xcor, ycor, 100, 100);
+    xcor+=130;
     if (i==4) {
-      ycor=200;
-      xcor=25;
+      ycor=350;
+      xcor=35;
     }
     i++;
   }
   fill(100);
-  rect(100,500,100,100);
-  rect(300,500,100,100);
+  //buy store rectangle
+  rect(35, 650, 100, 75);
+  //total money rectangle
+  fill(#FFD700);
+  rect(450, 50, 250, 75);
   textSize(20);
   fill(0);
-  text("Buy Store",100,550);
+  text("Buy Store", 45, 680);
+  //text("Store",35,555);
 }
 
 void updateStoresScreen() {
-  background(255);
+  //background(255);
   int i=0;
-  int xcor=25;//of size 100 w/ 25 spacing
-  int ycor=100;
+  int xcor=35;//of size 100 w/ 25 spacing
+  int ycor=200;
+  storesScreen();
   textSize(20);
   while (i<10) {
-    fill(100);
-    rect(xcor, ycor, 100, 50);
+    //fill(100);
+    //rect(xcor, ycor, 100, 100);
     if (i<empire.size()) {
       fill(255);
       text("Store "+(i+1), xcor+10, ycor+40);
     }
-    xcor+=125;
+    xcor+=130;
     if (i==4) {
-      ycor=200;
-      xcor=25;
+      ycor=350;
+      xcor=35;
     }
     i++;
   }
-  fill(100);
-  rect(100,500,100,100);
-  rect(300,500,100,100);
-  textSize(20);
-  fill(0);
-  text("Buy Store",100,550);
-  noStroke();
-  fill(100);
-  rect(300, 500, 100, 100);
-  fill(0);
+  fill(#FF0000);
+  text(dollarToStr(storeCost), 45, 700);
   textSize(30);
   strokeWeight(1);
-  text("$"+empire.getBudget(), 310, 580);
+  fill(#0000FF);
+  text(dollarToStr(empire.getBudget()), 460, 95);
 }
 
 
 //END EMPIRE
+
+public String dollarToStr(double d) {
+  String s = ""+d;
+  s=s.substring(0, s.indexOf(".")+2);
+  if (s.length()-s.indexOf(".")==2) {
+    s+="0";
+  }
+  return "$"+s;
+}

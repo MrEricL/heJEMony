@@ -114,7 +114,7 @@ Matteo :: empire MVP, fixed burger timing giving you $0
 --------------------------------------------------------------
 Eric :: empire MVP - buying stores. graphics for farm
 Jenny :: empire MPV - buying stores, storesScreen functions
-Matteo :: empire MVP - buying stores, storesScreen functions, made it so you earn money faster
+Matteo :: empire MVP - buying stores, storesScreen functions, made it so you earn money faster, worked on screen for buying stores so that it looks good and money is printed nicely, with dollar sign and two floating point values only
 ==============================================================
 2017-05-26
 --------------------------------------------------------------
