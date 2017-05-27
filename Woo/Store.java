@@ -17,6 +17,14 @@ public class Store {
     _priceBurger=7.50;
     _operationsCost=65;
   }
+  
+  public Employee getEmployee(int i) {
+    return _employees.get(i);
+  }
+  
+  public int numEmployees() {
+    return _employees.size();
+  }
 
   public void modCustomerSatisfaction(int i) {
     _customerSatisfaction+=i;

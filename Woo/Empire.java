@@ -19,18 +19,22 @@ public class Empire {
     _actionsList = new ALQueue <Integer> ();
   }
 
+  public Store getStore(int i) {
+    return _stores.get(i);
+  }
+
   public int getTotalEmployeeSatisfaction() {
     return _totalEmployeeSatisfaction;
   }
-  
+
   public int getTotalCustomerSatisfaction() {
     return _totalCustomerSatisfaction;
   }
-  
+
   public void modTotalEmployeeSatisfaction(int i) {
     _totalEmployeeSatisfaction+=i;
   }
-  
+
   public void modTotalCustomerSatisfaction(int i) {
     _totalCustomerSatisfaction+=i;
   }
@@ -71,8 +75,7 @@ public class Empire {
       s.increaseOperationsCost();
       if (s.areCustomersHappy()) {
         s.modCustomerSatisfaction(1);
-      }
-      else {
+      } else {
         s.modCustomerSatisfaction(-2);
       }
     }
