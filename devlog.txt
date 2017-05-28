@@ -124,8 +124,15 @@ Matteo :: Screen for Stores, you can click on individual stores and see employee
 ==============================================================
 2017-05-27
 --------------------------------------------------------------
-Eric :: 
-Jenny :: 
+Eric :: created stores.png 
+Jenny :: README.md
 Matteo :: Screen for stores, firing employees, closing stores, fixed runEmpire timeAction function. before it was always set to 0 so the empire never ran anything other than buying stores.
 ==============================================================
+2017-05-27
+--------------------------------------------------------------
+Eric :: 
+Jenny ::
+Matteo :: implemented store.png, random name selector for stores, fixed bug of buying an eleventh store 
+==============================================================
+
 
