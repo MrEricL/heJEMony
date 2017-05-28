@@ -23,6 +23,11 @@ public class Empire {
     return _stores.get(i);
   }
 
+  public void closeStore(int i) {
+    _stores.remove(i);
+  }
+
+
   public int getTotalEmployeeSatisfaction() {
     return _totalEmployeeSatisfaction;
   }

@@ -15,10 +15,15 @@ PImage emp;
  3=stores
  
  4=single store
+ 
+ 5=store closed screen
  ...
  ****state variables*/
 
-
+/**Actions
+ 1 = buy store
+ 2 = close store
+ **/
 
 
 /*********EMPIRE VARIABLES************/
@@ -29,12 +34,15 @@ int timeAction; //for each action
 double storeCost=50000; //store cost * random multiplier
 
 Store currStore;
+int currStoreNum;
+
+int storeClosedScreenStartTime=0;
 
 /*********EMPIRE VARIABLES************/
 
 
 void setup() {
-  state = 0; 
+  //state = 5; 
   size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
@@ -65,9 +73,17 @@ void draw() {
   } else if (state==4) {
     runEmpire();
     runIndividualStore(currStore);
+  } else if (state==5) {
+    runEmpire();
+    if (storeClosedScreenStartTime<90)
+      storeClosed();
+    else {
+      state=3;
+      storeClosedScreenStartTime=0;
+    }
   }
   totalTime++;
-  timeAction=0;
+  //timeAction=0;
 }
 
 //SAME METHOD FOR ALL
@@ -100,20 +116,19 @@ void mouseClicked() {
     if (overButton(35, 650, 150, 75)) {
       if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
-    }
-    else if (overButton(50, 50, 100, 75)) {
+    } else if (overButton(50, 50, 100, 75)) {
       state=2;
       emp = loadImage ("main.png"); 
       image (emp, 0, 0);
-    }
-    else {
+    } else {
       checkStoreButtons();
     }
   }
   if (state==4) {
-    if (overButton(10,10,50,50)) {
+    if (overButton(10, 10, 90, 60)) {
       state=3;
     }
+    fireEmployeeButton(currStore);
   }
 }
 
@@ -158,7 +173,7 @@ void keyPressed() {
 void beginEmpire() {
   empire = new Empire();
   empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
-  storeCost*=random(1)+1;
+  storeCost*=1.1;
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
 }
@@ -166,16 +181,24 @@ void beginEmpire() {
 void runEmpire() {
   if (totalTime%10==0) {
     empire.runOperations();
-  }
-  timeAction++;
-  if (!empire.isEmpty()) { 
-    Integer action = empire.peekActions();
-    if (action == timeAction) {
-      timeAction=0;
-      empire.popActions();
-      if (action==1) {
-        empire.buyStore(new Store(), storeCost);
-        storeCost*=random(1)+1;
+
+    if (!empire.isEmpty()) { 
+      timeAction++;
+      Integer action = empire.peekActions();
+      //System.out.println(action);
+      if (action == timeAction) {
+        timeAction=0;
+        empire.popActions();
+        if (action==1) {
+          empire.buyStore(new Store(), storeCost);
+          storeCost*=1.1;
+        } else if (action==2) {
+          //System.out.println("yo");
+          currStore=null;
+          empire.closeStore(currStoreNum);
+          currStoreNum=0;
+          state=5;
+        }
       }
     }
   }
@@ -255,7 +278,10 @@ void updateStoresScreen() {
     }
     i++;
   }
-  fill(#FF0000);
+  if (empire.getBudget()>=storeCost)
+    fill(#00FF00);
+  else
+    fill(#FF0000);
   text(dollarToStr(storeCost), 45, 700);
   textSize(30);
   strokeWeight(1);
@@ -277,41 +303,68 @@ public String dollarToStr(double d) {
 
 void setupIndividualStore(Store s) {
   background(#85C1E9);
-  textSize(20);
+  textSize(24);
   fill(#00FF00);
-  rect(10,10,70,50);
+  rect(10, 10, 90, 60);
   fill(0);
-  text("BACK",15,40);
+  text("BACK", 15, 40);
   fill(#07145D);
-  rect(0, 500, 750, 250);
+  rect(0, 450, 750, 300);
   fill(#C475EE);
-  text("Employees:", 10, 525);
+  text("Employees:", 10, 475);
   fill(#FBFB70);
-  rect(600,10,140,50);//money rectangle
+  rect(570, 10, 170, 60);//money rectangle
   int xcor=20;
   int i=0;
+  textSize(20);
   while (xcor<744) {
     fill(0);
-    rect(xcor, 550, 100, 180);
+    rect(xcor, 500, 100, 230);
     textSize(16);
     if (i<s.numEmployees()) {
-      fill(#FF0000);
+      fill(#0000FF);
       Employee temp=s.getEmployee(i);
-      text(temp.getName(), xcor+5, 570);
-      fill(#C0392B);
-      text("Satisfaction", xcor+5, 595);
+      text(temp.getName(), xcor+5, 520);
+      fill(#01F7FF);
+      text("Satisfaction", xcor+5, 545);
       fill(255);
-      text(temp.getSatisfaction(), xcor+5, 615);
+      text(temp.getSatisfaction(), xcor+5, 565);
+      fill(#FF0000);
+      textSize(24);
+      text("FIRE", xcor+5, 725);
+      //rect:(xcor+5,700,100,25)
       i++;
     }
     xcor+=122;
   }
 }
 
+void fireEmployeeButton(Store s) {
+  int x=20;
+  while (x<744) {
+    if (overButton(x+5, 700, 100, 25)) {
+      if (((x-20)/122)<s.numEmployees()) {
+        s.fire((x-20)/122);
+        return;
+      }
+    }
+    x+=122;
+  }
+}
+
 void runIndividualStore(Store s) {
+  if (s==null)
+    return;
   setupIndividualStore(s);
   fill(#030939);
-  text(dollarToStr(empire.getBudget()), 610, 40);
+  text(dollarToStr(empire.getBudget()), 610, 45);
+  if (s.numEmployees()==0) {
+    empire.addAction(2);
+    timeAction=0;
+    currStore=null;
+    //empire.closeStore(currStoreNum);
+    //state=5;
+  }
 }
 
 void checkStoreButtons() {
@@ -323,6 +376,7 @@ void checkStoreButtons() {
     if (overButton(xcor, ycor, 100, 100)) {
       state=4;
       currStore=empire.getStore(i);
+      currStoreNum=i;
       setupIndividualStore(currStore);
       return;
     }
@@ -333,4 +387,12 @@ void checkStoreButtons() {
     }
     i++;
   }
+}
+
+void storeClosed() {
+  background(#FF0000);
+  fill(255);
+  textSize(64);
+  text("STORE CLOSED", 100, 407);
+  storeClosedScreenStartTime++;
 }

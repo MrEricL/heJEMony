@@ -35,7 +35,7 @@ public class Store {
   }
 
   public void setDailyRevenue() {
-    _dailyRevenue= 6*(_customerSatisfaction*_priceBurger-_employees.size()*_salary-_operationsCost);
+    _dailyRevenue= 2*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
   }
 
   public double getDailyRevenue() {
@@ -44,6 +44,10 @@ public class Store {
 
   public void hire(Employee e) {
     _employees.add(e);
+  }
+  
+  public void fire(int i) {
+    _employees.remove(i);
   }
 
 
