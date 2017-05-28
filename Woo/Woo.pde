@@ -5,6 +5,7 @@ boolean hasBeenSetUp;
 
 PImage img;
 PImage emp; 
+PImage store;
 /* 
  0=starter scren
  
@@ -23,6 +24,11 @@ PImage emp;
 /**Actions
  1 = buy store
  2 = close store
+ **/
+ 
+ /** Sizes
+ Queue Bar = rect(36,87,676,83);
+ 
  **/
 
 
@@ -47,6 +53,10 @@ void setup() {
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
+
+    
+    
+    
   } else if (state==1) {
     setupMinigame();
   } else if (state==2) {
@@ -209,9 +219,9 @@ void printBudget() {
   color c1 = #ffff00;
   noStroke();
   fill(c1);
-  rect(340, 113, 139, 65);
+  rect(340, 113, 141, 65);
   fill(0);
-  textSize(30);
+  textSize(27);
   strokeWeight(1);
   text(dollarToStr(empire.getBudget()), 340, 150);
 
