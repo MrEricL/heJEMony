@@ -81,11 +81,12 @@ void draw() {
     runIndividualStore(currStore);
   } else if (state==5) {
     runEmpire();
-    if (storeClosedScreenStartTime<90)
+    if (storeClosedScreenStartTime<120)
       storeClosed();
     else {
       state=3;
       storeClosedScreenStartTime=0;
+      currStore=null;
     }
   }
   totalTime++;
@@ -122,7 +123,7 @@ void mouseClicked() {
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//buy new store
       if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
-    } else if (overButton(314, 690, 122, 75)){//go back
+    } else if (overButton(314, 690, 122, 75)) {//go back
       state=2;
       emp = loadImage ("main.png"); 
       image (emp, 0, 0);
@@ -200,10 +201,10 @@ void runEmpire() {
           storeCost*=1.25;
         } else if (action==2) {
           //System.out.println("yo");
-          currStore=null;
+          //currStore=null;
           empire.closeStore(currStoreNum);
           currStoreNum=0;
-          state=5;
+          //state=5;
         }
       }
     }
@@ -371,8 +372,9 @@ void runIndividualStore(Store s) {
   text(dollarToStr(empire.getBudget()), 610, 45);
   if (s.numEmployees()==0) {
     empire.addAction(2);
+    state=5;
     //timeAction=0;
-    currStore=null;
+    //currStore=null;
     //empire.closeStore(currStoreNum);
     //state=5;
   }
@@ -404,6 +406,6 @@ void storeClosed() {
   background(#FF0000);
   fill(255);
   textSize(64);
-  text("STORE CLOSED", 100, 407);
+    text(currStore.getName()+"\nCLOSED", 120, 300);
   storeClosedScreenStartTime++;
 }
