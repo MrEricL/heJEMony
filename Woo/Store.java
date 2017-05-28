@@ -8,6 +8,9 @@ public class Store {
   private double _priceBurger;
   private double _dailyRevenue;//for ease of calculations
   private double _operationsCost;//cost of operations per cycle
+  private String _name;
+  private static final String[] STORENAMES = {"Burger \nPalace", "Burger\nJoint", "Best\nBurger", "Speedy\nBurgers", "Top\nBurger", "Burger\nVillage", "Burger\nQueen", "Mc-\n-Dlanod", "Still\nCondo", "Blue\nCastle"};
+  private static int storePlace=9;
 
   public Store() {
     _employees=new ArrayList<Employee>();
@@ -16,12 +19,26 @@ public class Store {
     _salary=10.75;
     _priceBurger=7.50;
     _operationsCost=65;
+    int i=(int)(Math.random()*storePlace);
+    _name=STORENAMES[i];
+    String temp=STORENAMES[i];
+    STORENAMES[i]=STORENAMES[storePlace];
+    STORENAMES[storePlace]=temp;
+    storePlace--;
   }
-  
+
+  public void increaseStorePlace() {
+    storePlace++;
+  }
+
+  public String getName() {
+    return _name;
+  }
+
   public Employee getEmployee(int i) {
     return _employees.get(i);
   }
-  
+
   public int numEmployees() {
     return _employees.size();
   }
@@ -35,7 +52,7 @@ public class Store {
   }
 
   public void setDailyRevenue() {
-    _dailyRevenue= 2*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
+    _dailyRevenue= 4*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
   }
 
   public double getDailyRevenue() {
@@ -45,7 +62,7 @@ public class Store {
   public void hire(Employee e) {
     _employees.add(e);
   }
-  
+
   public void fire(int i) {
     _employees.remove(i);
   }
