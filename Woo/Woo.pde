@@ -25,8 +25,8 @@ PImage store;
  1 = buy store
  2 = close store
  **/
- 
- /** Sizes
+
+/** Sizes
  Queue Bar = rect(36,87,676,83);
  
  **/
@@ -53,10 +53,6 @@ void setup() {
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
-
-    
-    
-    
   } else if (state==1) {
     setupMinigame();
   } else if (state==2) {
@@ -118,27 +114,27 @@ void mouseClicked() {
   }
   //END MENU PLAY
   if (state==2) {
-    if (overButton(111, 314, 154, 168)) {
+    if (overButton(111, 314, 154, 168)) {//go to managing stores screen
       state=3;
     }
   }
   if (state==3) {
-    if (overButton(35, 650, 150, 75)) {
+    if (overButton(253, 544, 246, 120)&&empire.size()<10) {//buy new store
       if (empire.getBudget()-storeCost>0)
         empire.addAction(1);//1=buy store
-    } else if (overButton(50, 50, 100, 75)) {
+    } else if (overButton(314, 690, 122, 75)){//go back
       state=2;
       emp = loadImage ("main.png"); 
       image (emp, 0, 0);
-    } else {
+    } else {//check if you want to see an individual store
       checkStoreButtons();
     }
   }
   if (state==4) {
-    if (overButton(10, 10, 90, 60)) {
+    if (overButton(10, 10, 90, 60)) {//go back
       state=3;
     }
-    fireEmployeeButton(currStore);
+    fireEmployeeButton(currStore);//check if you fired an employee
   }
 }
 
@@ -183,7 +179,7 @@ void keyPressed() {
 void beginEmpire() {
   empire = new Empire();
   empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
-  storeCost*=1.1;
+  storeCost*=1.25;
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
 }
@@ -201,7 +197,7 @@ void runEmpire() {
         empire.popActions();
         if (action==1) {
           empire.buyStore(new Store(), storeCost);
-          storeCost*=1.1;
+          storeCost*=1.25;
         } else if (action==2) {
           //System.out.println("yo");
           currStore=null;
@@ -235,43 +231,46 @@ void printBudget() {
 }
 
 void storesScreen() {
+  store=loadImage("store.png");
+  image(store, 0, 0);
+  /*
   background(255);
-  fill(0);
-  rect(0, 0, 750, 150);
-  rect(0, 600, 750, 150);
-  int i=0;
-  int xcor=35;//of size 100 w/ 25 spacing
-  int ycor=200;
-  textSize(20);
-  while (i<10) {
-    fill(100);
-    rect(xcor, ycor, 100, 100);
-    xcor+=130;
-    if (i==4) {
-      ycor=350;
-      xcor=35;
-    }
-    i++;
-  }
-  fill(100);
-  //buy store rectangle
-  rect(35, 650, 150, 75);
-  //total money rectangle
-  fill(#FFD700);
-  rect(450, 50, 250, 75);
-  rect(50, 50, 100, 75);
-  textSize(20);
-  fill(0);
-  text("Buy Store", 45, 680);
-  text("Back", 55, 85);
-  //text("Store",35,555);
+   fill(0);
+   rect(0, 0, 750, 150);
+   rect(0, 600, 750, 150);
+   int i=0;
+   int xcor=35;//of size 100 w/ 25 spacing
+   int ycor=200;
+   textSize(20);
+   while (i<10) {
+   fill(100);
+   rect(xcor, ycor, 100, 100);
+   xcor+=130;
+   if (i==4) {
+   ycor=350;
+   xcor=35;
+   }
+   i++;
+   }
+   fill(100);
+   //buy store rectangle
+   rect(35, 650, 150, 75);
+   //total money rectangle
+   fill(#FFD700);
+   rect(450, 50, 250, 75);
+   rect(50, 50, 100, 75);
+   textSize(20);
+   fill(0);
+   text("Buy Store", 45, 680);
+   text("Back", 55, 85);
+   //text("Store",35,555);
+   */
 }
 
 void updateStoresScreen() {
-  //background(255);
   int i=0;
-  int xcor=35;//of size 100 w/ 25 spacing
-  int ycor=200;
+  int xcor=57;//of size 100 w/ 25 spacing
+  int ycor=225;
   storesScreen();
   textSize(20);
   while (i<10) {
@@ -279,24 +278,25 @@ void updateStoresScreen() {
     //rect(xcor, ycor, 100, 100);
     if (i<empire.size()) {
       fill(255);
-      text("Store "+(i+1), xcor+10, ycor+40);
+      text(empire.getStore(i).getName()/*"Store "+(i+1)*/, xcor+10, ycor+40);
     }
-    xcor+=130;
+    xcor+=133;
     if (i==4) {
-      ycor=350;
-      xcor=35;
+      ycor=375;
+      xcor=57;
     }
     i++;
   }
+  textSize(30);
   if (empire.getBudget()>=storeCost)
     fill(#00FF00);
   else
     fill(#FF0000);
-  text(dollarToStr(storeCost), 45, 700);
-  textSize(30);
+  text(dollarToStr(storeCost), 280, 650);
+  textSize(20);
   strokeWeight(1);
   fill(#0000FF);
-  text(dollarToStr(empire.getBudget()), 460, 95);
+  text(dollarToStr(empire.getBudget()).substring(1), 296, 80);
 }
 
 
@@ -355,6 +355,7 @@ void fireEmployeeButton(Store s) {
     if (overButton(x+5, 700, 100, 25)) {
       if (((x-20)/122)<s.numEmployees()) {
         s.fire((x-20)/122);
+        s.increaseStorePlace();
         return;
       }
     }
@@ -370,7 +371,7 @@ void runIndividualStore(Store s) {
   text(dollarToStr(empire.getBudget()), 610, 45);
   if (s.numEmployees()==0) {
     empire.addAction(2);
-    timeAction=0;
+    //timeAction=0;
     currStore=null;
     //empire.closeStore(currStoreNum);
     //state=5;
@@ -379,21 +380,21 @@ void runIndividualStore(Store s) {
 
 void checkStoreButtons() {
   int i=0;
-  int xcor=35;//of size 100 w/ 25 spacing
-  int ycor=200;
+  int xcor=57;//of size 100 w/ 25 spacing
+  int ycor=225;
   textSize(20);
   while (i<empire.size()) {
-    if (overButton(xcor, ycor, 100, 100)) {
+    if (overButton(xcor, ycor, 106, 107)) {
       state=4;
       currStore=empire.getStore(i);
       currStoreNum=i;
       setupIndividualStore(currStore);
       return;
     }
-    xcor+=130;
+    xcor+=133;
     if (i==4) {
-      ycor=350;
-      xcor=35;
+      ycor=375;
+      xcor=57;
     }
     i++;
   }
