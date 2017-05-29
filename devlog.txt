@@ -132,7 +132,7 @@ Matteo :: Screen for stores, firing employees, closing stores, fixed runEmpire t
 --------------------------------------------------------------
 Eric :: 
 Jenny ::
-Matteo :: implemented store.png, random name selector for stores, fixed bug of buying an eleventh store 
+Matteo :: implemented store.png, random name selector for stores, fixed bug of buying an eleventh store, worked on screen for individual store
 ==============================================================
 
 

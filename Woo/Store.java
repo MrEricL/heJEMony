@@ -91,4 +91,9 @@ public class Store {
   public void increaseOperationsCost() {
     _operationsCost+=.2;
   }
+  
+  public double getOperationsCost() {
+    return _operationsCost;
+  }
+  
 }
