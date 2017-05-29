@@ -4,7 +4,7 @@ public class Employee {
 
   public Employee(String s) {
     _name=s;
-    _satisfaction=5;
+    _satisfaction=6;
   }
 
   public String getName() {
@@ -13,5 +13,9 @@ public class Employee {
 
   public int getSatisfaction() {
     return _satisfaction;
+  }
+  
+  public void decreaseSatisfaction() {
+    _satisfaction--;
   }
 }

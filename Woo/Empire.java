@@ -73,7 +73,7 @@ public class Empire {
     _budget+=d;
   }
 
-  public void runOperations() {
+  public void runOperations(int tNow) {
     for (Store s : _stores) {
       s.setDailyRevenue();
       modifyBudget(s.getDailyRevenue());
@@ -82,6 +82,10 @@ public class Empire {
         s.modCustomerSatisfaction(1);
       } else {
         s.modCustomerSatisfaction(-2);
+      }
+      //System.out.println(tNow-s.getCreationTime());
+      if ((tNow-s.getCreationTime())%1800<10) {
+        s.lowerEmployeeSatisfaction();
       }
     }
   }

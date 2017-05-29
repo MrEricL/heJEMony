@@ -9,10 +9,11 @@ public class Store {
   private double _dailyRevenue;//for ease of calculations
   private double _operationsCost;//cost of operations per cycle
   private String _name;
+  private int _timeCreation;
   private static final String[] STORENAMES = {"Burger \nPalace", "Burger\nJoint", "Best\nBurger", "Speedy\nBurgers", "Top\nBurger", "Burger\nVillage", "Burger\nQueen", "Mc-\n-Dlanod", "Still\nCondo", "Blue\nCastle"};
   private static int storePlace=9;
 
-  public Store() {
+  public Store(int time) {
     _employees=new ArrayList<Employee>();
     hire(new Employee("Bob"));
     _customerSatisfaction=10;
@@ -24,6 +25,7 @@ public class Store {
     String temp=STORENAMES[i];
     STORENAMES[i]=STORENAMES[storePlace];
     STORENAMES[storePlace]=temp;
+    _timeCreation=time;
     storePlace--;
   }
 
@@ -96,4 +98,13 @@ public class Store {
     return _operationsCost;
   }
   
+  public int getCreationTime() {
+    return _timeCreation;
+  }
+  
+  public void lowerEmployeeSatisfaction() {
+    for (Employee e:_employees) {
+      e.decreaseSatisfaction();
+    }
+  }
 }

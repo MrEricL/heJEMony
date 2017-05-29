@@ -135,6 +135,9 @@ void mouseClicked() {
     if (overButton(10, 10, 90, 60)) {//go back
       state=3;
     }
+    else if (overButton(10,395,240,45)&&currStore.numEmployees()<6) {
+      currStore.hire(new Employee("Eric"));
+    }
     fireEmployeeButton(currStore);//check if you fired an employee
   }
 }
@@ -179,7 +182,7 @@ void keyPressed() {
 
 void beginEmpire() {
   empire = new Empire();
-  empire.buyStore(new Store(), storeCost);//you begin with one store, cost $50k
+  empire.buyStore(new Store(totalTime), storeCost);//you begin with one store, cost $50k
   storeCost*=1.25;
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
@@ -187,7 +190,7 @@ void beginEmpire() {
 
 void runEmpire() {
   if (totalTime%10==0) {
-    empire.runOperations();
+    empire.runOperations(totalTime);
 
     if (!empire.isEmpty()) { 
       timeAction++;
@@ -197,7 +200,7 @@ void runEmpire() {
         timeAction=0;
         empire.popActions();
         if (action==1) {
-          empire.buyStore(new Store(), storeCost);
+          empire.buyStore(new Store(totalTime), storeCost);
           storeCost*=1.25;
         } else if (action==2) {
           //System.out.println("yo");
@@ -320,18 +323,22 @@ void setupIndividualStore(Store s) {
   textSize(24);
   fill(#FBFB70);
   rect(10, 10, 90, 60);
-  rect(550, 210, 195, 60);//money rectangle
-  rect(550, 300, 195, 120);
+  rect(10, 190, 195, 60);//money rectangle
+  rect(10, 260, 195, 120);//operations cost
   rect(36, 87, 676, 83);
   fill(0);
   text("BACK", 15, 50);
   fill(#07145D);
-  rect(0, 450, 750, 300);
+  rect(0, 450, 750, 300);//big bottom rectangle
   fill(#C475EE);
   text("Employees:", 10, 475);
   fill(#0000FF);
-  text("Daily", 555, 325);
-  text("Operations Cost", 555, 355);
+  text("Daily", 15, 285);
+  text("Operations Cost", 15, 315);
+  fill(#00FF00);//lime, hire box
+  rect(10,395,240,45);//hire rectangle
+  fill(0);
+  text("Hire New Employee",15,430);
   int xcor=20;
   int i=0;
   textSize(20);
@@ -377,8 +384,8 @@ void runIndividualStore(Store s) {
   setupIndividualStore(s);
   fill(#030939);
   textSize(24);
-  text(dollarToStr(empire.getBudget()), 560, 245);
-  text(dollarToStr(s.getOperationsCost()), 560, 400);
+  text(dollarToStr(empire.getBudget()), 20, 225);
+  text(dollarToStr(s.getOperationsCost()), 20, 365);
   if (s.numEmployees()==0) {
     empire.addAction(2);
     state=5;
