@@ -314,17 +314,24 @@ public String dollarToStr(double d) {
 
 void setupIndividualStore(Store s) {
   background(#85C1E9);
+  fill(#0000FF);
+  textSize(28);
+  text(s.getName(), 330, 34);
   textSize(24);
-  fill(#00FF00);
+  fill(#FBFB70);
   rect(10, 10, 90, 60);
+  rect(550, 210, 195, 60);//money rectangle
+  rect(550, 300, 195, 120);
+  rect(36, 87, 676, 83);
   fill(0);
-  text("BACK", 15, 40);
+  text("BACK", 15, 50);
   fill(#07145D);
   rect(0, 450, 750, 300);
   fill(#C475EE);
   text("Employees:", 10, 475);
-  fill(#FBFB70);
-  rect(570, 10, 170, 60);//money rectangle
+  fill(#0000FF);
+  text("Daily", 555, 325);
+  text("Operations Cost", 555, 355);
   int xcor=20;
   int i=0;
   textSize(20);
@@ -369,7 +376,9 @@ void runIndividualStore(Store s) {
     return;
   setupIndividualStore(s);
   fill(#030939);
-  text(dollarToStr(empire.getBudget()), 610, 45);
+  textSize(24);
+  text(dollarToStr(empire.getBudget()), 560, 245);
+  text(dollarToStr(s.getOperationsCost()), 560, 400);
   if (s.numEmployees()==0) {
     empire.addAction(2);
     state=5;
@@ -406,6 +415,6 @@ void storeClosed() {
   background(#FF0000);
   fill(255);
   textSize(64);
-    text(currStore.getName()+"\nCLOSED", 120, 300);
+  text(currStore.getName()+"\nCLOSED", 120, 300);
   storeClosedScreenStartTime++;
 }
