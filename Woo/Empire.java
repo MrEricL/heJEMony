@@ -9,7 +9,9 @@ public class Empire {
     private ALQueue<Integer> _actionsList; //better to have codes + modifiers for different actions 
     //buy store = 1
     private Deque<String> _milestones;//will be used as a stack
-    private int _patties; 
+    private int _patties;
+    private ALHeap<Farm> _farmHeap;
+    private ArrayList<Farm> _availableFarms;
 
 
 
@@ -17,6 +19,8 @@ public class Empire {
 	_stores=new ArrayList<Store>(0); 
 	_budget=100000;
 	_actionsList = new ALQueue <Integer> ();
+	_availableFarms=new ArrayList<Farm>();
+	buildFarmHeap();
     }
 
     public Store getStore(int i) {
@@ -115,7 +119,23 @@ public class Empire {
 
 
 
-public ALQueue<Integer> retQ(){
-  return _actionsList;
-}
+    public ALQueue<Integer> retQ(){
+	return _actionsList;
+    }
+
+    private void buildFarmHeap() {
+	_farmHeap=new ALHeap<Farm>();
+	_farmHeap.add(new Farm(.5, "Steroid Patties"));
+	_farmHeap.add(new Farm(.6, "Happy Patties"));
+	_farmHeap.add(new Farm(.7, "Sunshine Farms"));
+	_farmHeap.add(new Farm(.8, "Organic Patties"));
+	_farmHeap.add(new Farm(.9, "Farm-Fresh Patties"));
+	_farmHeap.add(new Farm(1, "Grass-fed Farm"));
+    }
+
+    public accessNewFarm() {
+	_availableFarms.add(_farmHeap.removeMin());
+    }
+
+
 }
