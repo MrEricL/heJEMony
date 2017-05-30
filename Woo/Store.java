@@ -15,11 +15,12 @@ public class Store {
 
   public Store(int time) {
     _employees=new ArrayList<Employee>();
-    hire(new Employee("Bob"));
+    hire(new Employee("Bob"));//first employee
     _customerSatisfaction=10;
     _salary=10.75;
     _priceBurger=7.50;
     _operationsCost=65;
+    //get random name
     int i=(int)(Math.random()*storePlace);
     _name=STORENAMES[i];
     String temp=STORENAMES[i];
@@ -53,7 +54,7 @@ public class Store {
     _employeeSatisfaction+=i;
   }
 
-  public void setDailyRevenue() {
+  public void setDailyRevenue() {//arbitrary mathemtical formula that seems to work for making cash
     _dailyRevenue= 4*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
   }
 
@@ -102,7 +103,7 @@ public class Store {
     return _timeCreation;
   }
   
-  public void lowerEmployeeSatisfaction() {
+  public void lowerEmployeeSatisfaction() {//employees get less happy function
     for (Employee e:_employees) {
       e.decreaseSatisfaction();
     }

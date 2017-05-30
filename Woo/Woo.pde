@@ -1,15 +1,18 @@
 import java.util.ArrayList; 
 //****state variables
-int state=0;
-boolean hasBeenSetUp;
+int state=0;//state begins at starter screen
+boolean hasBeenSetUp;//variable for whether the minigame has been setup, which is important for the draw function which will either setup minigame or run it
 
+
+//images for loading certain screens
 PImage img;
 PImage emp; 
 PImage store;
 PImage farm;
-
 PImage miniStore;
-/* 
+
+
+/*  STATES
  0=starter scren
  
  1= minigame
@@ -27,7 +30,7 @@ PImage miniStore;
  ****state variables*/
 
 /**Actions
- 1 = buy store
+ 10 = buy store
  2 = close store
  **/
 
@@ -39,22 +42,23 @@ PImage miniStore;
 
 /*********EMPIRE VARIABLES************/
 Empire empire;
-int totalTime;
-int timeAction; //for each action
+int totalTime; //totalTime, in 1/60 of a second
+int timeAction; //for each action in queue of actions
 
-double storeCost=50000; //store cost * random multiplier
+double storeCost=50000; //store cost, has multiplier
 
-Store currStore;
-int currStoreNum;
+Store currStore; //currentStore when looking at them, for function ease
+int currStoreNum; //for removing store (index in list)
 
-int storeClosedScreenStartTime=0;
+int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 seconds when a store is closed
 
 /*********EMPIRE VARIABLES************/
 
 
 void setup() {
-  state = 6; 
+  state = 6; //state is meant to be zero this is for testing purposes
   size(750, 750);
+  //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
@@ -65,29 +69,35 @@ void setup() {
   } else if (state==3) {
     storesScreen();
   } else if (state==6) {
+    beginEmpire();
+    empire.accessNewFarm();
+    empire.accessNewFarm();
+    empire.accessNewFarm();
+    empire.accessNewFarm();
+    empire.accessNewFarm();
+    empire.accessNewFarm();
     setupFarm();
   }
 }
 
 void draw() {
-
-  if (state==2) {
+  if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
-  } else if (state==1 && !hasBeenSetUp) {
+  } else if (state==1 && !hasBeenSetUp) {//if minigame hasnt been set up, load it
     setupMinigame();
     hasBeenSetUp=true;
-  } else if (state==1 && hasBeenSetUp) {
+  } else if (state==1 && hasBeenSetUp) {//if minigame has been set up, run minigame
     drawMinigame();
-  } else if (state==0) {
+  } else if (state==0) {//start screen
     drawMenu();
-  } else if (state==3) {
+  } else if (state==3) {//screen with every store 
     runEmpire();
     updateStoresScreen();
-  } else if (state==4) {
+  } else if (state==4) {//looking at individual store
     runEmpire();
     runIndividualStore(currStore);
-  } else if (state==5) {
+  } else if (state==5) {//STORE CLOSED screen
     runEmpire();
     if (storeClosedScreenStartTime<120)
       storeClosed();
@@ -96,9 +106,10 @@ void draw() {
       storeClosedScreenStartTime=0;
       currStore=null;
     }
+  } else if (state==6) {//farm, to be implemented
   }
   totalTime++;
-  //timeAction=0;
+  //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
   else if (state==3) printQ(1);
 }
@@ -109,8 +120,8 @@ void mouseClicked() {
     if (currOrder.size()<9) {
       buttons();
     }
-    checkOrder();
-    if (overButton1(35, 530, 135, 50)) {
+    checkOrder();//checks if order done correctly
+    if (overButton(35, 530, 135, 50)) {//if you win you can move on
       state=2;
       beginEmpire();
     }
@@ -118,18 +129,18 @@ void mouseClicked() {
 
   //IF YOU CLICK PLAY BUTTON ON MENU
   if (state==0) {
-    if (overButton1(282, 369, 185, 105)) {
+    if (overButton(282, 369, 185, 105)) {
       state=1;
       setupMinigame();
     }
   }
   //END MENU PLAY
-  if (state==2) {
+  if (state==2) {//empire screen
     if (overButton(111, 314, 154, 168)) {//go to managing stores screen
       state=3;
     }
   }
-  if (state==3) {
+  if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//buy new store
       if (empire.getBudget()-storeCost>0)
         empire.addAction(10);//1=buy store
@@ -144,8 +155,7 @@ void mouseClicked() {
   if (state==4) {
     if (overButton(10, 10, 90, 60)) {//go back
       state=3;
-    }
-    else if (overButton(10,395,240,45)&&currStore.numEmployees()<6) {
+    } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {
       currStore.hire(new Employee("Eric"));
     }
     fireEmployeeButton(currStore);//check if you fired an employee
@@ -162,6 +172,8 @@ void drawMenu() {
 
   rect(282, 369, 185, 105);
 }
+
+/*for buttons
 boolean overButton1(int x, int y, int width, int height) {
   if (mouseX >= x && mouseX <= x+width && 
     mouseY >= y && mouseY <= y+height) {
@@ -169,17 +181,17 @@ boolean overButton1(int x, int y, int width, int height) {
   } else {
     return false;
   }
-}
+}*/
 // END MENU STUFF
 
 
-
+// for buttons
 boolean overButton(int x, int y, int width, int height) {
   return (mouseX >= x && mouseX <= x+width && mouseY >= y && mouseY <= y+height);
 }
 
-//cheat code -- press a
-//cheat code -- press s
+//cheat code -- press a to end minigame
+//cheat code -- press s for 100k
 void keyPressed() {
   if (key==97) currOrdNum=11;
   if (key==115) empire.setBudget(100000);
@@ -190,6 +202,7 @@ void keyPressed() {
 
 //EMPIRE STUFF
 
+//instantiates new empire and gives you a store
 void beginEmpire() {
   empire = new Empire();
   empire.buyStore(new Store(totalTime), storeCost);//you begin with one store, cost $50k
@@ -198,14 +211,15 @@ void beginEmpire() {
   image (emp, 0, 0);
 }
 
+//runs every 1/6 of a second
 void runEmpire() {
   if (totalTime%10==0) {
     empire.runOperations(totalTime);
-
+//this runs the actionQueue
     if (!empire.isEmpty()) { 
       timeAction++;
       Integer action = empire.peekActions();
-      //System.out.println(action);
+      //each if statement is for specific actions
       if (action == timeAction) {
         timeAction=0;
         empire.popActions();
@@ -223,7 +237,7 @@ void runEmpire() {
     }
   }
 }
-
+//prints budget on main menu
 void printBudget() {
 
   color c1 = #ffff00;
@@ -244,43 +258,13 @@ void printBudget() {
   rect(500, 535, 154, 168);
 }
 
+//loads screen for individual stores
 void storesScreen() {
   store=loadImage("store.png");
   image(store, 0, 0);
-  /*
-  background(255);
-   fill(0);
-   rect(0, 0, 750, 150);
-   rect(0, 600, 750, 150);
-   int i=0;
-   int xcor=35;//of size 100 w/ 25 spacing
-   int ycor=200;
-   textSize(20);
-   while (i<10) {
-   fill(100);
-   rect(xcor, ycor, 100, 100);
-   xcor+=130;
-   if (i==4) {
-   ycor=350;
-   xcor=35;
-   }
-   i++;
-   }
-   fill(100);
-   //buy store rectangle
-   rect(35, 650, 150, 75);
-   //total money rectangle
-   fill(#FFD700);
-   rect(450, 50, 250, 75);
-   rect(50, 50, 100, 75);
-   textSize(20);
-   fill(0);
-   text("Buy Store", 45, 680);
-   text("Back", 55, 85);
-   //text("Store",35,555);
-   */
 }
 
+//updates screen for individual stores
 void updateStoresScreen() {
   int i=0;
   int xcor=57;//of size 100 w/ 25 spacing
@@ -302,6 +286,7 @@ void updateStoresScreen() {
     i++;
   }
   textSize(30);
+  //determines color on whether u have enough guap
   if (empire.getBudget()>=storeCost)
     fill(#00FF00);
   else
@@ -316,6 +301,7 @@ void updateStoresScreen() {
 
 //END EMPIRE
 
+//converts dollar double to string w $
 public String dollarToStr(double d) {
   String s = ""+d;
   s=s.substring(0, s.indexOf(".")+2);
@@ -325,6 +311,7 @@ public String dollarToStr(double d) {
   return "$"+s;
 }
 
+//sets up screen for individual stores, employees, etc.
 void setupIndividualStore(Store s) {
   background(#85C1E9);
   fill(#0000FF);
@@ -332,10 +319,10 @@ void setupIndividualStore(Store s) {
   text(s.getName(), 330, 34);
   textSize(24);
   fill(#FBFB70);
-  rect(10, 10, 90, 60);
+  rect(10, 10, 90, 60);//back rectangle
   rect(10, 190, 195, 60);//money rectangle
   rect(10, 260, 195, 120);//operations cost
-  rect(36, 87, 676, 83);
+  rect(36, 87, 676, 83);//actions queue
   fill(0);
   text("BACK", 15, 50);
   fill(#07145D);
@@ -346,13 +333,13 @@ void setupIndividualStore(Store s) {
   text("Daily", 15, 285);
   text("Operations Cost", 15, 315);
   fill(#00FF00);//lime, hire box
-  rect(10,395,240,45);//hire rectangle
+  rect(10, 395, 240, 45);//hire rectangle
   fill(0);
-  text("Hire New Employee",15,430);
+  text("Hire New Employee", 15, 430);
   int xcor=20;
   int i=0;
   textSize(20);
-  while (xcor<744) {
+  while (xcor<744) {//prints employees
     fill(0);
     rect(xcor, 500, 100, 230);
     textSize(16);
@@ -373,7 +360,7 @@ void setupIndividualStore(Store s) {
     xcor+=122;
   }
 }
-
+//checks if an employee needs to be fired
 void fireEmployeeButton(Store s) {
   int x=20;
   while (x<744) {
@@ -387,7 +374,7 @@ void fireEmployeeButton(Store s) {
     x+=122;
   }
 }
-
+//running a store. if it has no employees it is closed
 void runIndividualStore(Store s) {
   if (s==null)
     return;
@@ -396,7 +383,7 @@ void runIndividualStore(Store s) {
   textSize(24);
   text(dollarToStr(empire.getBudget()), 20, 225);
   text(dollarToStr(s.getOperationsCost()), 20, 365);
-  if (s.numEmployees()==0) {
+  if (s.numEmployees()==0) {//if no employees, enqueue an action to actionlist to close it. can only close one store at a time
     empire.addAction(2);
     state=5;
     //timeAction=0;
@@ -406,6 +393,7 @@ void runIndividualStore(Store s) {
   }
 }
 
+//checks all the buttons of individual stores
 void checkStoreButtons() {
   int i=0;
   int xcor=57;//of size 100 w/ 25 spacing
@@ -428,6 +416,7 @@ void checkStoreButtons() {
   }
 }
 
+//closed store s creen
 void storeClosed() {
   background(#FF0000);
   fill(255);
@@ -437,8 +426,8 @@ void storeClosed() {
 }
 
 
-
-void printQ(int s){
+//printing action queue
+void printQ(int s) {
   int offset=0;
   int ycor;
   //  rect(36,199,676,83);
@@ -446,38 +435,53 @@ void printQ(int s){
   //0 = store
   if (s==0) ycor=199;
   else ycor=87;
-  
-  
-  
+
+
+
   ALQueue<Integer> Q = empire.retQ();
-  
-  for (int i=0; i < Q.size();i++){
+
+  for (int i=0; i < Q.size(); i++) {
     int temp = Q.getN(i);
-    if (temp==10){
+    if (temp==10) {
       miniStore = loadImage("miniStore.png");
       image(miniStore, 36+offset, ycor);   
       offset+=100;
     }
-  }   
+  }
 }
 
+//sets up farm screen
 void setupFarm() {
   farm = loadImage("farm.png");
-  image(farm,0,0);
+  image(farm, 0, 0);
   int xcor=60;
   int ycor=300;
-  fill(#03480C);
-  for (int i=0;i<6;i++) {
-    rect(xcor,ycor,140,190);
+  for (int i=0; i<6; i++) {
+    fill(#12490C);
+    rect(xcor, ycor, 160, 190);
+    if (i<empire.numUnlockedFarms()) {
+      textSize(18);
+      if (empire.getFarm(i).isChosen())
+        fill(#00FF00);
+      else
+        fill(#FF0000);
+      text(empire.getFarm(i).getName(), xcor+10, ycor+18);
+      fill(#FFFB00);
+      text((int)(empire.getFarm(i).getPercentRealMeat()*100)+"% Real Meat", xcor+10, ycor+50);
+      text("$"+empire.getFarm(i).getCostPerPatty()+" per patty", xcor+10, ycor+75);
+      fill(#00FF00);
+      text("SELECT FARM", xcor+10, ycor+170);
+    }
     xcor+=240;
     if (i==2) {
       xcor=60;
       ycor=500;
     }
   }
+  fill(#00FF00);
 }
 
 void drawFarm() {
   setupFarm();
+  text(dollarToStr(empire.getBudget()).substring(1), 307, 76);
 }
-  

@@ -31,8 +31,8 @@ wow we so BOSS bc...
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-blah blah pesky bug...
-maybe some of these will move into the Obs.Ovrcm section...
+-can only remove on store at a time, if queue has multiple it will bug out
+
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,9 +142,9 @@ Matteo :: worked on employee satisfaction decreasing with time if they don't get
 ==============================================================
 2017-05-30
 --------------------------------------------------------------
-Eric :: 
-Jenny :: 
-Matteo ::
+Eric :: worked on farm screen
+Jenny :: worked on farm screen
+Matteo :: implemented farmHeap so that you can access new farms and farm screen, comments
 ==============================================================
 
 
