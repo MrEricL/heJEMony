@@ -94,7 +94,8 @@ void draw() {
   }
   totalTime++;
   //timeAction=0;
-  printQ();
+  if (state==2) printQ(0);
+  else if (state==3) printQ(1);
 }
 
 //SAME METHOD FOR ALL
@@ -203,7 +204,7 @@ void runEmpire() {
       if (action == timeAction) {
         timeAction=0;
         empire.popActions();
-        if (action==100) {
+        if (action==10) {
           empire.buyStore(new Store(totalTime), storeCost);
           storeCost*=1.25;
         } else if (action==2) {
@@ -432,19 +433,25 @@ void storeClosed() {
 
 
 
-void printQ(){
+void printQ(int s){
   int offset=0;
-  ALQueue<Integer> Q= empire.retQ();
+  int ycor;
+  //  rect(36,199,676,83);
+  // 87
+  //0 = store
+  if (s==0) ycor=199;
+  else ycor=87;
+  
+  
+  
+  ALQueue<Integer> Q = empire.retQ();
   
   for (int i=0; i < Q.size();i++){
     int temp = Q.getN(i);
     if (temp==10){
       miniStore = loadImage("miniStore.png");
-      image(miniStore, 36+offset, 87);   
+      image(miniStore, 36+offset, ycor);   
       offset+=100;
     }
-  }
-
-  
-  
+  }   
 }
