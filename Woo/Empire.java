@@ -133,7 +133,7 @@ public class Empire {
 	_farmHeap.add(new Farm(1, "Grass-fed Farm"));
     }
 
-    public accessNewFarm() {
+    public void accessNewFarm() {
 	_availableFarms.add(_farmHeap.removeMin());
     }
 

@@ -6,6 +6,7 @@ boolean hasBeenSetUp;
 PImage img;
 PImage emp; 
 PImage store;
+PImage farm;
 
 PImage miniStore;
 /* 
@@ -20,6 +21,8 @@ PImage miniStore;
  4=single store
  
  5=store closed screen
+ 
+ 6=farm
  ...
  ****state variables*/
 
@@ -50,7 +53,7 @@ int storeClosedScreenStartTime=0;
 
 
 void setup() {
-  state = 2; 
+  state = 6; 
   size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
@@ -61,6 +64,8 @@ void setup() {
     beginEmpire();
   } else if (state==3) {
     storesScreen();
+  } else if (state==6) {
+    setupFarm();
   }
 }
 
@@ -455,3 +460,24 @@ void printQ(int s){
     }
   }   
 }
+
+void setupFarm() {
+  farm = loadImage("farm.png");
+  image(farm,0,0);
+  int xcor=60;
+  int ycor=300;
+  fill(#03480C);
+  for (int i=0;i<6;i++) {
+    rect(xcor,ycor,140,190);
+    xcor+=240;
+    if (i==2) {
+      xcor=60;
+      ycor=500;
+    }
+  }
+}
+
+void drawFarm() {
+  setupFarm();
+}
+  
