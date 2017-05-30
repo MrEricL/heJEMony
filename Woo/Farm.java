@@ -2,6 +2,7 @@ public class Farm implements Comparable{
     
     private double percentRealMeat;
     private String _name;
+    private boolean chosen;
 
     public Farm () {
 	percentRealMeat=.8;
@@ -33,6 +34,14 @@ public class Farm implements Comparable{
 	    return 0;
 	else
 	    return 1;
+    }
+    
+    public void toggleChosen() {
+      chosen=!chosen;
+    }
+    
+    public boolean isChosen() {
+      return chosen;
     }
 }
 

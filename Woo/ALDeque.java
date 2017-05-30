@@ -1,8 +1,4 @@
-//Team Jerms
-//Jeffrey Weng, Matteo Wong, Ricky Chen
-//APCS2 - pd3
-//LAB#02 -- All Hands on Deque!
-//2017-03-31
+
 
 
 
