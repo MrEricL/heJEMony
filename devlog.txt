@@ -128,11 +128,24 @@ Eric :: created stores.png
 Jenny :: README.md
 Matteo :: Screen for stores, firing employees, closing stores, fixed runEmpire timeAction function. before it was always set to 0 so the empire never ran anything other than buying stores.
 ==============================================================
-2017-05-27
+2017-05-28
 --------------------------------------------------------------
 Eric :: 
 Jenny ::
 Matteo :: implemented store.png, random name selector for stores, fixed bug of buying an eleventh store, worked on screen for individual store
 ==============================================================
+2017-05-29
+--------------------------------------------------------------
+Eric :: printing queue picture for the stores
+Jenny :: basics of Farm.java 
+Matteo :: worked on employee satisfaction decreasing with time if they don't get a raise
+==============================================================
+2017-05-30
+--------------------------------------------------------------
+Eric :: 
+Jenny :: 
+Matteo ::
+==============================================================
+
 
 
