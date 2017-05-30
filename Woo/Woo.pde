@@ -6,6 +6,8 @@ boolean hasBeenSetUp;
 PImage img;
 PImage emp; 
 PImage store;
+
+PImage miniStore;
 /* 
  0=starter scren
  
@@ -48,7 +50,7 @@ int storeClosedScreenStartTime=0;
 
 
 void setup() {
-  //state = 5; 
+  state = 2; 
   size(750, 750);
   if (state==0) {
     img = loadImage("hegemony splash art 2.png");
@@ -63,6 +65,7 @@ void setup() {
 }
 
 void draw() {
+
   if (state==2) {
     runEmpire();
     printBudget();
@@ -91,6 +94,7 @@ void draw() {
   }
   totalTime++;
   //timeAction=0;
+  printQ();
 }
 
 //SAME METHOD FOR ALL
@@ -122,7 +126,7 @@ void mouseClicked() {
   if (state==3) {
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//buy new store
       if (empire.getBudget()-storeCost>0)
-        empire.addAction(1);//1=buy store
+        empire.addAction(10);//1=buy store
     } else if (overButton(314, 690, 122, 75)) {//go back
       state=2;
       emp = loadImage ("main.png"); 
@@ -199,7 +203,7 @@ void runEmpire() {
       if (action == timeAction) {
         timeAction=0;
         empire.popActions();
-        if (action==1) {
+        if (action==100) {
           empire.buyStore(new Store(totalTime), storeCost);
           storeCost*=1.25;
         } else if (action==2) {
@@ -424,4 +428,23 @@ void storeClosed() {
   textSize(64);
   text(currStore.getName()+"\nCLOSED", 120, 300);
   storeClosedScreenStartTime++;
+}
+
+
+
+void printQ(){
+  int offset=0;
+  ALQueue<Integer> Q= empire.retQ();
+  
+  for (int i=0; i < Q.size();i++){
+    int temp = Q.getN(i);
+    if (temp==10){
+      miniStore = loadImage("miniStore.png");
+      image(miniStore, 36+offset, 87);   
+      offset+=100;
+    }
+  }
+
+  
+  
 }

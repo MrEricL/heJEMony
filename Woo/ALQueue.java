@@ -55,14 +55,16 @@ public class ALQueue<T> implements Queue<T>
     {
 	return _queue.isEmpty();
     }//O(1)
-
+public T getN(int s) {
+  return _queue.get(s);
+}
 
     public String toString() 
     {
 	return "front->" + _queue.toString() + "<-end";
     }//O(n)
 
-
+  
     //main method for testing
     public static void main( String[] args ) 
     {

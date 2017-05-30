@@ -50,7 +50,7 @@ public class Empire {
     }
     //adds to action list
     public void queueBuyStore() {
-	_actionsList.enqueue(1);
+	_actionsList.enqueue(100);
     }
 
     public Integer peekActions() {
@@ -112,4 +112,10 @@ public class Empire {
 	}
 	return false;
     } 
+
+
+
+public ALQueue<Integer> retQ(){
+  return _actionsList;
+}
 }
