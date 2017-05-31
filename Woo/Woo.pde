@@ -216,6 +216,7 @@ void beginEmpire() {
   storeCost*=1.25;
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
+  empire.accessNewFarm(); 
 }
 
 //runs every 1/6 of a second
@@ -235,6 +236,9 @@ void runEmpire() {
         if (action==10) {
           empire.buyStore(new Store(totalTime), storeCost);
           storeCost*=1.25;
+          if (empire.numUnlockedFarms() < 6) { 
+          empire.accessNewFarm(); 
+          }
         } else if (action==2) {
           //System.out.println("yo");
           //currStore=null;
@@ -246,6 +250,7 @@ void runEmpire() {
     }
   }
 }
+
 //prints budget on main menu
 void printBudget() {
 
@@ -463,6 +468,12 @@ void printQ(int s) {
 void setupFarm() {
   farm = loadImage("farm.png");
   image(farm, 0, 0);
+  fill(#FF0000); 
+  rect (170, 200, 250, 50); 
+  rect (36, 200, 120, 50); 
+  fill(0); 
+  text("Buy patties", 40, 240); 
+  text("Patties available: " + empire.getPatties(), 175, 240); 
   int xcor=60;
   int ycor=300;
   for (int i=0; i<6; i++) {
@@ -504,6 +515,9 @@ void farmButtons() {
     state=2;
     return;
   }
+  if (overButton (36, 200, 120, 50)) { 
+    empire.buyPatties (1000, empire.getSelectedFarm()); 
+  }
   int xcor=60;
   int ycor=300;
   for (int i=0; i<6; i++) {
@@ -511,6 +525,7 @@ void farmButtons() {
       if (overButton(xcor, ycor+145, 160, 45)) {
         empire.getFarm(i).toggleChosen();
         empire.toggleAllOtherFarmsChosen(i);
+        empire.setSelectedFarm (empire.getFarm(i)); 
         break;
       }
     }
