@@ -49,6 +49,10 @@ public class Store {
   public void modCustomerSatisfaction(int i) {
     _customerSatisfaction+=i;
   }
+  
+  public int getCustomerSatisfaction () { 
+    return _customerSatisfaction; 
+  } 
 
   public void modEmployeeSatisfaction(int i) {
     _employeeSatisfaction+=i;
