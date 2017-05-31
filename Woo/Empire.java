@@ -12,6 +12,7 @@ public class Empire {
   private int _patties;
   private ALHeap<Farm> _farmHeap;
   private ArrayList<Farm> _availableFarms;
+  private Farm selectedFarm; 
 
 
   //constructor, starts you with 100k
@@ -120,6 +121,10 @@ public class Empire {
     }
     return false;
   } 
+  
+  public int getPatties () { 
+    return _patties; 
+  } 
 
 
 
@@ -158,4 +163,11 @@ public class Empire {
         _availableFarms.get(j).toggleChosen();
     }
   }
+  public void setSelectedFarm(Farm farm) { 
+    selectedFarm = farm; 
+  } 
+  
+  public Farm getSelectedFarm () { 
+    return selectedFarm; 
+  } 
 }
