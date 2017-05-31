@@ -23,6 +23,7 @@ Every time you do something it will be added to a queue and take a certain amoun
 
 
 ### Instructions
+'>$ cd Woo'
 1. Open Woo.pde
 2. Launch Woo.pde
 3. Press play. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing "Finish" button when they are complete
