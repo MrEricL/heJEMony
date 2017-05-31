@@ -56,7 +56,7 @@ int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 secon
 
 
 void setup() {
-  state = 6; //state is meant to be zero this is for testing purposes
+  state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
@@ -68,7 +68,7 @@ void setup() {
     beginEmpire();
   } else if (state==3) {
     storesScreen();
-  } else if (state==6) {
+  } /*else if (state==6) {
     beginEmpire();
     empire.accessNewFarm();
     empire.accessNewFarm();
@@ -77,7 +77,7 @@ void setup() {
     empire.accessNewFarm();
     empire.accessNewFarm();
     setupFarm();
-  }
+  }*/
 }
 
 void draw() {
@@ -107,11 +107,13 @@ void draw() {
       currStore=null;
     }
   } else if (state==6) {//farm, to be implemented
+    runEmpire();
+    drawFarm();
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
-  else if (state==3) printQ(1);
+  else if (state==3 || state==6) printQ(1);
 }
 
 //SAME METHOD FOR ALL
@@ -138,6 +140,8 @@ void mouseClicked() {
   if (state==2) {//empire screen
     if (overButton(111, 314, 154, 168)) {//go to managing stores screen
       state=3;
+    } else if (overButton(111, 535, 154, 168)) {//go to farm
+      state=6;
     }
   }
   if (state==3) {//individual stores
@@ -160,6 +164,9 @@ void mouseClicked() {
     }
     fireEmployeeButton(currStore);//check if you fired an employee
   }
+  if (state==6) {
+    farmButtons();
+  }
 }
 
 //END MOUSE CLICK
@@ -174,14 +181,14 @@ void drawMenu() {
 }
 
 /*for buttons
-boolean overButton1(int x, int y, int width, int height) {
-  if (mouseX >= x && mouseX <= x+width && 
-    mouseY >= y && mouseY <= y+height) {
-    return true;
-  } else {
-    return false;
-  }
-}*/
+ boolean overButton1(int x, int y, int width, int height) {
+ if (mouseX >= x && mouseX <= x+width && 
+ mouseY >= y && mouseY <= y+height) {
+ return true;
+ } else {
+ return false;
+ }
+ }*/
 // END MENU STUFF
 
 
@@ -213,9 +220,11 @@ void beginEmpire() {
 
 //runs every 1/6 of a second
 void runEmpire() {
+  emp = loadImage ("main.png"); 
+  image (emp, 0, 0);
   if (totalTime%10==0) {
     empire.runOperations(totalTime);
-//this runs the actionQueue
+    //this runs the actionQueue
     if (!empire.isEmpty()) { 
       timeAction++;
       Integer action = empire.peekActions();
@@ -479,9 +488,36 @@ void setupFarm() {
     }
   }
   fill(#00FF00);
+  textSize(20);
+  rect(15,15,60,30);
+  fill(#0000FF);
+  text("BACK",20,40);
 }
 
 void drawFarm() {
   setupFarm();
   text(dollarToStr(empire.getBudget()).substring(1), 307, 76);
+}
+
+void farmButtons() {
+  if (overButton(15,15,60,30)) {
+    state=2;
+    return;
+  }
+  int xcor=60;
+  int ycor=300;
+  for (int i=0; i<6; i++) {
+    if (i<empire.numUnlockedFarms()) {
+      if (overButton(xcor, ycor+145, 160, 45)) {
+        empire.getFarm(i).toggleChosen();
+        empire.toggleAllOtherFarmsChosen(i);
+        break;
+      }
+    }
+    xcor+=240;
+    if (i==2) {
+      xcor=60;
+      ycor=500;
+    }
+  }
 }
