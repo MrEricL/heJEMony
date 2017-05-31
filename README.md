@@ -3,6 +3,8 @@
 
 ## Burger Hegemony
 
+![Image of burger](https://github.com/MrEricL/heJEMony/blob/master/Woo/data/hegemony%20splash%20art%202.png)
+
 ### Project User Description
 Burger Hegemony is a diner dash game in which you pretend to work at, and eventually manage, a fast food burger chain. You start as a cook, making burgers, and work your way up to a manager. Then you will be able to buy stores and have to manage things like operations costs, customer happiness, and employee happiness, to establish a burger hegemony.
 
@@ -23,9 +25,8 @@ Every time you do something it will be added to a queue and take a certain amoun
 
 
 ### Instructions
-'>$ cd Woo'
-1. Open Woo.pde
-2. Launch Woo.pde
+1. `>$ cd Woo`
+2. `>$ processing Woo.pde`
 3. Press play. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing "Finish" button when they are complete
 4. When you have completed all 10 orders, press "Finish Game" and you will be brought to the Empire!
 5. Here you can buy new stores, or click on a store to see more detailed information about it.
