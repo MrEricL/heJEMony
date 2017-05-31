@@ -108,43 +108,43 @@ Matteo :: empire, MVP flow chart
 --------------------------------------------------------------
 Eric :: empire MVP, added cheat code, worked on actionsList queue and how that will work/be processed by the draw() function
 Jenny :: empire MVP, processing money, how much you make
-Matteo :: empire MVP, fixed burger timing giving you $0 
+Matteo :: empire MVP, you have a store and it earns money, made it not earn too fast fixed burger timing giving you $0 
 ==============================================================
 2017-05-25
 --------------------------------------------------------------
 Eric :: empire MVP - buying stores. graphics for farm
 Jenny :: empire MPV - buying stores, storesScreen functions
-Matteo :: empire MVP - buying stores, storesScreen functions, made it so you earn money faster, worked on screen for buying stores so that it looks good and money is printed nicely, with dollar sign and two floating point values only
+Matteo :: empire MVP - buying stores w/buy button and empire.buyStore(), storesScreen functions (setup and run), made it so you earn money faster, worked on screen for buying stores so that it looks good and money is printed nicely, with dollar sign and two floating point values only
 ==============================================================
 2017-05-26
 --------------------------------------------------------------
-Eric :: screen for farm, home screen
-Jenny :: Screen for Stores
-Matteo :: Screen for Stores, you can click on individual stores and see employees etc
+Eric :: screen for farm, home screen, implemented them with loadImage()
+Jenny :: Screen for Stores, same as Eric, added operationsCost to stores
+Matteo :: Screen for Stores, you can click on individual stores and see employees etc by using overButton() and making screen load employee names
 ==============================================================
 2017-05-27
 --------------------------------------------------------------
 Eric :: created stores.png 
 Jenny :: README.md
-Matteo :: Screen for stores, firing employees, closing stores, fixed runEmpire timeAction function. before it was always set to 0 so the empire never ran anything other than buying stores.
+Matteo :: Screen for stores, firing employees w fireEmployeeButton() method, closing stores by implemeneting a state of 5 which has that screen, fixed runEmpire timeAction function. before it was always set to 0 so the empire never ran anything other than buying stores.
 ==============================================================
 2017-05-28
 --------------------------------------------------------------
 Eric :: 
 Jenny ::
-Matteo :: implemented store.png, random name selector for stores, fixed bug of buying an eleventh store, worked on screen for individual store
+Matteo :: implemented store.png page (updated coordinates of overButton() method calls in mouseClicked()), random name selector for stores by adding a final variable ArrayList<String> to Store, fixed bug of buying an eleventh store, worked on screen for individual store
 ==============================================================
 2017-05-29
 --------------------------------------------------------------
-Eric :: printing queue picture for the stores
-Jenny :: basics of Farm.java 
-Matteo :: worked on employee satisfaction decreasing with time if they don't get a raise
+Eric :: printing queue picture for the stores, printQ() method
+Jenny :: wrote Farm.java class, constructor, figured out variables to use
+Matteo :: worked on employee satisfaction decreasing with time if they don't get a raise, so functions like Employee.decreaseSatisfaction()
 ==============================================================
 2017-05-30
 --------------------------------------------------------------
-Eric :: worked on farm screen
-Jenny :: worked on farm screen
-Matteo :: implemented farmHeap so that you can access new farms and farm screen, comments
+Eric :: worked on farm screen and home screen looking nicer, updated UMLs, fixed printQ() to work in loading screen
+Jenny :: worked on farm screen aesthetics, implementing farmHeap
+Matteo :: implemented farmHeap so that you can access new farms as you progress by using a heapSort,  and actual coding of farm screen with setupFarm(), commented files
 ==============================================================
 
 
