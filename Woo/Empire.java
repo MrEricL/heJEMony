@@ -50,13 +50,13 @@ public class Empire {
     _totalCustomerSatisfaction+=i;
   }
 
-  public void buyStore(Store s, double d) {
+  public void buyStore(Store s) {
     _stores.add(s);
-    _budget-=d;
   }
   //adds to action list
-  public void queueBuyStore() {
-    _actionsList.enqueue(100);
+  public void queueBuyStore(double d) {
+    _actionsList.enqueue(10);
+    _budget-=d;
   }
 
   //use action queue begins
@@ -106,6 +106,7 @@ public class Empire {
 
   public void addAction(int i) {
     _actionsList.enqueue(i);
+   
   }
 
 

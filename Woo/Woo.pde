@@ -46,6 +46,7 @@ int totalTime; //totalTime, in 1/60 of a second
 int timeAction; //for each action in queue of actions
 
 double storeCost=50000; //store cost, has multiplier
+double storeSell=10000; //store selling
 
 Store currStore; //currentStore when looking at them, for function ease
 int currStoreNum; //for removing store (index in list)
@@ -99,8 +100,11 @@ void draw() {
     runIndividualStore(currStore);
   } else if (state==5) {//STORE CLOSED screen
     runEmpire();
-    if (storeClosedScreenStartTime<120)
+    if (storeClosedScreenStartTime<120){
       storeClosed();
+      empire.setBudget(empire.getBudget()+storeSell);
+      storeSell*=1.1;
+    }
     else {
       state=3;
       storeClosedScreenStartTime=0;
@@ -145,9 +149,11 @@ void mouseClicked() {
     }
   }
   if (state==3) {//individual stores
-    if (overButton(253, 544, 246, 120)&&empire.size()<10) {//buy new store
-      if (empire.getBudget()-storeCost>0)
-        empire.addAction(10);//1=buy store
+    if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
+      if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6){
+        empire.queueBuyStore(storeCost);//1=buy store
+        storeCost*=1.25;
+      }
     } else if (overButton(314, 690, 122, 75)) {//go back
       state=2;
       emp = loadImage ("main.png"); 
@@ -212,7 +218,7 @@ void keyPressed() {
 //instantiates new empire and gives you a store
 void beginEmpire() {
   empire = new Empire();
-  empire.buyStore(new Store(totalTime), storeCost);//you begin with one store, cost $50k
+  empire.buyStore(new Store(totalTime));//you begin with one store, cost $50k
   storeCost*=1.25;
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
@@ -234,8 +240,8 @@ void runEmpire() {
         timeAction=0;
         empire.popActions();
         if (action==10) {
-          empire.buyStore(new Store(totalTime), storeCost);
-          storeCost*=1.25;
+          empire.buyStore(new Store(totalTime));
+
           if (empire.numUnlockedFarms() < 6) { 
           empire.accessNewFarm(); 
           }
@@ -259,7 +265,7 @@ void printBudget() {
   fill(c1);
   rect(340, 113, 141, 65);
   fill(0);
-  textSize(27);
+  textSize(23);
   strokeWeight(1);
   text(dollarToStr(empire.getBudget()), 340, 150);
 
