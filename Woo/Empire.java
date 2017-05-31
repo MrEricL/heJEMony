@@ -96,6 +96,7 @@ public class Empire {
       if ((tNow-s.getCreationTime())%1800<10) {
         s.lowerEmployeeSatisfaction();
       }
+      //patties - customerSatisfaction
     }
   }
 
