@@ -14,7 +14,7 @@ public class Empire {
   private ArrayList<Farm> _availableFarms;
 
 
-//constructor, starts you with 100k
+  //constructor, starts you with 100k
   public Empire() {
     _stores=new ArrayList<Store>(0); 
     _budget=100000;
@@ -23,11 +23,11 @@ public class Empire {
     buildFarmHeap();
   }
 
-//takes int of store in list to access
+  //takes int of store in list to access
   public Store getStore(int i) {
     return _stores.get(i);
   }
-//takes int of store in list to close
+  //takes int of store in list to close
   public void closeStore(int i) {
     _stores.remove(i);
   }
@@ -58,7 +58,7 @@ public class Empire {
     _actionsList.enqueue(100);
   }
 
-//use action queue begins
+  //use action queue begins
   public Integer peekActions() {
     return _actionsList.peekFront();
   }
@@ -80,7 +80,7 @@ public class Empire {
     _budget+=d;
   }
 
-//runs operations, uses time to determine whether employees should get less happy
+  //runs operations, uses time to determine whether employees should get less happy
   public void runOperations(int tNow) {
     for (Store s : _stores) {
       s.setDailyRevenue();
@@ -127,7 +127,7 @@ public class Empire {
     return _actionsList;
   }
 
-//builds a farm heap, will use heapsort so you can access them one at a time starting w the least quality
+  //builds a farm heap, will use heapsort so you can access them one at a time starting w the least quality
   private void buildFarmHeap() {
     _farmHeap=new ALHeap<Farm>();
     _farmHeap.add(new Farm(.5, "Steroid Patties"));
@@ -137,7 +137,7 @@ public class Empire {
     _farmHeap.add(new Farm(.9, "Grass-fed Cows"));
     _farmHeap.add(new Farm(1, "Freerange Cattle"));
   }
-//basically heapsort granting you access to a new farm
+  //basically heapsort granting you access to a new farm
   public void accessNewFarm() {
     _availableFarms.add(_farmHeap.removeMin());
   }
@@ -145,8 +145,17 @@ public class Empire {
   public int numUnlockedFarms() {
     return _availableFarms.size();
   }
-  
+
   public Farm getFarm(int i) {
     return _availableFarms.get(i);
+  }
+
+  public void toggleAllOtherFarmsChosen(int i) {
+    for (int j=0; j<_availableFarms.size(); j++) {
+      if (j==i)
+        continue;
+      else if (_availableFarms.get(j).isChosen())
+        _availableFarms.get(j).toggleChosen();
+    }
   }
 }
