@@ -140,7 +140,7 @@ void buttons() {
 
 
 //used for managing the thing
-String printOrders(int linelength){
+void printOrders(int linelength){
   String currOrder=_orders.peekLast().toString();
   String ret="";
   int index=0;
@@ -157,7 +157,7 @@ String printOrders(int linelength){
     int len = retA[index].length()+2; //length plus comma and space
     if (linespacing+len > linelength){
       //shift the thing + add comma
-      linespacing=0
+      linespacing=0;
     }
     else {
       //put the text

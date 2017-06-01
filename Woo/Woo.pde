@@ -466,7 +466,7 @@ void printQ(int s) {
     int temp = Q.getN(i);
     if (temp==10) {
       miniStore = loadImage("miniStore.png");
-      image(miniStore, 36+offset, ycor);   
+      image(miniStore, 70+offset, ycor);   
       offset+=100;
     }
   }
