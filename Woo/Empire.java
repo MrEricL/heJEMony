@@ -10,6 +10,7 @@ public class Empire {
   //buy store = 1
   private Deque<String> _milestones;//will be used as a stack
   private int _patties;
+  private int[] _pattiesArray; //0=.5, 1=.6,2=.7,3=.8,4=.9,5=1.0
   private ALHeap<Farm> _farmHeap;
   private ArrayList<Farm> _availableFarms;
   private Farm selectedFarm; 
@@ -22,6 +23,9 @@ public class Empire {
     _actionsList = new ALQueue <Integer> ();
     _availableFarms=new ArrayList<Farm>();
     buildFarmHeap();
+    _patties=1000;
+    _pattiesArray=new int[6];
+    _pattiesArray[0]=1000;
   }
 
   //takes int of store in list to access
@@ -96,6 +100,7 @@ public class Empire {
       if ((tNow-s.getCreationTime())%1800<10) {
         s.lowerEmployeeSatisfaction();
       }
+      usePatties(s);
       //patties - customerSatisfaction
     }
   }
@@ -106,12 +111,27 @@ public class Empire {
 
   public void addAction(int i) {
     _actionsList.enqueue(i);
-   
   }
 
 
   public void setBudget(double s) {
     _budget+=s;
+  }
+  //goes through cheapest to most expensive stores and uses patties               
+  public void usePatties(Store s) {
+    int p=s.getCustomerSatisfaction();
+    int i=0;
+    while (p>0) {//traverse _pattiesArray                                       
+      if (_pattiesArray[i]>=p) {
+        _pattiesArray[i]-=p;
+        _patties-=p;
+        p=0;
+      } else {
+        p-=_pattiesArray[i];
+        _patties-=_pattiesArray[i];
+        _pattiesArray[i]=0;
+      }
+    }
   }
 
   public boolean buyPatties (int numPatty, Farm farm) {
@@ -119,13 +139,14 @@ public class Empire {
     if (_budget >= cost) {
       _budget -= cost;
       _patties += numPatty;
+      _pattiesArray[(int)((farm.getPercentRealMeat()-.5)*10)]+=numPatty;
       return true;
     }
     return false;
   } 
-  
+
   public int getPatties () { 
-    return _patties; 
+    return _patties;
   } 
 
 
@@ -166,10 +187,10 @@ public class Empire {
     }
   }
   public void setSelectedFarm(Farm farm) { 
-    selectedFarm = farm; 
+    selectedFarm = farm;
   } 
-  
+
   public Farm getSelectedFarm () { 
-    return selectedFarm; 
-  } 
+    return selectedFarm;
+  }
 }

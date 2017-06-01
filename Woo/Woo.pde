@@ -223,6 +223,8 @@ void beginEmpire() {
   emp = loadImage ("main.png"); 
   image (emp, 0, 0);
   empire.accessNewFarm(); 
+  empire.getFarm(0).toggleChosen();
+  empire.setSelectedFarm(empire.getFarm(0));
 }
 
 //runs every 1/6 of a second
@@ -528,7 +530,7 @@ void farmButtons() {
   int ycor=300;
   for (int i=0; i<6; i++) {
     if (i<empire.numUnlockedFarms()) {
-      if (overButton(xcor, ycor+145, 160, 45)) {
+      if (overButton(xcor, ycor+145, 160, 45)&&!empire.getFarm(i).isChosen()) {
         empire.getFarm(i).toggleChosen();
         empire.toggleAllOtherFarmsChosen(i);
         empire.setSelectedFarm (empire.getFarm(i)); 
