@@ -88,6 +88,8 @@ public class Empire {
   //runs operations, uses time to determine whether employees should get less happy
   public void runOperations(int tNow) {
     for (Store s : _stores) {
+      if (_patties==0)
+        return;
       s.setDailyRevenue(selectedFarm);
       modifyBudget(s.getDailyRevenue());
       s.increaseOperationsCost();
@@ -105,7 +107,7 @@ public class Empire {
     }
   }
 
-//num stores
+  //num stores
   public int size() {
     return _stores.size();
   }

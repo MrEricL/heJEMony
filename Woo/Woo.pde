@@ -84,7 +84,7 @@ void setup() {
 }
 
 void draw() {
-  System.out.println(totalTime);
+  //System.out.println(totalTime);
   if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
@@ -533,7 +533,7 @@ void drawFarm() {
       text(empire.getFarm(i).getName(), xcor+10, ycor+18);
       fill(#FFFB00);
       text((int)(empire.getFarm(i).getPercentRealMeat()*100)+"% Real Meat", xcor+10, ycor+50);
-      text("$"+empire.getFarm(i).getCostPerPatty()+" per patty", xcor+10, ycor+75);
+      text(dollarToStr(empire.getFarm(i).getCostPerPatty())+" per patty", xcor+10, ycor+75);
       fill(#00FF00);
       text("SELECT FARM", xcor+10, ycor+170);
     }
@@ -557,7 +557,8 @@ void farmButtons() {
   int ycor=300;
   int i=0;
   while (i<empire.numUnlockedFarms()) {
-    if (overButton(xcor, ycor+145, 160, 45)&&!empire.getFarm(i).isChosen()) {
+    if (overButton(xcor, ycor+145, 160, 45) && !empire.getFarm(i).isChosen() ) {
+      System.out.println(empire.getFarm(i).getName());
       empire.getFarm(i).toggleChosen();
       empire.toggleAllOtherFarmsChosen(i);
       empire.setSelectedFarm (empire.getFarm(i)); 
