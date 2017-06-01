@@ -122,7 +122,7 @@ public class Empire {
   public void usePatties(Store s) {
     int p=s.getCustomerSatisfaction();
     int i=0;
-    while (p>0) {//traverse _pattiesArray                                       
+    while (p>0&&i<6) {//traverse _pattiesArray                                       
       if (_pattiesArray[i]>=p) {
         _pattiesArray[i]-=p;
         _patties-=p;
@@ -132,6 +132,7 @@ public class Empire {
         _patties-=_pattiesArray[i];
         _pattiesArray[i]=0;
       }
+      i++;
     }
   }
 

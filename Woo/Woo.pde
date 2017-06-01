@@ -62,11 +62,17 @@ int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 secon
 
 
 void setup() {
+  img=loadImage("hegemony splash art 2.png");
+  emp=loadImage("main.png");
+  store=loadImage("store.png");
+  farm=loadImage("farm.png");
+  miniStore=loadImage("miniStore.png");
+  hire=loadImage("hire.png");
   state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
-    img = loadImage("hegemony splash art 2.png");
+    //img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
   } else if (state==1) {
     setupMinigame();
@@ -78,8 +84,7 @@ void setup() {
 }
 
 void draw() {
-//System.out.println(totalTime);
-System.out.println(state);
+  System.out.println(totalTime);
   if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
@@ -139,21 +144,20 @@ void mouseClicked() {
   }
 
   //IF YOU CLICK PLAY BUTTON ON MENU
-  if (state==0) {
+  else if (state==0) {
     if (overButton(282, 369, 185, 105)) {
       state=1;
       setupMinigame();
     }
   }
   //END MENU PLAY
-  if (state==2) {//empire screen
+  else if (state==2) {//empire screen
     if (overButton(111, 314, 154, 168)) {//go to managing stores screen
       state=3;
     } else if (overButton(111, 535, 154, 168)) {//go to farm
       state=6;
     }
-  }
-  if (state==3) {//individual stores
+  } else if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
       if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6) {
         empire.queueBuyStore(storeCost);//10=buy store
@@ -162,13 +166,12 @@ void mouseClicked() {
       }
     } else if (overButton(314, 690, 122, 75)) {//go back
       state=2;
-      emp = loadImage ("main.png"); 
+      //emp = loadImage ("main.png"); 
       image (emp, 0, 0);
     } else {//check if you want to see an individual store
       checkStoreButtons();
     }
-  }
-  if (state==4) {
+  } else if (state==4) {
     if (overButton(10, 10, 90, 60)) {//go back
       state=3;
     } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {//hire employee
@@ -176,8 +179,7 @@ void mouseClicked() {
       //currStore.hire(new Employee("Eric"));
     }
     fireEmployeeButton(currStore);//check if you fired an employee
-  }
-  if (state==6) {
+  } else if (state==6) {
     farmButtons();
   }
 }
@@ -189,20 +191,8 @@ void mouseClicked() {
 void drawMenu() {
   stroke(0);
   noFill();
-
   rect(282, 369, 185, 105);
 }
-
-/*for buttons
- boolean overButton1(int x, int y, int width, int height) {
- if (mouseX >= x && mouseX <= x+width && 
- mouseY >= y && mouseY <= y+height) {
- return true;
- } else {
- return false;
- }
- }*/
-// END MENU STUFF
 
 
 // for buttons
@@ -227,7 +217,7 @@ void beginEmpire() {
   empire = new Empire();
   empire.buyStore(new Store(totalTime));//you begin with one store, cost $50k
   storeCost*=1.25;
-  emp = loadImage ("main.png"); 
+  //emp = loadImage ("main.png"); 
   image (emp, 0, 0);
   empire.accessNewFarm(); 
   empire.getFarm(0).toggleChosen();
@@ -236,7 +226,7 @@ void beginEmpire() {
 
 //runs every 1/6 of a second
 void runEmpire() {
-  emp = loadImage ("main.png"); 
+  //emp = loadImage ("main.png"); 
   image (emp, 0, 0);
   if (totalTime%10==0) {
     empire.runOperations(totalTime);
@@ -291,7 +281,7 @@ void printBudget() {
 
 //loads screen for individual stores
 void storesScreen() {
-  store=loadImage("store.png");
+  //store=loadImage("store.png");
   image(store, 0, 0);
 }
 
@@ -319,7 +309,7 @@ void updateStoresScreen() {
   textSize(30);
   //determines color on whether u have enough guap
   if (empire.getBudget()>=storeCost)
-  fill(#00FF00);
+    fill(#00FF00);
   else
     fill(#FF0000);
   text(dollarToStr(storeCost), 280, 650);
@@ -408,7 +398,7 @@ void fireEmployeeButton(Store s) {
 //running a store. if it has no employees it is closed
 void runIndividualStore(Store s) {
   if (s==null)
-  return;
+    return;
   setupIndividualStore(s);
   fill(#030939);
   textSize(24);
@@ -467,33 +457,27 @@ void printQ(int s) {
   if (s==0) ycor=199;
   else ycor=87;
 
-
-
   ALQueue<Integer> Q = empire.retQ();
 
   for (int i=0; i < Q.size(); i++) {
     int temp = Q.getN(i);
     if (temp==10) {
-      miniStore = loadImage("miniStore.png");
-      image(miniStore, 70+offset, ycor);   
-      offset+=100;
-    }
-    if (temp==7) {
+      //miniStore = loadImage("miniStore.png");
+      image(miniStore, 70+offset, ycor);
+    } else if (temp==7) {
       fill(#FF0000);
       rect(70+offset, ycor, 90, 83);
-      offset+=100;
+    } else if (temp==5) {
+      //hire = loadImage("hire.png");
+      image(hire, 70+offset, ycor);
     }
-    if (temp==5) {
-      hire = loadImage("hire.png");
-      image(hire,70+offset,ycor);
-      offset+=100;
-    }
+    offset+=100;
   }
 }
 
 //sets up farm screen
 void setupFarm() {
-  farm = loadImage("farm.png");
+  //farm = loadImage("farm.png");
   image(farm, 0, 0);
   fill(#FF0000); 
   rect (170, 200, 250, 50); 
@@ -503,13 +487,47 @@ void setupFarm() {
   text("Patties available: " + empire.getPatties(), 175, 240); 
   int xcor=60;
   int ycor=300;
+  /*
+  for (int i=0; i<6; i++) {
+   fill(#12490C);
+   rect(xcor, ycor, 160, 190);
+   if (i<empire.numUnlockedFarms()) {
+   textSize(18);
+   if (empire.getFarm(i).isChosen())
+   fill(#00FF00);
+   else
+   fill(#FF0000);
+   text(empire.getFarm(i).getName(), xcor+10, ycor+18);
+   fill(#FFFB00);
+   text((int)(empire.getFarm(i).getPercentRealMeat()*100)+"% Real Meat", xcor+10, ycor+50);
+   text("$"+empire.getFarm(i).getCostPerPatty()+" per patty", xcor+10, ycor+75);
+   fill(#00FF00);
+   text("SELECT FARM", xcor+10, ycor+170);
+   }
+   xcor+=240;
+   if (i==2) {
+   xcor=60;
+   ycor=500;
+   }
+   }*/
+  fill(#00FF00);
+  textSize(20);
+  rect(15, 15, 60, 30);
+  fill(#0000FF);
+  text("BACK", 20, 40);
+}
+
+void drawFarm() {
+  setupFarm();
+  int xcor=60;
+  int ycor=300;
   for (int i=0; i<6; i++) {
     fill(#12490C);
     rect(xcor, ycor, 160, 190);
     if (i<empire.numUnlockedFarms()) {
       textSize(18);
       if (empire.getFarm(i).isChosen())
-      fill(#00FF00);
+        fill(#00FF00);
       else
         fill(#FF0000);
       text(empire.getFarm(i).getName(), xcor+10, ycor+18);
@@ -525,15 +543,6 @@ void setupFarm() {
       ycor=500;
     }
   }
-  fill(#00FF00);
-  textSize(20);
-  rect(15, 15, 60, 30);
-  fill(#0000FF);
-  text("BACK", 20, 40);
-}
-
-void drawFarm() {
-  setupFarm();
   text(dollarToStr(empire.getBudget()).substring(1), 307, 76);
 }
 
@@ -541,25 +550,24 @@ void farmButtons() {
   if (overButton(15, 15, 60, 30)) {
     state=2;
     return;
-  }
-  if (overButton (36, 200, 120, 50)) { 
+  } else if (overButton (36, 200, 120, 50)) { 
     empire.buyPatties (1000, empire.getSelectedFarm());
   }
   int xcor=60;
   int ycor=300;
-  for (int i=0; i<6; i++) {
-    if (i<empire.numUnlockedFarms()) {
-      if (overButton(xcor, ycor+145, 160, 45)&&!empire.getFarm(i).isChosen()) {
-        empire.getFarm(i).toggleChosen();
-        empire.toggleAllOtherFarmsChosen(i);
-        empire.setSelectedFarm (empire.getFarm(i)); 
-        break;
-      }
+  int i=0;
+  while (i<empire.numUnlockedFarms()) {
+    if (overButton(xcor, ycor+145, 160, 45)&&!empire.getFarm(i).isChosen()) {
+      empire.getFarm(i).toggleChosen();
+      empire.toggleAllOtherFarmsChosen(i);
+      empire.setSelectedFarm (empire.getFarm(i)); 
+      break;
     }
-    xcor+=240;
-    if (i==2) {
-      xcor=60;
-      ycor=500;
-    }
+    i++;
+  }
+  xcor+=240;
+  if (i==2) {
+    xcor=60;
+    ycor=500;
   }
 }
