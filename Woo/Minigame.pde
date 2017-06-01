@@ -138,19 +138,51 @@ void buttons() {
   }
 }
 
+
+//used for managing the thing
+String printOrders(int linelength){
+  String currOrder=_orders.peekLast().toString();
+  String ret="";
+  int index=0;
+  while (index < currOrder.length()){
+    if (currOrder.substring(index,index+1).equals(" "));
+    else ret+=currOrder.substring(index,index+1);
+    index+=1;
+  }
+  String[] retA = ret.split(",");
+  index=0;
+  int linespacing=0; //how many
+  textSize(10);
+  while (index < retA.length){
+    int len = retA[index].length()+2; //length plus comma and space
+    if (linespacing+len > linelength){
+      //shift the thing + add comma
+      linespacing=0
+    }
+    else {
+      //put the text
+    }
+     
+  }
+
+}
+
+///
+
 void loadOrders() {
   if (miniTime%600==0 && miniTime<6000) {
     //holds place in the substring
     fill(0);
     int place=0;
     _orders.addLast(new Order(4)); 
-    textSize(12);
+    textSize(10);
     //gets most recent order
     String currOrder=_orders.peekLast().toString();
     //text is added in subsets of 18 characters so it doesnt go off the screen
     text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 620, y);
     place+=18;
     y+=20;
+    System.out.println(currOrder);
     while (place<currOrder.length()-18) {
       text(currOrder.substring(place, place+18), 620, y);
       place+=18;
