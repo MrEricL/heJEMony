@@ -105,6 +105,7 @@ public class Empire {
     }
   }
 
+//num stores
   public int size() {
     return _stores.size();
   }

@@ -10,6 +10,7 @@ PImage emp;
 PImage store;
 PImage farm;
 PImage miniStore;
+PImage hire;
 
 
 /*  STATES
@@ -26,12 +27,16 @@ PImage miniStore;
  5=store closed screen
  
  6=farm
+ 
+ 7=victory
+ 
+ 8=lose
  ...
  ****state variables*/
 
 /**Actions
  10 = buy store
- 2 = close store
+ 7 = close store
  **/
 
 /** Sizes
@@ -69,19 +74,12 @@ void setup() {
     beginEmpire();
   } else if (state==3) {
     storesScreen();
-  } /*else if (state==6) {
-    beginEmpire();
-    empire.accessNewFarm();
-    empire.accessNewFarm();
-    empire.accessNewFarm();
-    empire.accessNewFarm();
-    empire.accessNewFarm();
-    empire.accessNewFarm();
-    setupFarm();
-  }*/
+  }
 }
 
 void draw() {
+//System.out.println(totalTime);
+System.out.println(state);
   if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
@@ -100,12 +98,11 @@ void draw() {
     runIndividualStore(currStore);
   } else if (state==5) {//STORE CLOSED screen
     runEmpire();
-    if (storeClosedScreenStartTime<120){
+    if (storeClosedScreenStartTime<18) {
       storeClosed();
-      empire.setBudget(empire.getBudget()+storeSell);
+      empire.setBudget(storeSell);
       storeSell*=1.1;
-    }
-    else {
+    } else {
       state=3;
       storeClosedScreenStartTime=0;
       currStore=null;
@@ -113,11 +110,19 @@ void draw() {
   } else if (state==6) {//farm, to be implemented
     runEmpire();
     drawFarm();
+  } else if (state==7) {
+    background(#00FF00);
+    textSize(100);
+    text("YOU\nWIN!", 300, 500);
+  } else if (empire.size()==10 && empire.getBudget()>=9999999) {//victory
+    state=7;
+  } else if (empire.size()==0 || empire.getBudget()<-100000) {//lose
+    state=8;
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
-  else if (state==3 || state==6) printQ(1);
+  else if (state==3 || state==6 || state==4) printQ(1);
 }
 
 //SAME METHOD FOR ALL
@@ -150,8 +155,9 @@ void mouseClicked() {
   }
   if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
-      if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6){
-        empire.queueBuyStore(storeCost);//1=buy store
+      if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6) {
+        empire.queueBuyStore(storeCost);//10=buy store
+        System.out.println("queued store");
         storeCost*=1.25;
       }
     } else if (overButton(314, 690, 122, 75)) {//go back
@@ -165,8 +171,9 @@ void mouseClicked() {
   if (state==4) {
     if (overButton(10, 10, 90, 60)) {//go back
       state=3;
-    } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {
-      currStore.hire(new Employee("Eric"));
+    } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {//hire employee
+      empire.addAction(5);
+      //currStore.hire(new Employee("Eric"));
     }
     fireEmployeeButton(currStore);//check if you fired an employee
   }
@@ -245,14 +252,16 @@ void runEmpire() {
           empire.buyStore(new Store(totalTime));
 
           if (empire.numUnlockedFarms() < 6) { 
-          empire.accessNewFarm(); 
+            empire.accessNewFarm();
           }
-        } else if (action==2) {
+        } else if (action==7) {
           //System.out.println("yo");
           //currStore=null;
           empire.closeStore(currStoreNum);
           currStoreNum=0;
           //state=5;
+        } else if (action==5) {
+          currStore.hire(new Employee("Eric"));
         }
       }
     }
@@ -310,7 +319,7 @@ void updateStoresScreen() {
   textSize(30);
   //determines color on whether u have enough guap
   if (empire.getBudget()>=storeCost)
-    fill(#00FF00);
+  fill(#00FF00);
   else
     fill(#FF0000);
   text(dollarToStr(storeCost), 280, 650);
@@ -399,14 +408,14 @@ void fireEmployeeButton(Store s) {
 //running a store. if it has no employees it is closed
 void runIndividualStore(Store s) {
   if (s==null)
-    return;
+  return;
   setupIndividualStore(s);
   fill(#030939);
   textSize(24);
   text(dollarToStr(empire.getBudget()), 20, 225);
   text(dollarToStr(s.getOperationsCost()), 20, 365);
   if (s.numEmployees()==0) {//if no employees, enqueue an action to actionlist to close it. can only close one store at a time
-    empire.addAction(2);
+    empire.addAction(7);
     state=5;
     //timeAction=0;
     //currStore=null;
@@ -469,6 +478,16 @@ void printQ(int s) {
       image(miniStore, 70+offset, ycor);   
       offset+=100;
     }
+    if (temp==7) {
+      fill(#FF0000);
+      rect(70+offset, ycor, 90, 83);
+      offset+=100;
+    }
+    if (temp==5) {
+      hire = loadImage("hire.png");
+      image(hire,70+offset,ycor);
+      offset+=100;
+    }
   }
 }
 
@@ -490,7 +509,7 @@ void setupFarm() {
     if (i<empire.numUnlockedFarms()) {
       textSize(18);
       if (empire.getFarm(i).isChosen())
-        fill(#00FF00);
+      fill(#00FF00);
       else
         fill(#FF0000);
       text(empire.getFarm(i).getName(), xcor+10, ycor+18);
@@ -508,9 +527,9 @@ void setupFarm() {
   }
   fill(#00FF00);
   textSize(20);
-  rect(15,15,60,30);
+  rect(15, 15, 60, 30);
   fill(#0000FF);
-  text("BACK",20,40);
+  text("BACK", 20, 40);
 }
 
 void drawFarm() {
@@ -519,12 +538,12 @@ void drawFarm() {
 }
 
 void farmButtons() {
-  if (overButton(15,15,60,30)) {
+  if (overButton(15, 15, 60, 30)) {
     state=2;
     return;
   }
   if (overButton (36, 200, 120, 50)) { 
-    empire.buyPatties (1000, empire.getSelectedFarm()); 
+    empire.buyPatties (1000, empire.getSelectedFarm());
   }
   int xcor=60;
   int ycor=300;
