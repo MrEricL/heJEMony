@@ -88,7 +88,7 @@ public class Empire {
   //runs operations, uses time to determine whether employees should get less happy
   public void runOperations(int tNow) {
     for (Store s : _stores) {
-      s.setDailyRevenue();
+      s.setDailyRevenue(selectedFarm);
       modifyBudget(s.getDailyRevenue());
       s.increaseOperationsCost();
       if (s.areCustomersHappy()) {
