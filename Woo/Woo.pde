@@ -301,12 +301,20 @@ void runEmpire() {
           currStoreNum=0;
           //state=5;
         } else if (action==5) {
-          currStore.hire(new Employee("Eric"));
+          currStore.hire(new Employee(retName()));
         }
       }
     }
   }
 }
+
+String retName(){
+  ArrayList names = new ArrayList();
+  return "Eric";
+  
+}
+
+
 
 //prints budget on main menu
 void printBudget() {
