@@ -11,8 +11,13 @@ PImage store;
 PImage farm;
 PImage miniStore;
 PImage hire;
+PImage fire;
+PImage ecoli;
+PImage strike;
+PImage win;
 
-
+boolean ecoliState=false;
+int ecoliTimer=0;
 /*  STATES
  0=starter scren
  
@@ -68,6 +73,9 @@ void setup() {
   farm=loadImage("farm.png");
   miniStore=loadImage("miniStore.png");
   hire=loadImage("hire.png");
+  fire = loadImage("fire.png");
+  ecoli = loadImage("ecoli.png");
+
   state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
@@ -128,6 +136,11 @@ void draw() {
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
   else if (state==3 || state==6 || state==4) printQ(1);
+  
+  if (ecoliState && ecoliTimer < 180){
+    image(ecoli, 200,200);
+    ecoliTimer+=1;
+  }
 }
 
 //SAME METHOD FOR ALL
@@ -156,6 +169,10 @@ void mouseClicked() {
       state=3;
     } else if (overButton(111, 535, 154, 168)) {//go to farm
       state=6;
+    }
+    if (overButton(500, 535, 154, 168)){
+      state=1;
+      setupMinigame();
     }
   } else if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
@@ -205,6 +222,9 @@ boolean overButton(int x, int y, int width, int height) {
 void keyPressed() {
   if (key==97) currOrdNum=11;
   if (key==115) empire.setBudget(100000);
+  if (key==98){
+    ecoliState=true;
+  }
 }
 
 //END MINIGAME
@@ -465,8 +485,8 @@ void printQ(int s) {
       //miniStore = loadImage("miniStore.png");
       image(miniStore, 70+offset, ycor);
     } else if (temp==7) {
-      fill(#FF0000);
-      rect(70+offset, ycor, 90, 83);
+     // fire = loadImage("fire.png");
+      image(fire, 70+offset, ycor);
     } else if (temp==5) {
       //hire = loadImage("hire.png");
       image(hire, 70+offset, ycor);
