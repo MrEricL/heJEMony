@@ -1,0 +1,74 @@
+0. Rough rough GUI
+   - Home page to select the options
+
+I. Implement Store.java
+
+   - Will begin with instance variables _salary, _priceBurger, and a list of Employees
+   - for this we will need Employee.java
+
+II. Minigame.pde
+    A. Food.java interface and Patty.java, Lettuce.java, Tomato.java, TopBun.java, BottomBun.java, etc
+       - Will just look like ellipses of different colors at first
+   B. Order.java
+      - Will have a static random generator to produce random orders
+      - Each order will have a Queue of Food types
+***A-B can be completed the day or day after Mr. Brown approves propro
+
+   C. Use Processing to make it possible to build a burger
+      - Buttons in a circle representing different foods
+      - When you click the buttons the corresponding food is added to the pile
+      - implement a counter to act as a timer with draw()
+   D. Queue of orders to fulfill
+      - Have random generator add an order to the queue every X seconds
+*** A-D are essential
+
+
+    E. Have timing mechansism along with customer happiness and cost of burgers
+       - This will allow you to add money to your total
+       - Happier customers have been served the correct order in under a certain number of seconds and will tip
+       - Happier customers means more customers for the future
+**Phase II is completed
+
+III. Basics for building a fast food chain
+    A. Basics of Empire.java	
+   - Uses processing for new option page 
+   - Utilises a stack to check for achievements and will unlock after a certain threshold
+   - Utilises an ArrayList to hold multiple stores, and give option to buy more stores
+	-Tracks store revenue etc
+   - Implements a queue for actions (i.e. buying multiple stores take X time)
+   - Tracks customer happiness
+***Completed
+
+IV. Employees
+   - Adds the employee class
+	- Hire/fire employees
+	- Track employee happiness
+***Completed
+
+V. Farm
+   - New option to control farm
+   - Buy more cows / add more preservative
+	- Adds/subtract cost and consumer happiness
+***Complete
+
+VI. RNG and Misc
+    - put top bun graphic
+    - fiddle with math so that it works better
+    - RNG for setbacks (strikes or e coli outbreak)
+      - More specifically: e. coli outbreak
+      - Strikes when workers not paid enough
+      - Customer satisfaction going down	
+      - Pay for adds to increase popularity
+***Strikes will be finished by 6/2
+***Other random events to be implemented o ver weekend
+
+Possible Setbacks/ Risks
+code being inefficient and freezing draw(). solved by going through, making sure while loops break as soon as possible, making sure to use else if chains instead of a bunch of consecutive if statements, etc.
+
+We are not familiar with Processing the GUI will only be the bare minimum.
+Solution: Processing.org and the Processing reference are super user-friendly so it's all good
+
+Mathematically figuring out how much to make things cost, revenue, etc. will be a headache
+Delegation
+
+Most of the project is collaborative, but the skeleton and methods can be written separately before merged.
