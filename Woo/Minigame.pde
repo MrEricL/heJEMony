@@ -24,6 +24,7 @@ PImage cheese;
 
 //MINI GAME STUFF
 void setupMinigame() {
+  y=185;
   miniTime=0;
   background(150);
   fill(0);

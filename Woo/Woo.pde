@@ -76,7 +76,7 @@ void setup() {
   fire = loadImage("fire.png");
   ecoli = loadImage("ecoli.png");
 
-  state = 0; //state is meant to be zero this is for testing purposes
+  state = 2; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
@@ -92,7 +92,8 @@ void setup() {
 }
 
 void draw() {
-  //System.out.println(totalTime);
+
+  System.out.println(empire.getBudget());
   if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
@@ -132,6 +133,13 @@ void draw() {
   } else if (empire.size()==0 || empire.getBudget()<-100000) {//lose
     state=8;
   }
+  
+  //PUT AN IMAGE
+  if (empire!= null && empire.getPatties()==0){
+      fill(255);
+      rect(100,30,50,50);
+      
+  }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
@@ -141,10 +149,11 @@ void draw() {
     image(ecoli, 200,200);
     ecoliTimer+=1;
   }
-  if (ecoliTimer >= 180){
+  else if (ecoliTimer >= 180){
     ecoliTimer=0;
     ecoliState=false;
   }
+
 }
 
 //SAME METHOD FOR ALL
