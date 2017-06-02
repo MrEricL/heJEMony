@@ -141,6 +141,10 @@ void draw() {
     image(ecoli, 200,200);
     ecoliTimer+=1;
   }
+  if (ecoliTimer >= 180){
+    ecoliTimer=0;
+    ecoliState=false;
+  }
 }
 
 //SAME METHOD FOR ALL
