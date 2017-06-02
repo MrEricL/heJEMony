@@ -17,7 +17,9 @@ PImage strike;
 PImage win;
 
 boolean ecoliState=false;
+boolean ecoliEffect=false;
 int ecoliTimer=0;
+
 /*  STATES
  0=starter scren
  
@@ -76,7 +78,7 @@ void setup() {
   fire = loadImage("fire.png");
   ecoli = loadImage("ecoli.png");
 
-  state = 2; //state is meant to be zero this is for testing purposes
+  state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
@@ -93,7 +95,7 @@ void setup() {
 
 void draw() {
 
-  System.out.println(empire.getBudget());
+  //System.out.println(empire.getBudget());
   if (state==2) {//if empire home screen
     runEmpire();
     printBudget();
@@ -144,17 +146,32 @@ void draw() {
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
   else if (state==3 || state==6 || state==4) printQ(1);
-  
-  if (ecoliState && ecoliTimer < 180){
+  if (ecoliState){
+    ecoliRun();
+  }
+}
+
+void ecoliRun(){
+    ecoliEffect=true;
+    if (ecoliTimer < 180){
     image(ecoli, 200,200);
     ecoliTimer+=1;
+
   }
+  
   else if (ecoliTimer >= 180){
     ecoliTimer=0;
-    ecoliState=false;
   }
-
+  
+  if (ecoliEffect&& totalTime%180 == 0){
+    empire.ecoli(1);
+  }
+  
+  //change farm and payout
+  
+  
 }
+
 
 //SAME METHOD FOR ALL
 void mouseClicked() {

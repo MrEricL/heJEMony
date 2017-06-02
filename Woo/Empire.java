@@ -107,6 +107,12 @@ public class Empire {
     }
   }
 
+  public void ecoli(int dec){
+     for (Store s : _stores) {
+       s.modCustomerSatisfaction(-dec);
+     }
+    
+  }
   //num stores
   public int size() {
     return _stores.size();
@@ -197,4 +203,6 @@ public class Empire {
   public Farm getSelectedFarm () { 
     return selectedFarm;
   }
+  
+  
 }
