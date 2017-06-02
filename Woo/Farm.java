@@ -19,7 +19,11 @@ public class Farm implements Comparable{
     }
 
     public double getCostPerPatty() {
+<<<<<<< HEAD
 	return percentRealMeat * .5;
+=======
+	return percentRealMeat * .7;
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     }
 
     public String getName() {

@@ -2,7 +2,11 @@
 ALDeque<Order> _orders=new ALDeque<Order>();
 ArrayList<Integer> burgerTimes = new ArrayList <Integer>(); 
 int miniTime=0;//time variable
+<<<<<<< HEAD
 int y=170;//for printing orders
+=======
+int y=185;//for printing orders
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 Order currOrder = new Order();
 int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
@@ -31,9 +35,15 @@ void setupMinigame() {
   fill(255);
   textSize(32);
   text("Revenue:", 20, 40);
+<<<<<<< HEAD
   rect(600, 100, 150, 650); 
   fill(0);
   text("Orders", 620, 150);
+=======
+  rect(550, 100, 200, 750); 
+  fill(0);
+  text("Orders", 570, 150);
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   drawButtons();
 
   //time
@@ -93,13 +103,21 @@ void buttons() {
 
     if (bunClick==false){
           bun = loadImage("bun.png");
+<<<<<<< HEAD
     image(bun, 300, placeForFood+20);    
+=======
+    image(bun, 245, placeForFood+20);    
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     currOrder.add(new Bun());
     }
     else{
       ///FOR THE TOP BUN
     topbun = loadImage("topbun.png");
+<<<<<<< HEAD
     image(topbun, 300, placeForFood+20); 
+=======
+    image(topbun, 245, placeForFood+20); 
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     }
     placeForFood-=50;
     bunClick=true;
@@ -108,7 +126,11 @@ void buttons() {
     // fill(#8B5A2B);
     // ellipse(375, placeForFood, 200, 65);
     patty = loadImage("burger.png");
+<<<<<<< HEAD
     image(patty, 300, placeForFood+35);   
+=======
+    image(patty, 245, placeForFood+35);   
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     currOrder.add(new Patty());
     placeForFood-=25;
   }
@@ -116,7 +138,11 @@ void buttons() {
     // fill(#FFD700);
     //ellipse(375, placeForFood, 200, 65);
     cheese = loadImage("cheese.png");
+<<<<<<< HEAD
     image(cheese, 300, placeForFood+55);
+=======
+    image(cheese, 245, placeForFood+55);
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     currOrder.add(new Cheese());
     placeForFood-=10;
   }
@@ -124,7 +150,11 @@ void buttons() {
     //fill(#00FF00);
     //ellipse(375, placeForFood, 200, 65);
     lettuce = loadImage("lettuce.png");
+<<<<<<< HEAD
     image(lettuce, 300, placeForFood+35);
+=======
+    image(lettuce, 245, placeForFood+35);
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     currOrder.add(new Lettuce());
     placeForFood-=20;
   }
@@ -132,18 +162,71 @@ void buttons() {
     //fill(#FF0000);
     //ellipse(375, placeForFood, 200, 65);
     tomato = loadImage("tomato.png");
+<<<<<<< HEAD
     image(tomato, 300, placeForFood+35);    
+=======
+    image(tomato, 245, placeForFood+35);    
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     currOrder.add(new Tomato());
     placeForFood-=30;
   }
 }
 
+<<<<<<< HEAD
+=======
+
+//used for managing the thing
+void printOrders(int linelength){
+  // len 22 
+  // number + period + space
+  // len 19
+
+  String currOrder=_orders.peekLast().toString();
+  String ret="";
+  int index=0;
+  while (index < currOrder.length()){
+    if (currOrder.substring(index,index+1).equals(" "));
+    else ret+=currOrder.substring(index,index+1);
+    index+=1;
+  }
+  //ret = ret.substring (0,1)+ret.substring(2,ret.length());
+  String[] retA = ret.split(",");
+  index=0;
+  int linespacing=0; //how many
+  ret="";//resets the thing
+  ret+=(miniTime/600+1)+". ";
+  textSize(15);
+
+  while (index < retA.length){
+    int len = retA[index].length()+2; //length plus comma and space
+    if (linespacing+len+2 > linelength){
+      text(ret, 565, y);
+      linespacing=0;
+      y+=25;
+      ret="";
+      
+    }
+  ret+=retA[index];
+  ret+=", ";
+  linespacing+=len;
+   index++;
+  }
+  ret=ret.substring(0,ret.length()-2);
+      text(ret, 565, y);//last time
+      y+=30;
+
+}
+
+///
+
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 void loadOrders() {
   if (miniTime%600==0 && miniTime<6000) {
     //holds place in the substring
     fill(0);
     int place=0;
     _orders.addLast(new Order(4)); 
+<<<<<<< HEAD
     textSize(12);
     //gets most recent order
     String currOrder=_orders.peekLast().toString();
@@ -151,6 +234,18 @@ void loadOrders() {
     text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 620, y);
     place+=18;
     y+=20;
+=======
+    printOrders(25);
+/*
+    textSize(13);
+    //gets most recent order
+    String currOrder=_orders.peekLast().toString();
+    //text is added in subsets of 18 characters so it doesnt go off the screen
+    text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 565, y);
+    place+=18;
+    y+=20;
+    System.out.println(currOrder);
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
     while (place<currOrder.length()-18) {
       text(currOrder.substring(place, place+18), 620, y);
       place+=18;
@@ -160,8 +255,14 @@ void loadOrders() {
     y+=20;
     if ((y-170)%60!=0) {
       y+=20;
+<<<<<<< HEAD
     }
   }
+=======
+    }*/
+  }
+  
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 }
 
 void drawButtons() {

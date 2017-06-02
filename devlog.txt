@@ -146,6 +146,27 @@ Eric :: worked on farm screen and home screen looking nicer, updated UMLs, fixed
 Jenny :: worked on farm screen aesthetics, implementing farmHeap
 Matteo :: implemented farmHeap so that you can access new farms as you progress by using a heapSort,  and actual coding of farm screen with setupFarm(), commented files
 ==============================================================
+<<<<<<< HEAD
+=======
+2017-05-30
+--------------------------------------------------------------
+Eric :: worked on farm screen and home screen looking nicer, updated UMLs, fixed printQ() to work in loading screen
+Jenny :: worked on farm screen aesthetics, implementing farmHeap
+Matteo :: implemented farmHeap so that you can access new farms as you progress by using a heapSort,  and actual coding of farm screen with setupFarm(), commented files
+==============================================================
+2017-05-31
+--------------------------------------------------------------
+Eric :: worked on queue, making the payment work on time with queuebuystore() so you dont go into negative money,
+Jenny :: finished up setupFarm() w/ matteo, costs of patties
+Matteo :: coded functionality of farm screen, with buttons for selecting different farms, inputted the patties so that they actually affect how much money you make
+==============================================================
+2017-06-02
+--------------------------------------------------------------
+Eric :: worked on minigame running more smoothly by troubleshooting code, graphics of top bun, making math work so you earned proper outs
+Jenny :: worked on win and lose screens and functions, making math work
+Matteo :: worked on printQ, improved farm functions by debugging them, went through code to make it more efficient so that draw() wouldnt freeze
+==============================================================
+>>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 
 
 
