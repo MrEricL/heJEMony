@@ -10,10 +10,7 @@ public class Empire {
   //buy store = 1
   private Deque<String> _milestones;//will be used as a stack
   private int _patties;
-<<<<<<< HEAD
-=======
   private int[] _pattiesArray; //0=.5, 1=.6,2=.7,3=.8,4=.9,5=1.0
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   private ALHeap<Farm> _farmHeap;
   private ArrayList<Farm> _availableFarms;
   private Farm selectedFarm; 
@@ -26,12 +23,9 @@ public class Empire {
     _actionsList = new ALQueue <Integer> ();
     _availableFarms=new ArrayList<Farm>();
     buildFarmHeap();
-<<<<<<< HEAD
-=======
     _patties=1000;
     _pattiesArray=new int[6];
     _pattiesArray[0]=1000;
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   }
 
   //takes int of store in list to access
@@ -94,13 +88,9 @@ public class Empire {
   //runs operations, uses time to determine whether employees should get less happy
   public void runOperations(int tNow) {
     for (Store s : _stores) {
-<<<<<<< HEAD
-      s.setDailyRevenue();
-=======
       if (_patties==0)
         return;
       s.setDailyRevenue(selectedFarm);
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
       modifyBudget(s.getDailyRevenue());
       s.increaseOperationsCost();
       if (s.areCustomersHappy()) {
@@ -112,36 +102,24 @@ public class Empire {
       if ((tNow-s.getCreationTime())%1800<10) {
         s.lowerEmployeeSatisfaction();
       }
-<<<<<<< HEAD
-=======
       usePatties(s);
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
       //patties - customerSatisfaction
     }
   }
 
-<<<<<<< HEAD
-=======
   //num stores
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   public int size() {
     return _stores.size();
   }
 
   public void addAction(int i) {
     _actionsList.enqueue(i);
-<<<<<<< HEAD
-   
-=======
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   }
 
 
   public void setBudget(double s) {
     _budget+=s;
   }
-<<<<<<< HEAD
-=======
   //goes through cheapest to most expensive stores and uses patties               
   public void usePatties(Store s) {
     int p=s.getCustomerSatisfaction();
@@ -159,30 +137,20 @@ public class Empire {
       i++;
     }
   }
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 
   public boolean buyPatties (int numPatty, Farm farm) {
     double cost = numPatty * farm.getCostPerPatty ();
     if (_budget >= cost) {
       _budget -= cost;
       _patties += numPatty;
-<<<<<<< HEAD
-=======
       _pattiesArray[(int)((farm.getPercentRealMeat()-.5)*10)]+=numPatty;
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
       return true;
     }
     return false;
   } 
-<<<<<<< HEAD
-  
-  public int getPatties () { 
-    return _patties; 
-=======
 
   public int getPatties () { 
     return _patties;
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
   } 
 
 
@@ -223,19 +191,10 @@ public class Empire {
     }
   }
   public void setSelectedFarm(Farm farm) { 
-<<<<<<< HEAD
-    selectedFarm = farm; 
-  } 
-  
-  public Farm getSelectedFarm () { 
-    return selectedFarm; 
-  } 
-=======
     selectedFarm = farm;
   } 
 
   public Farm getSelectedFarm () { 
     return selectedFarm;
   }
->>>>>>> 5c2e51dfb50ea99d27efc407c3e9152772d4f156
 }
