@@ -8,7 +8,7 @@ int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
 float cash=0;
 
-boolean bunClick=false;
+int bunClick=0;
 
 //printing time
 int realTime=0;
@@ -17,13 +17,21 @@ int counterT=0;
 PImage tomato;
 PImage lettuce;
 PImage patty;
-PImage bun;
-PImage topbun;
+PImage XYZ;
+PImage ABC;
 PImage cheese;
 //****Minigame variables
 
 //MINI GAME STUFF
 void setupMinigame() {
+            XYZ = loadImage("bun.png");
+      ABC = loadImage("topbun.png");
+  patty = loadImage("burger.png");
+
+    cheese = loadImage("cheese.png");
+    lettuce = loadImage("lettuce.png");
+tomato = loadImage("tomato.png");
+  currOrdNum=1;
   realTime=0;
   counterT=0;
   y=185;
@@ -49,6 +57,7 @@ void setupMinigame() {
 
 
 void drawMinigame() {
+  
   loadOrders();
   miniTime+=1;
   counterT+=1;
@@ -94,23 +103,25 @@ void buttons() {
     //fill(#F4A460);
     //ellipse(375, placeForFood, 200, 65);
 
-    if (bunClick==false){
-          bun = loadImage("bun.png");
-    image(bun, 245, placeForFood+20);    
-    currOrder.add(new Bun());
+    if (bunClick==0){
+
+          image(XYZ, 245, placeForFood+20);    
+          currOrder.add(new Bun());
     }
     else{
       ///FOR THE TOP BUN
-    topbun = loadImage("topbun.png");
-    image(topbun, 245, placeForFood+20); 
+
+      image(ABC, 245, placeForFood+20); 
+      currOrder.add(new Bun());
     }
     placeForFood-=50;
-    bunClick=true;
+    bunClick=1;
+    System.out.println(bunClick);
   }
   if (overButton(35, 300, 110, 50)) {
     // fill(#8B5A2B);
     // ellipse(375, placeForFood, 200, 65);
-    patty = loadImage("burger.png");
+  
     image(patty, 245, placeForFood+35);   
     currOrder.add(new Patty());
     placeForFood-=25;
@@ -118,7 +129,7 @@ void buttons() {
   if (overButton(35, 235, 110, 50)) {
     // fill(#FFD700);
     //ellipse(375, placeForFood, 200, 65);
-    cheese = loadImage("cheese.png");
+
     image(cheese, 245, placeForFood+55);
     currOrder.add(new Cheese());
     placeForFood-=10;
@@ -126,7 +137,7 @@ void buttons() {
   if (overButton(35, 170, 110, 50)) {
     //fill(#00FF00);
     //ellipse(375, placeForFood, 200, 65);
-    lettuce = loadImage("lettuce.png");
+
     image(lettuce, 245, placeForFood+35);
     currOrder.add(new Lettuce());
     placeForFood-=20;
@@ -134,7 +145,7 @@ void buttons() {
   if (overButton(35, 105, 110, 50)) {
     //fill(#FF0000);
     //ellipse(375, placeForFood, 200, 65);
-    tomato = loadImage("tomato.png");
+    
     image(tomato, 245, placeForFood+35);    
     currOrder.add(new Tomato());
     placeForFood-=30;
@@ -240,7 +251,7 @@ void drawButtons() {
 }
 
 void checkOrder() {
-  bunClick=false;
+  bunClick=0;
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
     if (_orders.peekFirst().equals(currOrder)) {
       if (burgerTimes.get(0) > 11) { 
@@ -257,9 +268,9 @@ void checkOrder() {
       strokeWeight(1);
       //to cross out orders
       fill(0);
-      text("-----------------", 620, 170+(currOrdNum-1)*60);
-      text("-----------------", 620, 190+(currOrdNum-1)*60);
-      text("-----------------", 620, 210+(currOrdNum-1)*60);
+      text("-----------------", 575, 186+(currOrdNum-1)*60);
+      text("-----------------", 575, 213+(currOrdNum-1)*60);
+
       currOrdNum+=1;
     }
     currOrder=new Order();

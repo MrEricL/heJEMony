@@ -15,6 +15,7 @@ PImage fire;
 PImage ecoli;
 PImage strike;
 PImage win;
+PImage out;
 
 boolean ecoliState=false;
 //boolean ecoliEffect=false;
@@ -77,6 +78,7 @@ void setup() {
   hire=loadImage("hire.png");
   fire = loadImage("fire.png");
   ecoli = loadImage("ecoli.png");
+  out = loadImage("out.png");
 
   state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
@@ -138,8 +140,7 @@ void draw() {
 
   //PUT AN IMAGE
   if (empire!= null && empire.getPatties()==0) {
-    fill(255);
-    rect(100, 30, 50, 50);
+    image(out, 100,30);
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
@@ -207,6 +208,7 @@ void mouseClicked() {
     if (overButton(500, 535, 154, 168)) {
       state=1;
       setupMinigame();
+   //   drawMinigame();
     }
   } else if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
