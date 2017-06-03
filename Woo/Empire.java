@@ -93,13 +93,15 @@ public class Empire {
       s.setDailyRevenue(selectedFarm);
       modifyBudget(s.getDailyRevenue());
       s.increaseOperationsCost();
-      if (s.areCustomersHappy()) {
-        s.modCustomerSatisfaction(1);
-      } else {
-        s.modCustomerSatisfaction(-2);
+      if ((tNow-s.getCreationTime())%60<10) {
+        if (s.areCustomersHappy()) {
+          s.modCustomerSatisfaction(1);
+        } else {
+          s.modCustomerSatisfaction(-2);
+        }
       }
       //System.out.println(tNow-s.getCreationTime());
-      if ((tNow-s.getCreationTime())%1800<10) {
+      if ((tNow-s.getCreationTime())%600<10) {
         s.lowerEmployeeSatisfaction();
       }
       usePatties(s);
@@ -107,11 +109,10 @@ public class Empire {
     }
   }
 
-  public void ecoli(int dec){
-     for (Store s : _stores) {
-       s.modCustomerSatisfaction(-dec);
-     }
-    
+  public void ecoli(int dec) {
+    for (Store s : _stores) {
+      s.modCustomerSatisfaction(-dec);
+    }
   }
   //num stores
   public int size() {
@@ -203,6 +204,4 @@ public class Empire {
   public Farm getSelectedFarm () { 
     return selectedFarm;
   }
-  
-  
 }

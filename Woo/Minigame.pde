@@ -266,7 +266,7 @@ void checkOrder() {
     placeForFood=500;
     fill(150);
     strokeWeight(0);
-    rect(146, 101, 450, 650);
+    rect(146, 101, 400, 650);
     strokeWeight(1);
   }
 }

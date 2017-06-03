@@ -49,9 +49,9 @@ public class Store {
   public void modCustomerSatisfaction(int i) {
     _customerSatisfaction+=i;
   }
-  
+
   public int getCustomerSatisfaction () { 
-    return _customerSatisfaction; 
+    return _customerSatisfaction;
   } 
 
   public void modEmployeeSatisfaction(int i) {
@@ -92,23 +92,26 @@ public class Store {
   }
 
   public boolean areCustomersHappy() {
-    return ((double)_employees.size()/_customerSatisfaction)>=(1.0/20);
+    if (_customerSatisfaction>0) {
+      return ((double)_employees.size()/_customerSatisfaction)>=(1.0/20);
+    } else
+      return true;//ratio is true
   }
 
   public void increaseOperationsCost() {
-    _operationsCost+=.2;
+    _operationsCost+=.01;
   }
-  
+
   public double getOperationsCost() {
     return _operationsCost;
   }
-  
+
   public int getCreationTime() {
     return _timeCreation;
   }
-  
+
   public void lowerEmployeeSatisfaction() {//employees get less happy function
-    for (Employee e:_employees) {
+    for (Employee e : _employees) {
       e.decreaseSatisfaction();
     }
   }

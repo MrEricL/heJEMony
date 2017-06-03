@@ -17,7 +17,7 @@ PImage strike;
 PImage win;
 
 boolean ecoliState=false;
-boolean ecoliEffect=false;
+//boolean ecoliEffect=false;
 int ecoliTimer=0;
 
 /*  STATES
@@ -135,43 +135,47 @@ void draw() {
   } else if (empire.size()==0 || empire.getBudget()<-100000) {//lose
     state=8;
   }
-  
+
   //PUT AN IMAGE
-  if (empire!= null && empire.getPatties()==0){
-      fill(255);
-      rect(100,30,50,50);
-      
+  if (empire!= null && empire.getPatties()==0) {
+    fill(255);
+    rect(100, 30, 50, 50);
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
   else if (state==3 || state==6 || state==4) printQ(1);
-  if (ecoliState){
+
+  if (ecoliState) {
     ecoliRun();
   }
 }
 
-void ecoliRun(){
-    ecoliEffect=true;
-    if (ecoliTimer < 180){
-    image(ecoli, 200,200);
-    ecoliTimer+=1;
+void ecoliRun() {
+  //ecoliEffect=true;
+  //if (ecoliTimer < 180) 
+  image(ecoli, 200, 200);
+  ecoliTimer+=1;
 
-  }
-  
+  /*
   else if (ecoliTimer >= 180){
-    ecoliTimer=0;
+   ecoliTimer=0;
+   }*/
+
+  if (ecoliState&& totalTime%30 == 0) {
+    empire.ecoli(3);
   }
-  
-  if (ecoliEffect&& totalTime%180 == 0){
-    empire.ecoli(1);
-  }
-  
+
   //change farm and payout
-  
-  
 }
 
+void ecoliButton() {
+  if (overButton(200, 200, 500, 500)) {
+    empire.modifyBudget(-10000);//cost to get rid of e coli
+    ecoliState=false;
+    //ecoliEffect=false;
+  }
+}
 
 //SAME METHOD FOR ALL
 void mouseClicked() {
@@ -200,7 +204,7 @@ void mouseClicked() {
     } else if (overButton(111, 535, 154, 168)) {//go to farm
       state=6;
     }
-    if (overButton(500, 535, 154, 168)){
+    if (overButton(500, 535, 154, 168)) {
       state=1;
       setupMinigame();
     }
@@ -228,6 +232,9 @@ void mouseClicked() {
     fireEmployeeButton(currStore);//check if you fired an employee
   } else if (state==6) {
     farmButtons();
+  } 
+  if (ecoliState) {
+    ecoliButton();
   }
 }
 
@@ -252,7 +259,7 @@ boolean overButton(int x, int y, int width, int height) {
 void keyPressed() {
   if (key==97) currOrdNum=11;
   if (key==115) empire.setBudget(100000);
-  if (key==98){
+  if (key==98) {
     ecoliState=true;
   }
 }
@@ -308,10 +315,9 @@ void runEmpire() {
   }
 }
 
-String retName(){
+String retName() {
   ArrayList names = new ArrayList();
   return "Eric";
-  
 }
 
 
@@ -401,6 +407,7 @@ void setupIndividualStore(Store s) {
   rect(10, 10, 90, 60);//back rectangle
   rect(10, 190, 195, 60);//money rectangle
   rect(10, 260, 195, 120);//operations cost
+  rect(550,190,190,120);//customer satisfaction
   rect(36, 87, 676, 83);//actions queue
   fill(0);
   text("BACK", 15, 50);
@@ -411,6 +418,8 @@ void setupIndividualStore(Store s) {
   fill(#0000FF);
   text("Daily", 15, 285);
   text("Operations Cost", 15, 315);
+  text("Customer Satisfaction",555,240);
+  text(""+s.getCustomerSatisfaction(),555,280);
   fill(#00FF00);//lime, hire box
   rect(10, 395, 240, 45);//hire rectangle
   fill(0);
@@ -523,7 +532,7 @@ void printQ(int s) {
       //miniStore = loadImage("miniStore.png");
       image(miniStore, 70+offset, ycor);
     } else if (temp==7) {
-     // fire = loadImage("fire.png");
+      // fire = loadImage("fire.png");
       image(fire, 70+offset, ycor);
     } else if (temp==5) {
       //hire = loadImage("hire.png");
