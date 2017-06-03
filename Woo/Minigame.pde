@@ -1,6 +1,6 @@
 //*****Minigame variables
-ALDeque<Order> _orders=new ALDeque<Order>();
-ArrayList<Integer> burgerTimes = new ArrayList <Integer>(); 
+ALDeque<Order> _orders;//=new ALDeque<Order>();
+ArrayList<Integer> burgerTimes; 
 int miniTime=0;//time variable
 int y=185;//for printing orders
 Order currOrder = new Order();
@@ -8,7 +8,7 @@ int placeForFood=500;//where you add food to
 int currOrdNum=1;//which order currently on
 float cash=0;
 
-int bunClick=0;
+int bunClick;
 
 //printing time
 int realTime=0;
@@ -24,13 +24,19 @@ PImage cheese;
 
 //MINI GAME STUFF
 void setupMinigame() {
-            XYZ = loadImage("bun.png");
-      ABC = loadImage("topbun.png");
+  bunClick=0;
+  _orders=new ALDeque<Order>();
+  burgerTimes = new ArrayList <Integer>(); 
+
+  strokeWeight(0);
+  currOrdNum=1;
+  XYZ = loadImage("bun.png");
+  ABC = loadImage("topbun.png");
   patty = loadImage("burger.png");
 
-    cheese = loadImage("cheese.png");
-    lettuce = loadImage("lettuce.png");
-tomato = loadImage("tomato.png");
+  cheese = loadImage("cheese.png");
+  lettuce = loadImage("lettuce.png");
+  tomato = loadImage("tomato.png");
   currOrdNum=1;
   realTime=0;
   counterT=0;
@@ -57,14 +63,14 @@ tomato = loadImage("tomato.png");
 
 
 void drawMinigame() {
-  
+
   loadOrders();
   miniTime+=1;
   counterT+=1;
 
   if (counterT==60) {
     fill(0);
-    rect(615, 48, 100, 40);
+    rect(615, 48, 100, 40);//rectangle for timer
     counterT=0;
     realTime+=1;
     for (int i = 0; i < burgerTimes.size(); i ++ ) { 
@@ -72,9 +78,9 @@ void drawMinigame() {
     } 
     fill(255);
     textSize(28);    
-    text(realTime, 620, 70);
+    text(realTime, 620, 70);//prints time
   }
-  if (miniTime % 11 == 0) {
+  if (miniTime % 11 == 0) {//compounds time if you are taking too long
     burgerTimes.add (0, new Integer (0));
   } 
   fill(0);
@@ -103,12 +109,11 @@ void buttons() {
     //fill(#F4A460);
     //ellipse(375, placeForFood, 200, 65);
 
-    if (bunClick==0){
-
-          image(XYZ, 245, placeForFood+20);    
-          currOrder.add(new Bun());
-    }
-    else{
+    if (bunClick==0) {
+      //System.out.println(bunClick);
+      image(XYZ, 245, placeForFood+20);    
+      currOrder.add(new Bun());
+    } else {
       ///FOR THE TOP BUN
 
       image(ABC, 245, placeForFood+20); 
@@ -116,12 +121,12 @@ void buttons() {
     }
     placeForFood-=50;
     bunClick=1;
-    System.out.println(bunClick);
+    //System.out.println(bunClick);
   }
   if (overButton(35, 300, 110, 50)) {
     // fill(#8B5A2B);
     // ellipse(375, placeForFood, 200, 65);
-  
+
     image(patty, 245, placeForFood+35);   
     currOrder.add(new Patty());
     placeForFood-=25;
@@ -145,7 +150,7 @@ void buttons() {
   if (overButton(35, 105, 110, 50)) {
     //fill(#FF0000);
     //ellipse(375, placeForFood, 200, 65);
-    
+
     image(tomato, 245, placeForFood+35);    
     currOrder.add(new Tomato());
     placeForFood-=30;
@@ -154,7 +159,7 @@ void buttons() {
 
 
 //used for managing the thing
-void printOrders(int linelength){
+void printOrders(int linelength) {
   // len 22 
   // number + period + space
   // len 19
@@ -162,9 +167,9 @@ void printOrders(int linelength){
   String currOrder=_orders.peekLast().toString();
   String ret="";
   int index=0;
-  while (index < currOrder.length()){
-    if (currOrder.substring(index,index+1).equals(" "));
-    else ret+=currOrder.substring(index,index+1);
+  while (index < currOrder.length()) {
+    if (currOrder.substring(index, index+1).equals(" "));
+    else ret+=currOrder.substring(index, index+1);
     index+=1;
   }
   //ret = ret.substring (0,1)+ret.substring(2,ret.length());
@@ -175,24 +180,22 @@ void printOrders(int linelength){
   ret+=(miniTime/600+1)+". ";
   textSize(15);
 
-  while (index < retA.length){
+  while (index < retA.length) {
     int len = retA[index].length()+2; //length plus comma and space
-    if (linespacing+len+2 > linelength){
+    if (linespacing+len+2 > linelength) {
       text(ret, 565, y);
       linespacing=0;
       y+=25;
       ret="";
-      
     }
-  ret+=retA[index];
-  ret+=", ";
-  linespacing+=len;
-   index++;
+    ret+=retA[index];
+    ret+=", ";
+    linespacing+=len;
+    index++;
   }
-  ret=ret.substring(0,ret.length()-2);
-      text(ret, 565, y);//last time
-      y+=30;
-
+  ret=ret.substring(0, ret.length()-2);
+  text(ret, 565, y);//last time
+  y+=30;
 }
 
 ///
@@ -204,27 +207,26 @@ void loadOrders() {
     int place=0;
     _orders.addLast(new Order(4)); 
     printOrders(25);
-/*
+    /*
     textSize(13);
-    //gets most recent order
-    String currOrder=_orders.peekLast().toString();
-    //text is added in subsets of 18 characters so it doesnt go off the screen
-    text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 565, y);
-    place+=18;
-    y+=20;
-    System.out.println(currOrder);
-    while (place<currOrder.length()-18) {
-      text(currOrder.substring(place, place+18), 620, y);
-      place+=18;
-      y+=20;
-    }
-    text(currOrder.substring(place), 620, y);
-    y+=20;
-    if ((y-170)%60!=0) {
-      y+=20;
-    }*/
+     //gets most recent order
+     String currOrder=_orders.peekLast().toString();
+     //text is added in subsets of 18 characters so it doesnt go off the screen
+     text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 565, y);
+     place+=18;
+     y+=20;
+     System.out.println(currOrder);
+     while (place<currOrder.length()-18) {
+     text(currOrder.substring(place, place+18), 620, y);
+     place+=18;
+     y+=20;
+     }
+     text(currOrder.substring(place), 620, y);
+     y+=20;
+     if ((y-170)%60!=0) {
+     y+=20;
+     }*/
   }
-  
 }
 
 void drawButtons() {
@@ -251,8 +253,9 @@ void drawButtons() {
 }
 
 void checkOrder() {
-  bunClick=0;
+  //bunClick=0;
   if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
+    bunClick=0;
     if (_orders.peekFirst().equals(currOrder)) {
       if (burgerTimes.get(0) > 11) { 
         double decrease = (burgerTimes.get(0) - 11) * 0.1; 
@@ -265,11 +268,11 @@ void checkOrder() {
       } else { 
         cash+=_orders.pollFirst().getPrice();
       }
-      strokeWeight(1);
+      //strokeWeight(1);
       //to cross out orders
       fill(0);
-      text("-----------------", 575, 186+(currOrdNum-1)*60);
-      text("-----------------", 575, 213+(currOrdNum-1)*60);
+      text("-----------------", 575, 186+(currOrdNum-1)*55);
+      text("-----------------", 575, 213+(currOrdNum-1)*55);
 
       currOrdNum+=1;
     }
@@ -278,6 +281,6 @@ void checkOrder() {
     fill(150);
     strokeWeight(0);
     rect(146, 101, 400, 650);
-    strokeWeight(1);
+    //strokeWeight(1);
   }
 }

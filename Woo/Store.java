@@ -59,7 +59,7 @@ public class Store {
   }
 
   public void setDailyRevenue(Farm f) {//arbitrary mathemtical formula that seems to work for making cash
-    _dailyRevenue= (f.getCostPerPatty()*7)*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
+      _dailyRevenue= (f.getCostPerPatty()*7)*numEmployees()*(_customerSatisfaction*_priceBurger-numEmployees()*_salary-_operationsCost);
   }
 
   public double getDailyRevenue() {

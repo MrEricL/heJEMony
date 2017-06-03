@@ -17,9 +17,9 @@ PImage strike;
 PImage win;
 PImage out;
 
-boolean ecoliState=false;
+boolean ecoliState;
 //boolean ecoliEffect=false;
-int ecoliTimer=0;
+//int ecoliTimer=0;
 
 /*  STATES
  0=starter scren
@@ -66,6 +66,7 @@ int currStoreNum; //for removing store (index in list)
 
 int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 seconds when a store is closed
 
+boolean playedMinigame;
 /*********EMPIRE VARIABLES************/
 
 
@@ -80,6 +81,7 @@ void setup() {
   ecoli = loadImage("ecoli.png");
   out = loadImage("out.png");
 
+  ecoliState=false;
   state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
@@ -99,12 +101,16 @@ void draw() {
 
   //System.out.println(empire.getBudget());
   if (state==2) {//if empire home screen
+    image(emp, 0, 0);
     runEmpire();
     printBudget();
   } else if (state==1 && !hasBeenSetUp) {//if minigame hasnt been set up, load it
     setupMinigame();
     hasBeenSetUp=true;
-  } else if (state==1 && hasBeenSetUp) {//if minigame has been set up, run minigame
+  } else if (state==1 && hasBeenSetUp && !playedMinigame) {//if minigame has been set up, run minigame
+    drawMinigame();
+  } else if (state==1 && hasBeenSetUp && playedMinigame) {
+    runEmpire();
     drawMinigame();
   } else if (state==0) {//start screen
     drawMenu();
@@ -140,7 +146,7 @@ void draw() {
 
   //PUT AN IMAGE
   if (empire!= null && empire.getPatties()==0) {
-    image(out, 100,30);
+    image(out, 100, 30);
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
@@ -152,31 +158,7 @@ void draw() {
   }
 }
 
-void ecoliRun() {
-  //ecoliEffect=true;
-  //if (ecoliTimer < 180) 
-  image(ecoli, 200, 200);
-  ecoliTimer+=1;
 
-  /*
-  else if (ecoliTimer >= 180){
-   ecoliTimer=0;
-   }*/
-
-  if (ecoliState&& totalTime%30 == 0) {
-    empire.ecoli(3);
-  }
-
-  //change farm and payout
-}
-
-void ecoliButton() {
-  if (overButton(200, 200, 500, 500)) {
-    empire.modifyBudget(-10000);//cost to get rid of e coli
-    ecoliState=false;
-    //ecoliEffect=false;
-  }
-}
 
 //SAME METHOD FOR ALL
 void mouseClicked() {
@@ -187,7 +169,10 @@ void mouseClicked() {
     checkOrder();//checks if order done correctly
     if (overButton(35, 530, 135, 50)) {//if you win you can move on
       state=2;
-      beginEmpire();
+      if (!playedMinigame) {
+        beginEmpire();
+        playedMinigame=true;
+      }
     }
   }
 
@@ -205,10 +190,10 @@ void mouseClicked() {
     } else if (overButton(111, 535, 154, 168)) {//go to farm
       state=6;
     }
-    if (overButton(500, 535, 154, 168)) {
+    if (overButton(500, 535, 154, 168)&&!ecoliState) {
       state=1;
       setupMinigame();
-   //   drawMinigame();
+      //   drawMinigame();
     }
   } else if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
@@ -286,7 +271,7 @@ void beginEmpire() {
 //runs every 1/6 of a second
 void runEmpire() {
   //emp = loadImage ("main.png"); 
-  image (emp, 0, 0);
+  //image (emp, 0, 0);
   if (totalTime%10==0) {
     empire.runOperations(totalTime);
     //this runs the actionQueue
@@ -409,7 +394,7 @@ void setupIndividualStore(Store s) {
   rect(10, 10, 90, 60);//back rectangle
   rect(10, 190, 195, 60);//money rectangle
   rect(10, 260, 195, 120);//operations cost
-  rect(550,190,190,120);//customer satisfaction
+  rect(530, 190, 190, 120);//customer satisfaction
   rect(36, 87, 676, 83);//actions queue
   fill(0);
   text("BACK", 15, 50);
@@ -420,8 +405,8 @@ void setupIndividualStore(Store s) {
   fill(#0000FF);
   text("Daily", 15, 285);
   text("Operations Cost", 15, 315);
-  text("Customer Satisfaction",555,240);
-  text(""+s.getCustomerSatisfaction(),555,280);
+  text("Customer\nSatisfaction", 535, 220);
+  text(""+s.getCustomerSatisfaction(), 535, 300);
   fill(#00FF00);//lime, hire box
   rect(10, 395, 240, 45);//hire rectangle
   fill(0);
@@ -634,10 +619,38 @@ void farmButtons() {
       break;
     }
     i++;
+    xcor+=240;
+
+    if (i==3) {
+      xcor=60;
+      ycor=500;
+    }
   }
-  xcor+=240;
-  if (i==2) {
-    xcor=60;
-    ycor=500;
+}
+
+
+void ecoliRun() {
+  //ecoliEffect=true;
+  //if (ecoliTimer < 180) 
+  image(ecoli, 200, 200);
+  //ecoliTimer+=1;
+
+  /*
+  else if (ecoliTimer >= 180){
+   ecoliTimer=0;
+   }*/
+
+  if (ecoliState&& totalTime%30 == 0) {
+    empire.ecoli(2);
+  }
+
+  //change farm and payout
+}
+
+void ecoliButton() {
+  if (overButton(200, 200, 500, 500)) {
+    empire.modifyBudget(-10000);//cost to get rid of e coli
+    ecoliState=false;
+    //ecoliEffect=false;
   }
 }

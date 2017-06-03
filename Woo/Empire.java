@@ -130,6 +130,7 @@ public class Empire {
   //goes through cheapest to most expensive stores and uses patties               
   public void usePatties(Store s) {
     int p=s.getCustomerSatisfaction();
+    if (p<0) p=10;
     int i=0;
     while (p>0&&i<6) {//traverse _pattiesArray                                       
       if (_pattiesArray[i]>=p) {

@@ -158,11 +158,23 @@ Eric :: worked on queue, making the payment work on time with queuebuystore() so
 Jenny :: finished up setupFarm() w/ matteo, costs of patties
 Matteo :: coded functionality of farm screen, with buttons for selecting different farms, inputted the patties so that they actually affect how much money you make
 ==============================================================
-2017-06-02
+2017-06-01
 --------------------------------------------------------------
 Eric :: worked on minigame running more smoothly by troubleshooting code, graphics of top bun, making math work so you earned proper outs
 Jenny :: worked on win and lose screens and functions, making math work
 Matteo :: worked on printQ, improved farm functions by debugging them, went through code to make it more efficient so that draw() wouldnt freeze
+==============================================================
+2017-06-02
+--------------------------------------------------------------
+Eric :: worked on implementing ecoli with ecoliTimer, ecoliEffect, ecoliRun(), designed image, making Minigame work from empire homesecreen
+Jenny :: worked on implementing ecoli with ecoliTimer, ecoliEffect, ecoliRun()
+Matteo :: worked on implementing ecoli with ecoliTimer, ecoliEffect, ecoliRun(), debugging Minigame (unsuccessfully), 
+==============================================================
+2017-06-03
+--------------------------------------------------------------
+Eric :: 
+Jenny ::
+Matteo :: debugged Farm buttons which weren't clicking, the problem was a misplaced closing brace. debugged minigame to print properly from empire (remedying the failures from 06-02), messed with numbers/math of the game so it works better
 ==============================================================
 
 
