@@ -44,7 +44,9 @@ boolean ecoliState;
 
 /**Actions
  10 = buy store
- 7 = close store
+ 12 = close store
+ 5 = hire employee
+ 6=fix ecoli
  **/
 
 /** Sizes
@@ -67,6 +69,7 @@ int currStoreNum; //for removing store (index in list)
 int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 seconds when a store is closed
 
 boolean playedMinigame;
+boolean strikeBoo;//true if a strike happens
 /*********EMPIRE VARIABLES************/
 
 
@@ -80,8 +83,10 @@ void setup() {
   fire = loadImage("fire.png");
   ecoli = loadImage("ecoli.png");
   out = loadImage("out.png");
+  strike=loadImage("strike.png");
 
   ecoliState=false;
+  strikeBoo=false;
   state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
@@ -215,6 +220,11 @@ void mouseClicked() {
     } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {//hire employee
       empire.addAction(5);
       //currStore.hire(new Employee("Eric"));
+    } else if (overButton(580, 330, 140, 50)) {
+      empire.addAction(12);//close store
+      state=5;
+    } else if (overButton(530, 390, 190, 50)) {
+      currStore.raise(4);//raise
     }
     fireEmployeeButton(currStore);//check if you fired an employee
   } else if (state==6) {
@@ -274,6 +284,11 @@ void runEmpire() {
   //image (emp, 0, 0);
   if (totalTime%10==0) {
     empire.runOperations(totalTime);
+    if (Math.random()>0.999)
+      ecoliState=true;
+    /*if (empire.calculateTotalEmployeeSatisfaction()<1){
+     strikeBoo=true;
+     }*/
     //this runs the actionQueue
     if (!empire.isEmpty()) { 
       timeAction++;
@@ -288,7 +303,7 @@ void runEmpire() {
           if (empire.numUnlockedFarms() < 6) { 
             empire.accessNewFarm();
           }
-        } else if (action==7) {
+        } else if (action==12) {
           //System.out.println("yo");
           //currStore=null;
           empire.closeStore(currStoreNum);
@@ -296,6 +311,9 @@ void runEmpire() {
           //state=5;
         } else if (action==5) {
           currStore.hire(new Employee(retName()));
+        } else if (action==6) {
+          empire.modifyBudget(-10000);//cost to get rid of e coli
+          ecoliState=false;
         }
       }
     }
@@ -395,6 +413,8 @@ void setupIndividualStore(Store s) {
   rect(10, 190, 195, 60);//money rectangle
   rect(10, 260, 195, 120);//operations cost
   rect(530, 190, 190, 120);//customer satisfaction
+  rect(580, 330, 140, 50);//close store
+  rect(530, 390, 190, 50);//raise
   rect(36, 87, 676, 83);//actions queue
   fill(0);
   text("BACK", 15, 50);
@@ -402,10 +422,13 @@ void setupIndividualStore(Store s) {
   rect(0, 450, 750, 300);//big bottom rectangle
   fill(#C475EE);
   text("Employees:", 10, 475);
+  fill(#FF0000);
+  text("Close Store", 585, 365);
   fill(#0000FF);
   text("Daily", 15, 285);
   text("Operations Cost", 15, 315);
   text("Customer\nSatisfaction", 535, 220);
+  text("$4 Raise", 535, 425);
   text(""+s.getCustomerSatisfaction(), 535, 300);
   fill(#00FF00);//lime, hire box
   rect(10, 395, 240, 45);//hire rectangle
@@ -424,8 +447,10 @@ void setupIndividualStore(Store s) {
       text(temp.getName(), xcor+5, 520);
       fill(#01F7FF);
       text("Satisfaction", xcor+5, 545);
+      text("Salary",xcor+5,585);
       fill(255);
       text(temp.getSatisfaction(), xcor+5, 565);
+      text("$"+temp.getSalary(),xcor+5,605);
       fill(#FF0000);
       textSize(24);
       text("FIRE", xcor+5, 725);
@@ -454,12 +479,15 @@ void runIndividualStore(Store s) {
   if (s==null)
     return;
   setupIndividualStore(s);
+  if (s.striking()) {
+    image(strike, 100, 20);
+  }
   fill(#030939);
   textSize(24);
   text(dollarToStr(empire.getBudget()), 20, 225);
   text(dollarToStr(s.getOperationsCost()), 20, 365);
   if (s.numEmployees()==0) {//if no employees, enqueue an action to actionlist to close it. can only close one store at a time
-    empire.addAction(7);
+    empire.addAction(12);
     state=5;
     //timeAction=0;
     //currStore=null;
@@ -518,12 +546,19 @@ void printQ(int s) {
     if (temp==10) {
       //miniStore = loadImage("miniStore.png");
       image(miniStore, 70+offset, ycor);
-    } else if (temp==7) {
+    } else if (temp==12) {
       // fire = loadImage("fire.png");
       image(fire, 70+offset, ycor);
     } else if (temp==5) {
       //hire = loadImage("hire.png");
       image(hire, 70+offset, ycor);
+    } else if (temp==6) {
+      fill(#00FF00);
+      rect(70+offset, ycor, 90, 83);
+      fill(255);
+      textSize(16);
+      text("Cleaning\nEcoli", 72+offset, ycor+20);
+      textSize(20);
     }
     offset+=100;
   }
@@ -649,8 +684,8 @@ void ecoliRun() {
 
 void ecoliButton() {
   if (overButton(200, 200, 500, 500)) {
-    empire.modifyBudget(-10000);//cost to get rid of e coli
-    ecoliState=false;
+    empire.addAction(6);
+
     //ecoliEffect=false;
   }
 }

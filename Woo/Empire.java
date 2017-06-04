@@ -4,7 +4,7 @@ public class Empire {
   private ArrayList<Store> _stores;//list of stores
   private int _employeeSalary;//not currently being used
   private double _budget;
-  private int _totalEmployeeSatisfaction;//determines strikes
+  private double _totalEmployeeSatisfaction;//determines strikes
   private int _totalCustomerSatisfaction;//determines revenue
   private ALQueue<Integer> _actionsList; //better to have codes + modifiers for different actions 
   //buy store = 1
@@ -38,7 +38,7 @@ public class Empire {
   }
 
 
-  public int getTotalEmployeeSatisfaction() {
+  public double getTotalEmployeeSatisfaction() {
     return _totalEmployeeSatisfaction;
   }
 
@@ -46,8 +46,17 @@ public class Empire {
     return _totalCustomerSatisfaction;
   }
 
-  public void modTotalEmployeeSatisfaction(int i) {
+  public void modTotalEmployeeSatisfaction(double i) {
     _totalEmployeeSatisfaction+=i;
+  }
+
+  public double calculateTotalEmployeeSatisfaction() {
+    double r=0;
+    for (Store s : _stores) {
+      r+=s.getEmployeeSatisfaction();
+    }
+    _totalEmployeeSatisfaction= r/_stores.size();
+    return r;
   }
 
   public void modTotalCustomerSatisfaction(int i) {
@@ -90,6 +99,11 @@ public class Empire {
     for (Store s : _stores) {
       if (_patties==0)
         return;
+      if (s.getEmployeeSatisfaction()<=2) {//floored so basically <1
+        s.onStrike();
+      }
+      if (s.striking())
+        continue;
       s.setDailyRevenue(selectedFarm);
       modifyBudget(s.getDailyRevenue());
       s.increaseOperationsCost();

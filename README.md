@@ -24,10 +24,21 @@ Once you make a certain amount of money, you will be able to purchase more store
 Every time you do something it will be added to a queue and take a certain amount of time to complete. An optional method might be to make it a priorityQueue and allow the user to decide what should take priority in the queue (stopping an e coli outbreak might matter more than launching a new ad, for instance).
 
 
-### Instructions
+### Launching Instructions
+#### Launch from terminal
+1. install processing-java from the processing "tools" tab
+2. move into whatever directory you'd like
+3. `>$ git clone git@github.com:MrEricL/heJEMony.git`
+4. `>$ processing-java --sketch=pwd/heJEMony/Woo --run`
+5. Press play
+
+#### Launch from Processing
 1. `>$ cd Woo`
 2. `>$ processing Woo.pde`
-3. Press play. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing "Finish" button when they are complete
-4. When you have completed all 10 orders, press "Finish Game" and you will be brought to the Empire!
-5. Here you can buy new stores, or click on a store to see more detailed information about it.
-6. More features coming soon!
+3. Press play. 
+
+###Gameplay Instructions
+1. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing "Finish" button when they are complete
+2. When you have completed all 10 orders, press "Finish Game" and you will be brought to the Empire!
+3. Here you can buy new stores, or click on a store to see more detailed information about it.
+4. More features coming soon!
