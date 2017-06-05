@@ -134,7 +134,7 @@ public class Empire {
   }
 
   public void addAction(int i) {
-    _actionsList.enqueue(i);
+    if (_actionsList.size() < 6) _actionsList.enqueue(i);
   }
 
 
