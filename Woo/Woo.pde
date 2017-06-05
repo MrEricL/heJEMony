@@ -16,6 +16,7 @@ PImage ecoli;
 PImage strike;
 PImage win;
 PImage out;
+PImage clean;
 
 boolean ecoliState;
 //boolean ecoliEffect=false;
@@ -84,6 +85,7 @@ void setup() {
   ecoli = loadImage("ecoli.png");
   out = loadImage("out.png");
   strike=loadImage("strike.png");
+  clean = loadImage("clean.png");
 
   ecoliState=false;
   strikeBoo=false;
@@ -151,7 +153,7 @@ void draw() {
 
   //PUT AN IMAGE
   if (empire!= null && empire.getPatties()==0) {
-    image(out, 100, 30);
+    image(out, 680, 27);
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
@@ -340,12 +342,14 @@ void printBudget() {
   text(dollarToStr(empire.getBudget()), 340, 150);
 
   //clickable area
+  /*
   stroke(255);
   noFill();
   rect(111, 314, 154, 168);
   rect(500, 314, 154, 168);
   rect(111, 535, 154, 168);
   rect(500, 535, 154, 168);
+  */
 }
 
 //loads screen for individual stores
@@ -553,12 +557,13 @@ void printQ(int s) {
       //hire = loadImage("hire.png");
       image(hire, 70+offset, ycor);
     } else if (temp==6) {
-      fill(#00FF00);
+      image (clean, 70+ offset, ycor);
+      /*fill(#00FF00);
       rect(70+offset, ycor, 90, 83);
       fill(255);
       textSize(16);
       text("Cleaning\nEcoli", 72+offset, ycor+20);
-      textSize(20);
+      textSize(20);*/
     }
     offset+=100;
   }
@@ -667,7 +672,9 @@ void farmButtons() {
 void ecoliRun() {
   //ecoliEffect=true;
   //if (ecoliTimer < 180) 
-  image(ecoli, 200, 200);
+  image(ecoli, 120, 150);
+  image(ecoli, 120, 150);
+  image(ecoli, 120, 150);
   //ecoliTimer+=1;
 
   /*

@@ -9,6 +9,7 @@ int currOrdNum=1;//which order currently on
 float cash=0;
 
 int bunClick;
+boolean played=false;
 
 //printing time
 int realTime=0;
@@ -93,12 +94,13 @@ void drawMinigame() {
     cashStr+="0";
   }
   text("$"+cashStr, 45, 75);
-  if (currOrdNum > 10) {
+  if (currOrdNum > 10 || played) {
     fill(255);
     rect(35, 530, 135, 50);
     fill (0); 
     textSize(20); 
     text("Finish game", 45, 565);
+    played=true;
   }
 }
 
