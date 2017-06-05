@@ -16,8 +16,8 @@ public class Empire {
   private ArrayList<Farm> _availableFarms;
   private Farm selectedFarm; 
 
- 
-  
+
+
 
   //constructor, starts you with 100k
   public Empire() {
@@ -41,14 +41,14 @@ public class Empire {
     _stores.remove(i);
   }
 
- public int nextStoreToClose() {
+  public int nextStoreToClose() {
     return _storesToClose.dequeue();
   }
-  
+
   public void queueStoreToClose(int i) {
     _storesToClose.enqueue(i);
   }
-  
+
   public double getTotalEmployeeSatisfaction() {
     return _totalEmployeeSatisfaction;
   }
@@ -108,11 +108,14 @@ public class Empire {
   //runs operations, uses time to determine whether employees should get less happy
   public void runOperations(int tNow) {
     for (Store s : _stores) {
-      if (_patties==0)
-        return;
+      if ((tNow-s.getCreationTime())%600<10) {
+        s.lowerEmployeeSatisfaction();
+      }
       if (s.getEmployeeSatisfaction()<=2) {//floored so basically <1
         s.onStrike();
       }
+      if (_patties==0)
+        return;
       if (s.striking())
         continue;
       s.setDailyRevenue(selectedFarm);
@@ -125,10 +128,10 @@ public class Empire {
           s.modCustomerSatisfaction(-2);
         }
       }
+      if (selectedFarm.getPercentRealMeat()<.7 && ((tNow-s.getCreationTime())%660<10))//every 11 seconds
+        s.modCustomerSatisfaction(-1);
       //System.out.println(tNow-s.getCreationTime());
-      if ((tNow-s.getCreationTime())%600<10) {
-        s.lowerEmployeeSatisfaction();
-      }
+
       usePatties(s);
       //patties - customerSatisfaction
     }
@@ -231,6 +234,6 @@ public class Empire {
     return selectedFarm;
   }
   public int getFarmNum() { 
-    return _availableFarms.size(); 
+    return _availableFarms.size();
   }
 }
