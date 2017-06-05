@@ -3,14 +3,7 @@ import java.util.ArrayList;
 int state=0;//state begins at starter screen
 boolean hasBeenSetUp;//variable for whether the minigame has been setup, which is important for the draw function which will either setup minigame or run it
 
-/*
-add coords
-top row: 58,241,631,87
-(631-102)/2 is width of each box, w 102 between them
 
-3 boxes
-32,425,686,163
-*/
 
 //images for loading certain screens
 PImage img;
@@ -25,6 +18,7 @@ PImage strike;
 PImage win;
 PImage out;
 PImage clean;
+PImage adScreen;
 
 boolean ecoliState;
 //boolean ecoliEffect=false;
@@ -50,6 +44,8 @@ boolean ecoliState;
  8=lose
  
  9=info
+ 
+ 10=ads
  ...
  ****state variables*/
 
@@ -99,6 +95,7 @@ void setup() {
   out = loadImage("out.png");
   strike=loadImage("strike.png");
   clean = loadImage("clean.png");
+  adScreen=loadImage("ads2.png");
 
   ecoliState=false;
   strikeBoo=false;
@@ -159,24 +156,34 @@ void draw() {
   } else if (state==7) {
     background(#00FF00);
     textSize(100);
-    text("YOU\nWIN!", 300, 500);
+    text("YOU\nWIN!", 300, 300);
+  } else if (state==8) {
+    background(#FF0000);
+    textSize(100);
+    text("YOU\nLOSE :(", 300, 300);
   } else if (state == 9) { 
     runEmpire();
     loadInfo();
-  } else if (empire.size()==10 && empire.getBudget()>=9999999) {//victory
-    state=7;
-  } else if (empire.size()==0 || empire.getBudget()<-100000) {//lose
-    state=8;
+  } else if (state==10) {
+    runEmpire();
+    runAdScreen();
   }
-
-  //PUT AN IMAGE
+  if (empire!=null) {
+    if (empire.size()==10 && empire.getBudget()>=999999) {//victory
+      state=7;
+    }
+    if (empire.size()==0 || empire.getBudget()<-100000) {//lose
+      state=8;
+    }
+  }
+  //PUT AN IMAGE for no patties left
   if (empire!= null && empire.getPatties()==0) {
     image(out, 680, 27);
   }
   totalTime++;
   //prints queue of actions, parameters bc queue bar in different places
   if (state==2) printQ(0);
-  else if (state==3 || state==6 || state==4) printQ(1);
+  else if (state==3 || state==6 || state==4 || state==10 || state==9) printQ(1);
 
   if (ecoliState) {
     ecoliRun();
@@ -241,7 +248,7 @@ void mouseClicked() {
       state=3;
     } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {//hire employee
       empire.addAction(5);
-      currStore.hire(new Employee(retName()));
+      currStore.hire(new Employee(currStore.personName()));
       //currStore.hire(new Employee("Eric"));
     } else if (overButton(580, 330, 140, 50)) {
       empire.addAction(7);//close store
@@ -250,6 +257,8 @@ void mouseClicked() {
       state=5;
     } else if (overButton(530, 390, 190, 50)) {
       currStore.raise(4);//raise
+    } else if (overButton(270, 390, 240, 50)&&empire.getHasAds()) {//ad screen
+      state=10;
     }
     fireEmployeeButton(currStore);//check if you fired an employee
   } else if (state==6) {
@@ -257,6 +266,8 @@ void mouseClicked() {
   } else if (state==9) {
     if (overButton(325, 700, 50, 40))
       state=2;
+  } else if (state==10) {
+    adButtons();
   }
   if (ecoliState) {
     ecoliButton();
@@ -358,7 +369,6 @@ void runEmpire() {
 }
 
 String retName() {
-  ArrayList names = new ArrayList();
   return "Eric";
 }
 
@@ -471,8 +481,16 @@ void setupIndividualStore(Store s) {
   text(""+s.getCustomerSatisfaction(), 535, 300);
   fill(#00FF00);//lime, hire box
   rect(10, 395, 240, 45);//hire rectangle
+  rect(270, 390, 240, 50);//ads
   fill(0);
   text("Hire New Employee", 15, 430);
+  if (empire.size()>3)
+    text("Buy Ads", 275, 430);
+  else {
+    textSize(20);
+    text("Unlock Ads at 4 Stores", 275, 430);
+    textSize(24);
+  }
   int xcor=20;
   int i=0;
   textSize(20);
@@ -746,16 +764,65 @@ void ecoliButton() {
 }
 void loadInfo() { 
   background(#00FF00);
-  textSize(100);
-  text("Information", 100, 100);
+  fill(#D4DD20);
+  rect(36, 87, 676, 83);
+  fill(225);
+  textSize(60);
+  text("Information", 160, 85);
   textSize (50); 
-  text ("Money: " + dollarToStr(empire.getBudget()), 50, 200);
-  text ("Patties: "+empire.getPatties(), 50, 300); 
-  text ("Stores bought: "+ empire.size(), 50, 400); 
-  text ("Farms available: "+ empire.getFarmNum(), 50, 500);
+  text ("Money: " + dollarToStr(empire.getBudget()), 50, 220);
+  text ("Patties: "+empire.getPatties(), 50, 320); 
+  text ("Stores bought: "+ empire.size(), 50, 420); 
+  text ("Farms available: "+ empire.getFarmNum(), 50, 520);
   fill(#FF0000);
   rect(325, 700, 50, 40);
   fill(255);
   textSize(20);
-  text("Back", 330, 730);
+  text("Back", 327, 730);
+}
+
+/*
+add coords
+ top row: 58,241,631,87
+ (631-102)/2 is width of each box, w 102 between them
+ 
+ 3 boxes
+ 32,425,686,163
+ w=185
+ */
+
+
+void runAdScreen() {
+  image(adScreen, 0, 0);
+  textSize(24);
+  fill(#0000FF);
+  text("Customer Satisfaction:\n"+currStore.getCustomerSatisfaction(), 63, 275); 
+  if (currStore.getAdType()==0)
+    text("Ad Success: n/a", 430, 290);
+  else
+    text("Ad Success: "+dollarToStr(currStore.adSuccess(empire.getSelectedFarm())).substring(1)+"%", 430, 290);
+  //box 1 xcor: 32, box2 xcor: 275 3: 533
+  fill(0);
+  if (currStore.getAdType()==0) fill(#14750A);
+  text("No\nAds", 90, 506);
+  fill(0);
+  if (currStore.getAdType()==1) fill(#14750A);
+  text("Advertise\nPrice", 283, 506);
+  fill(0);
+  if (currStore.getAdType()==2) fill(#14750A);
+  text("Advertise\nMeat Quality", 541, 506);
+  textSize(20);
+  fill(#0000FF);
+  text(dollarToStr(empire.getBudget()).substring(1), 296, 80);
+}
+
+void adButtons() {
+  if (overButton(32, 425, 185, 164))
+    currStore.setAd(0);
+  else if (overButton(275, 425, 185, 164))
+    currStore.setAd(1);
+  else if (overButton(533, 425, 185, 164))
+    currStore.setAd(2);
+  else if (overButton(314, 690, 122, 75)) 
+    state=4;
 }
