@@ -176,6 +176,12 @@ Eric ::
 Jenny ::
 Matteo :: debugged Farm buttons which weren't clicking, the problem was a misplaced closing brace. debugged minigame to print properly from empire (remedying the failures from 06-02), messed with numbers/math of the game so it works better
 ==============================================================
+2017-06-04
+--------------------------------------------------------------
+Eric :: 
+Jenny ::
+Matteo :: debugged selling store, which used to boost your money by a over 500k. debugged hiring employees and then selling a store which created a nullpointer exception. debugged closing multiple stores at once
+==============================================================
 
 
 

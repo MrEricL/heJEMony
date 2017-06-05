@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Empire {
   private ArrayList<Store> _stores;//list of stores
+  private ALQueue<Integer> _storesToClose;
   private int _employeeSalary;//not currently being used
   private double _budget;
   private double _totalEmployeeSatisfaction;//determines strikes
@@ -15,6 +16,8 @@ public class Empire {
   private ArrayList<Farm> _availableFarms;
   private Farm selectedFarm; 
 
+ 
+  
 
   //constructor, starts you with 100k
   public Empire() {
@@ -26,6 +29,7 @@ public class Empire {
     _patties=1000;
     _pattiesArray=new int[6];
     _pattiesArray[0]=1000;
+    _storesToClose=new ALQueue<Integer>();
   }
 
   //takes int of store in list to access
@@ -37,7 +41,14 @@ public class Empire {
     _stores.remove(i);
   }
 
-
+ public int nextStoreToClose() {
+    return _storesToClose.dequeue();
+  }
+  
+  public void queueStoreToClose(int i) {
+    _storesToClose.enqueue(i);
+  }
+  
   public double getTotalEmployeeSatisfaction() {
     return _totalEmployeeSatisfaction;
   }

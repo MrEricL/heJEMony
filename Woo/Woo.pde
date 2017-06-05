@@ -45,7 +45,7 @@ boolean ecoliState;
 
 /**Actions
  10 = buy store
- 12 = close store
+ 15 = close store
  5 = hire employee
  6=fix ecoli
  **/
@@ -106,7 +106,7 @@ void setup() {
 
 void draw() {
 
-  //System.out.println(empire.getBudget());
+  if (empire!=null)System.out.println(empire.getBudget());
   if (state==2) {//if empire home screen
     image(emp, 0, 0);
     runEmpire();
@@ -129,10 +129,10 @@ void draw() {
     runIndividualStore(currStore);
   } else if (state==5) {//STORE CLOSED screen
     runEmpire();
-    if (storeClosedScreenStartTime<18) {
+    if (storeClosedScreenStartTime<22) {
       storeClosed();
-      empire.setBudget(storeSell);
-      storeSell*=1.1;
+      //empire.setBudget(storeSell);
+      //storeSell*=1.1;
     } else {
       state=3;
       storeClosedScreenStartTime=0;
@@ -223,7 +223,8 @@ void mouseClicked() {
       empire.addAction(5);
       //currStore.hire(new Employee("Eric"));
     } else if (overButton(580, 330, 140, 50)) {
-      empire.addAction(12);//close store
+      empire.addAction(15);//close store
+      empire.queueStoreToClose(currStoreNum);
       state=5;
     } else if (overButton(530, 390, 190, 50)) {
       currStore.raise(4);//raise
@@ -305,14 +306,17 @@ void runEmpire() {
           if (empire.numUnlockedFarms() < 6) { 
             empire.accessNewFarm();
           }
-        } else if (action==12) {
+        } else if (action==15) {
           //System.out.println("yo");
           //currStore=null;
-          empire.closeStore(currStoreNum);
+          empire.setBudget(storeSell);
+          empire.closeStore(empire.nextStoreToClose());
           currStoreNum=0;
+          storeSell*=1.1;
           //state=5;
         } else if (action==5) {
-          currStore.hire(new Employee(retName()));
+          if (currStore!=null)
+            currStore.hire(new Employee(retName()));
         } else if (action==6) {
           empire.modifyBudget(-10000);//cost to get rid of e coli
           ecoliState=false;
@@ -344,12 +348,12 @@ void printBudget() {
   //clickable area
   /*
   stroke(255);
-  noFill();
-  rect(111, 314, 154, 168);
-  rect(500, 314, 154, 168);
-  rect(111, 535, 154, 168);
-  rect(500, 535, 154, 168);
-  */
+   noFill();
+   rect(111, 314, 154, 168);
+   rect(500, 314, 154, 168);
+   rect(111, 535, 154, 168);
+   rect(500, 535, 154, 168);
+   */
 }
 
 //loads screen for individual stores
@@ -451,10 +455,10 @@ void setupIndividualStore(Store s) {
       text(temp.getName(), xcor+5, 520);
       fill(#01F7FF);
       text("Satisfaction", xcor+5, 545);
-      text("Salary",xcor+5,585);
+      text("Salary", xcor+5, 585);
       fill(255);
       text(temp.getSatisfaction(), xcor+5, 565);
-      text("$"+temp.getSalary(),xcor+5,605);
+      text("$"+temp.getSalary(), xcor+5, 605);
       fill(#FF0000);
       textSize(24);
       text("FIRE", xcor+5, 725);
@@ -491,7 +495,8 @@ void runIndividualStore(Store s) {
   text(dollarToStr(empire.getBudget()), 20, 225);
   text(dollarToStr(s.getOperationsCost()), 20, 365);
   if (s.numEmployees()==0) {//if no employees, enqueue an action to actionlist to close it. can only close one store at a time
-    empire.addAction(12);
+    empire.addAction(15);
+    empire.queueStoreToClose(currStoreNum);
     state=5;
     //timeAction=0;
     //currStore=null;
@@ -528,7 +533,7 @@ void storeClosed() {
   background(#FF0000);
   fill(255);
   textSize(64);
-  text(currStore.getName()+"\nCLOSED", 120, 300);
+  text(currStore.getName()+"\nCLOSING", 120, 300);
   storeClosedScreenStartTime++;
 }
 
@@ -550,7 +555,7 @@ void printQ(int s) {
     if (temp==10) {
       //miniStore = loadImage("miniStore.png");
       image(miniStore, 70+offset, ycor);
-    } else if (temp==12) {
+    } else if (temp==15) {
       // fire = loadImage("fire.png");
       image(fire, 70+offset, ycor);
     } else if (temp==5) {
@@ -559,11 +564,11 @@ void printQ(int s) {
     } else if (temp==6) {
       image (clean, 70+ offset, ycor);
       /*fill(#00FF00);
-      rect(70+offset, ycor, 90, 83);
-      fill(255);
-      textSize(16);
-      text("Cleaning\nEcoli", 72+offset, ycor+20);
-      textSize(20);*/
+       rect(70+offset, ycor, 90, 83);
+       fill(255);
+       textSize(16);
+       text("Cleaning\nEcoli", 72+offset, ycor+20);
+       textSize(20);*/
     }
     offset+=100;
   }
