@@ -230,4 +230,7 @@ public class Empire {
   public Farm getSelectedFarm () { 
     return selectedFarm;
   }
+  public int getFarmNum() { 
+    return _availableFarms.size(); 
+  }
 }

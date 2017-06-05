@@ -40,6 +40,8 @@ boolean ecoliState;
  7=victory
  
  8=lose
+ 
+ 9=info
  ...
  ****state variables*/
 
@@ -89,7 +91,7 @@ void setup() {
 
   ecoliState=false;
   strikeBoo=false;
-  state = 0; //state is meant to be zero this is for testing purposes
+state = 0; //state is meant to be zero this is for testing purposes
   size(750, 750);
   //normally setup will only do the first line. we have the other ones for testing purposes
   if (state==0) {
@@ -145,6 +147,8 @@ void draw() {
     background(#00FF00);
     textSize(100);
     text("YOU\nWIN!", 300, 500);
+  } else if (state == 9) { 
+    loadInfo();    
   } else if (empire.size()==10 && empire.getBudget()>=9999999) {//victory
     state=7;
   } else if (empire.size()==0 || empire.getBudget()<-100000) {//lose
@@ -201,6 +205,9 @@ void mouseClicked() {
       state=1;
       setupMinigame();
       //   drawMinigame();
+    }
+    else if (overButton (500, 314, 154, 168)) { 
+      state = 9; 
     }
   } else if (state==3) {//individual stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
@@ -700,4 +707,14 @@ void ecoliButton() {
 
     //ecoliEffect=false;
   }
+}
+void loadInfo() { 
+    background(#00FF00);
+    textSize(100);
+    text("Information", 100, 100);
+    textSize (50); 
+    text ("Money: " + empire.getBudget(), 50,200);
+    text ("Patties: "+empire.getPatties(), 50, 300); 
+    text ("Stores bought: "+ empire.size(), 50, 400); 
+    text ("Farms available: "+ empire.getFarmNum(), 50, 500); 
 }
