@@ -150,9 +150,9 @@ public class Empire {
         }
 
         if (s.adSuccess(selectedFarm)==-1) {
-        } else if (s.adSuccess(selectedFarm)<50) {//ads dont work
+        } else if (s.adSuccess(selectedFarm)<40) {//ads dont work
           s.modCustomerSatisfaction(-3);
-        } else if (s.adSuccess(selectedFarm)>50) {
+        } else if (s.adSuccess(selectedFarm)>40) {
           s.modCustomerSatisfaction(2);//ads work
         }
         //System.out.println(tNow-s.getCreationTime());
