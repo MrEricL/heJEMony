@@ -13,9 +13,11 @@ public class Store {
     private boolean _strike;
     private static final String[] STORENAMES = {"Burger \nPalace", "Burger\nJoint", "Best\nBurger", "Speedy\nBurgers", "Top\nBurger", "Burger\nVillage", "Burger\nQueen", "Mc-\n-Dlanod", "Still\nCondo", "Blue\nCastle"};
     private static int storePlace=9;
+    private int adType;//0=no ad, 1=price, 2=patty quality
 
     public Store(int time) {
 	_employees=new ArrayList<Employee>();
+	adType=0;
 	_strike=false;
 	hire(new Employee("Bob"));//first employee
 	_customerSatisfaction=10;
@@ -150,5 +152,20 @@ public class Store {
 	for (Employee e: _employees) {
 	    e.modSatisfaction(i);
 	}
+    }
+
+    public void setAd(int i) {
+	adType=i;
+    }
+
+    public double adSuccess(Farm f) {//will take currentFarm from empire
+	if (adType==1) {//advertising price
+	    return (int)(10/f.getPercentRealMeat())*5;//lower percent real meat = lower price
+	}
+	else if (adType==2) {
+	    return (f.getPercentRealMeat()-.4)*20;
+	}
+	else
+	    return -1;
     }
 }

@@ -3,6 +3,14 @@ import java.util.ArrayList;
 int state=0;//state begins at starter screen
 boolean hasBeenSetUp;//variable for whether the minigame has been setup, which is important for the draw function which will either setup minigame or run it
 
+/*
+add coords
+top row: 58,241,631,87
+(631-102)/2 is width of each box, w 102 between them
+
+3 boxes
+32,425,686,163
+*/
 
 //images for loading certain screens
 PImage img;
