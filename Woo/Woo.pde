@@ -1,4 +1,4 @@
-brimport java.util.ArrayList; 
+import java.util.ArrayList; 
 //****state variables
 int state=0;//state begins at starter screen
 boolean hasBeenSetUp;//variable for whether the minigame has been setup, which is important for the draw function which will either setup minigame or run it
