@@ -819,10 +819,14 @@ void runAdScreen() {
 void adButtons() {
   if (overButton(32, 425, 185, 164))
     currStore.setAd(0);
-  else if (overButton(275, 425, 185, 164))
+  else if (overButton(275, 425, 185, 164)){
     currStore.setAd(1);
-  else if (overButton(533, 425, 185, 164))
+    empire.setBudget(-20000);
+  }
+  else if (overButton(533, 425, 185, 164)){
+   empire.setBudget(-20000); 
     currStore.setAd(2);
+  }
   else if (overButton(314, 690, 122, 75)) 
     state=4;
 }

@@ -121,7 +121,7 @@ public class Empire {
       if ((tNow-s.getCreationTime())%600<10) {
         s.lowerEmployeeSatisfaction();
       }
-      if (s.getEmployeeSatisfaction()<=2&&!s.striking()) {//floored so basically <1
+      if (s.getEmployeeSatisfaction()<=1&&!s.striking()) {//floored so basically <1
         s.onStrike();
       } else if (s.getEmployeeSatisfaction()>2&&s.striking())
         s.endStrike();
