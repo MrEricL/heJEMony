@@ -1,14 +1,14 @@
 //*****Minigame variables
 ALDeque<Order> _orders;//=new ALDeque<Order>();
-ArrayList<Integer> burgerTimes; 
-int miniTime=0;//time variable
-int y=185;//for printing orders
-Order currOrder = new Order();
-int placeForFood=500;//where you add food to
+ArrayList<Integer> burgerTimes; //list of times so that if you take over 11 seconds to make an order you make less $
+int miniTime;//time variable
+int y;//for printing orders
+Order currOrder;//current order to be built up
+int placeForFood;//where you add food to
 int currOrdNum;//which order currently on
-float cash=0;
+float cash;//total money
 
-int bunClick;
+int bunClick;//used for deciding b/w top and bottom bun image
 boolean played=false;
 
 //printing time
@@ -18,16 +18,21 @@ int counterT=0;
 PImage tomato;
 PImage lettuce;
 PImage patty;
-PImage XYZ;
-PImage ABC;
+PImage XYZ;//bottom bun
+PImage ABC;//top bun
 PImage cheese;
 //****Minigame variables
 
 //MINI GAME STUFF
 void setupMinigame() {
+  cash=0;
+  placeForFood=500;
   bunClick=0;
   _orders=new ALDeque<Order>();
   burgerTimes = new ArrayList <Integer>(); 
+  currOrder=new Order();
+  y=185;
+  miniTime=0;
 
   strokeWeight(0);
   XYZ = loadImage("bun.png");
@@ -61,7 +66,7 @@ void setupMinigame() {
 
 
 
-
+//various chunks of code that update your total money, the time, etc.
 void drawMinigame() {
 
   loadOrders();
@@ -81,9 +86,6 @@ void drawMinigame() {
     textSize(28);    
     text(realTime, 620, 70);//prints time
   }
-  /*if (miniTime % 11 == 0) {//compounds time if you are taking too long
-   burgerTimes.add (0, new Integer (0));
-   } */
   fill(0);
   rect(40, 50, 100, 40);//total cash rectangle
   rect(160, 50, 100, 40);//burger price rectangle
@@ -176,7 +178,7 @@ void buttons() {
 }
 
 
-//used for managing the thing
+//prints orders on side
 void printOrders(int linelength) {
   // len 22 
   // number + period + space
@@ -216,35 +218,15 @@ void printOrders(int linelength) {
   y+=30;
 }
 
-///
-
+//generates new orders
 void loadOrders() {
   if (miniTime%600==0 && miniTime<6000) {
     //holds place in the substring
     fill(0);
     int place=0;
     _orders.addLast(new Order(4));
-    burgerTimes.add (new Integer (0));
+    burgerTimes.add (new Integer (0));//burger time corresponding to new order
     printOrders(25);
-    /*
-    textSize(13);
-     //gets most recent order
-     String currOrder=_orders.peekLast().toString();
-     //text is added in subsets of 18 characters so it doesnt go off the screen
-     text ((miniTime/600+1)+". "+currOrder.substring(place, place+18), 565, y);
-     place+=18;
-     y+=20;
-     System.out.println(currOrder);
-     while (place<currOrder.length()-18) {
-     text(currOrder.substring(place, place+18), 620, y);
-     place+=18;
-     y+=20;
-     }
-     text(currOrder.substring(place), 620, y);
-     y+=20;
-     if ((y-170)%60!=0) {
-     y+=20;
-     }*/
   }
 }
 
@@ -273,10 +255,10 @@ void drawButtons() {
 
 void checkOrder() {
   //bunClick=0;
-  if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {
+  if (!_orders.isEmpty()&&overButton(35, 430, 110, 50)) {//if over finish button
     bunClick=0;
-    if (_orders.peekFirst().equals(currOrder)) {
-      if (burgerTimes.get(0) > 11) { 
+    if (_orders.peekFirst().equals(currOrder)) {//if order is correct
+      if (burgerTimes.get(0) > 11) { //if you took too long the money you make decreases
         double decrease = (burgerTimes.get(0) - 11) * 0.1; 
         double realPrice = _orders.pollFirst().getPrice() - decrease; 
         if (realPrice < 0) { 
