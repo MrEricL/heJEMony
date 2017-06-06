@@ -5,7 +5,7 @@ int miniTime=0;//time variable
 int y=185;//for printing orders
 Order currOrder = new Order();
 int placeForFood=500;//where you add food to
-int currOrdNum=1;//which order currently on
+int currOrdNum;//which order currently on
 float cash=0;
 
 int bunClick;
@@ -30,7 +30,6 @@ void setupMinigame() {
   burgerTimes = new ArrayList <Integer>(); 
 
   strokeWeight(0);
-  currOrdNum=1;
   XYZ = loadImage("bun.png");
   ABC = loadImage("topbun.png");
   patty = loadImage("burger.png");
@@ -77,28 +76,34 @@ void drawMinigame() {
     for (int i = 0; i < burgerTimes.size(); i ++ ) { 
       burgerTimes.set (i, burgerTimes.get (i) + 1);
     } 
+    //System.out.println(burgerTimes);
     fill(255);
     textSize(28);    
     text(realTime, 620, 70);//prints time
   }
-  if (miniTime % 11 == 0) {//compounds time if you are taking too long
-    burgerTimes.add (0, new Integer (0));
-  } 
+  /*if (miniTime % 11 == 0) {//compounds time if you are taking too long
+   burgerTimes.add (0, new Integer (0));
+   } */
   fill(0);
-  rect(40, 50, 100, 40);
-  rect(160, 50, 100, 50);
+  rect(40, 50, 100, 40);//total cash rectangle
+  rect(160, 50, 100, 40);//burger price rectangle
   fill(#00FF00);
   textSize(24);
-  /*
+
+  //**prints price of current order
   double realPrice=0;
-   if (burgerTimes.get(0) > 11) { 
-   double decrease = (burgerTimes.get(0) - 11) * 0.1; 
-   realPrice = _orders.pollFirst().getPrice() - decrease; 
-   if (realPrice < 0) { 
-   realPrice = 0;
-   }
-   }
-   text(dollarToStr(realPrice),165,80);*/
+  if (_orders.size()>0&&burgerTimes.get(0) > 11) { 
+    double decrease = (burgerTimes.get(0) - 11) * 0.1; 
+    realPrice = _orders.peekFirst().getPrice() - decrease; 
+    if (realPrice < 0) { 
+      realPrice = 0;
+    }
+    text(dollarToStr(realPrice), 165, 75);
+  } else if (_orders.size()>0)
+    text(dollarToStr(_orders.peekFirst().getPrice()), 165, 75);
+  //**end of code printing price of current order
+
+
   String cashStr=""+cash;
   cashStr=cashStr.substring(0, cashStr.indexOf(".")+2);
   if (cashStr.length()-cashStr.indexOf(".")==2) {
@@ -218,7 +223,8 @@ void loadOrders() {
     //holds place in the substring
     fill(0);
     int place=0;
-    _orders.addLast(new Order(4)); 
+    _orders.addLast(new Order(4));
+    burgerTimes.add (new Integer (0));
     printOrders(25);
     /*
     textSize(13);
@@ -276,18 +282,21 @@ void checkOrder() {
         if (realPrice < 0) { 
           realPrice = 0;
         } 
-        cash += realPrice; 
-        burgerTimes.remove(0);
+        cash += realPrice;
       } else { 
         cash+=_orders.pollFirst().getPrice();
       }
+      burgerTimes.remove(0);
       //strokeWeight(1);
       //to cross out orders
+      System.out.println(186+(currOrdNum-1)*55);
       fill(0);
       text("-----------------", 575, 186+(currOrdNum-1)*55);
       text("-----------------", 575, 213+(currOrdNum-1)*55);
 
       currOrdNum+=1;
+      //System.out.println(currOrdNum);
+
     }
     currOrder=new Order();
     placeForFood=500;

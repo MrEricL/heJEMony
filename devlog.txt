@@ -200,7 +200,7 @@ Matteo :: implemented advertisements in Store.java with adType variable and modi
 --------------------------------------------------------------
 Eric :: making ads cost money
 Jenny :: making ads cost money, devlog 
-Matteo :: making ads cost money 
+Matteo :: making ads cost money, fixing bug with naming stores, fixing bug with dividing by zero in removing stores, fixed bug in minigame with timing, added printing cost of current order to minigame
 ==============================================================
 
 
