@@ -415,6 +415,9 @@ void updateStoresScreen() {
     //rect(xcor, ycor, 100, 100);
     if (i<empire.size()) {
       fill(255);
+      if (empire.getStore(i).striking()) { 
+        fill (#FF0000); 
+      } 
       text(empire.getStore(i).getName()/*"Store "+(i+1)*/, xcor+10, ycor+40);
     }
     xcor+=133;

@@ -32,7 +32,7 @@ public class Store {
     STORENAMES[i]=STORENAMES[storePlace]; //broken
     STORENAMES[storePlace]=temp;
     _timeCreation=time;
-    storePlace--;
+    //storePlace--;
   }
 
   public void increaseStorePlace() {
@@ -56,6 +56,9 @@ public class Store {
     for (Employee e : _employees) {
       r+=e.getSatisfaction();
     }
+    if (_employees.size() == 0){ 
+      return 0; 
+    } 
     return r/_employees.size();
   }
 
