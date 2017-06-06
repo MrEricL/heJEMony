@@ -86,8 +86,19 @@ void drawMinigame() {
   } 
   fill(0);
   rect(40, 50, 100, 40);
+  rect(160, 50, 100, 50);
   fill(#00FF00);
   textSize(24);
+  /*
+  double realPrice=0;
+   if (burgerTimes.get(0) > 11) { 
+   double decrease = (burgerTimes.get(0) - 11) * 0.1; 
+   realPrice = _orders.pollFirst().getPrice() - decrease; 
+   if (realPrice < 0) { 
+   realPrice = 0;
+   }
+   }
+   text(dollarToStr(realPrice),165,80);*/
   String cashStr=""+cash;
   cashStr=cashStr.substring(0, cashStr.indexOf(".")+2);
   if (cashStr.length()-cashStr.indexOf(".")==2) {

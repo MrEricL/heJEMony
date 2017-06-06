@@ -120,6 +120,8 @@ public class Empire {
     for (Store s : _stores) {
       if ((tNow-s.getCreationTime())%600<10) {
         s.lowerEmployeeSatisfaction();
+        if (_patties==0)
+          s.modCustomerSatisfaction(-1);
       }
       if (s.getEmployeeSatisfaction()<=1&&!s.striking()) {//floored so basically <1
         s.onStrike();
@@ -129,8 +131,10 @@ public class Empire {
         modHasAds(true);
       else
         modHasAds(false);
-      if (_patties==0)
-        return;
+      if (_patties==0) {
+        setBudget(-s.getOperationsCost());
+        continue;
+      }
       if (s.striking())
         continue;
       s.setDailyRevenue(selectedFarm);
@@ -158,7 +162,6 @@ public class Empire {
         //System.out.println(tNow-s.getCreationTime());
       }
       usePatties(s);
-
     }
   }
 
