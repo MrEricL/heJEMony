@@ -27,16 +27,18 @@ Flesh out each category whenever necessary, appropriate.
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Our code wasn't running at one point, the draw() method just froze entirely. We made our code more efficient by closing loops as soon as possible and changing if to else if chains, and we put all the loadImage() commands in the setup() method
+- Our code wasn't running at one point, the draw() method just froze entirely. We made our code more efficient by closing loops as soon as possible and changing if to else if chains, and we put all the loadImage() commands in the setup() method.
+- We thought it froze again later on, but it was actually just the patty counter we had implemented working
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- When removing a store or hiring an employee, we have it on the queue in order to maintain the purpose of only being able to do one action at a time, however the action is completed immediately rather than when the queue ends in order to avoid errors with nullPointer exceptions from hiring and switching stores or closing multiple stores
+- When removing a store or hiring an employee, we have it on the queue in order to maintain the purpose of only being able to do one action at a time, however the action is completed immediately rather than when the queue ends in order to avoid errors with nullPointer exceptions from hiring and switching stores or closing multiple stores. We made hiring and firing instant in order to resolve this, but it still shows on the queue for more than an instant. 
 
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- in processing you can only loadImage() in setup() (or rather if you do it elsewhere it can cause mysterious freezing)
+- in processing you can only loadImage() in setup() (or rather if you do it elsewhere it can cause mysterious freezing
+- we learned how to implement button functioning. We wrote an overButton function that we called in mouseClicked
 
 
 MID-DEVELOPMENT DESIGN CHANGES
@@ -44,12 +46,14 @@ MID-DEVELOPMENT DESIGN CHANGES
 - Changed Farm screen from deciding meat percentage to choosing between farms
 - Made e. coli much simpler, you just pay a fine and get rid of it
 - Did not use a Stack of milestones, just had some if statements which was more convenient
-- Implemented a Heap and HeapSort for accessing new farms!
+- Implemented a Heap and HeapSort for accessing new farms; heap is based on percentage of real meat in each patty
+-Added advertisement features last-minute for each store to increase/decrease customer satisfaction
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 tales of wisdom gained...
 ||||||||||||||||||||||||||||||||||||||||||
+- Organize code. We had some really long processing files and java classes as well a large number of classes for the whole game and it was difficult to locate method/variable names easily without code organized with comments and white space
 
 
 
@@ -141,7 +145,7 @@ Matteo :: implemented store.png page (updated coordinates of overButton() method
 2017-05-29
 --------------------------------------------------------------
 Eric :: printing queue picture for the stores, printQ() method
-Jenny :: wrote Farm.java class, constructor, figured out variables to use
+Jenny :: wrote Farm.java class, constructor, figured out variables to use, buyPatties() and patty tracker in Empire
 Matteo :: worked on employee satisfaction decreasing with time if they don't get a raise, so functions like Employee.decreaseSatisfaction()
 ==============================================================
 2017-05-30
@@ -189,8 +193,14 @@ Matteo :: debugged selling store, which used to boost your money by a over 500k.
 2017-06-05
 --------------------------------------------------------------
 Eric :: screen for advertisements, debugging minigame
-Jenny :: checking for bugs, finished information screen
+Jenny :: checking for bugs, finished information screen and added button functioning to info screen from main screen
 Matteo :: implemented advertisements in Store.java with adType variable and modifier methods, then added that to the <Empire>.runOperations() method. Debugged strikes and closing stores resulting in null pointer error
+==============================================================
+2017-06-06
+--------------------------------------------------------------
+Eric :: making ads cost money
+Jenny :: making ads cost money, devlog 
+Matteo :: making ads cost money 
 ==============================================================
 
 
