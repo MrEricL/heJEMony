@@ -37,8 +37,12 @@ Every time you do something it will be added to a queue and take a certain amoun
 2. `>$ processing Woo.pde`
 3. Press play. 
 
-###Gameplay Instructions
+### Gameplay Instructions
 1. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing "Finish" button when they are complete
 2. When you have completed all 10 orders, press "Finish Game" and you will be brought to the Empire!
-3. Here you can buy new stores, or click on a store to see more detailed information about it.
-4. More features coming soon!
+3. Click on the store, the top left button, where you can buy new stores, or click on a store to see more detailed information about it.
+4. You can click on the farm, the bottom left, to choose between farms. Better farms are unlocked as you buy new stores. You need to remember to keep stocking patties. A red triangle will appear when you are out of patties and you will stop making money
+5. You can click on the burger to replay the minigame
+6. The question mark is a general info tab
+7. From an individual store you can buy advertisements after you have 4 or more stores. These ads should be targeted based on whether you are choosing cheap patties or high quality patties.
+8. Random events like e coli might derail you, and workers might go on strike. Be careful! 
