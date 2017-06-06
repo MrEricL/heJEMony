@@ -799,11 +799,11 @@ void runAdScreen() {
   image(adScreen, 0, 0);
   textSize(24);
   fill(#0000FF);
-  text("Customer Satisfaction:\n"+currStore.getCustomerSatisfaction(), 63, 275); 
+  text(currStore.getCustomerSatisfaction(), 263, 295); 
   if (currStore.getAdType()==0)
-    text("Ad Success: n/a", 430, 290);
+    text("n/a", 590, 290);
   else
-    text("Ad Success: "+dollarToStr(currStore.adSuccess(empire.getSelectedFarm())).substring(1)+"%", 430, 290);
+    text(dollarToStr(currStore.adSuccess(empire.getSelectedFarm())).substring(1)+"%", 590, 290);
   //box 1 xcor: 32, box2 xcor: 275 3: 533
   fill(0);
   if (currStore.getAdType()==0) fill(#14750A);
