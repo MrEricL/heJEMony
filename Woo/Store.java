@@ -28,11 +28,7 @@ public class Store {
     //get random name for store
     int i=(int)(Math.random()*storePlace);
     _name=STORENAMES[i];
-    String temp=STORENAMES[i];
-    STORENAMES[i]=STORENAMES[storePlace]; //broken
-    STORENAMES[storePlace]=temp;
-    _timeCreation=time;
-    //storePlace--;
+    
   }
 
   public void increaseStorePlace() {
