@@ -31,12 +31,11 @@ Every time you do something it will be added to a queue and take a certain amoun
 1. install processing-java from the processing "tools" tab
 2. move into whatever directory you'd like
 3. `$ git clone git@github.com:MrEricL/heJEMony.git`
-4. `$ processing-java --sketch=pwd/heJEMony/Woo --run`
-5. Press the arrow to play.
+4. '$ processing-java --sketch=pwd/heJEMony/Woo --run`
 
 #### Launch from Processing
-1. `>$ cd Woo`
-2. `>$ processing Woo.pde`
+1. `$ cd Woo`
+2. `$ processing Woo.pde`
 3. Press the arrow to play. 
 
 ### Gameplay Instructions
