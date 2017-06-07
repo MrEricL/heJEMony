@@ -260,7 +260,6 @@ void mouseClicked() {
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
       if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6) {
         empire.queueBuyStore(storeCost);//10=buy store
-        System.out.println("queued store");
         storeCost*=1.25;
       }
     } else if (overButton(314, 690, 122, 75)) {//go back
@@ -353,9 +352,7 @@ void runEmpire() {
     empire.runOperations(totalTime);
     if (Math.random()>0.9999)
       ecoliState=true;
-    /*if (empire.calculateTotalEmployeeSatisfaction()<1){
-     strikeBoo=true;
-     }*/
+    
     //this runs the actionQueue
     if (!empire.isEmpty()) { 
       timeAction++;
@@ -633,20 +630,10 @@ void printQ(int s) {
       image(hire, 70+offset, ycor);
     } else if (temp==6) {
       image (clean, 70+ offset, ycor);
-      /*fill(#00FF00);
-       rect(70+offset, ycor, 90, 83);
-       fill(255);
-       textSize(16);
-       text("Cleaning\nEcoli", 72+offset, ycor+20);
-       textSize(20);*/
+     
     } else if (temp==11) {
       image(farmChange, 70+offset, ycor);
-      /*fill(#FF0000);
-       rect(70+offset, ycor, 90, 83);
-       fill(255);
-       textSize(16);
-       text("Changing\nFarm", 72+offset, ycor+20);
-       textSize(20);*/
+
     } else if (temp==4) {
       image(addAd, 70+offset, ycor);
     } else if (temp==3) {
@@ -669,29 +656,7 @@ void setupFarm() {
   text("Patties available: " + empire.getPatties(), 175, 240); 
   int xcor=60;
   int ycor=300;
-  /*
-  for (int i=0; i<6; i++) {
-   fill(#12490C);
-   rect(xcor, ycor, 160, 190);
-   if (i<empire.numUnlockedFarms()) {
-   textSize(18);
-   if (empire.getFarm(i).isChosen())
-   fill(#00FF00);
-   else
-   fill(#FF0000);
-   text(empire.getFarm(i).getName(), xcor+10, ycor+18);
-   fill(#FFFB00);
-   text((int)(empire.getFarm(i).getPercentRealMeat()*100)+"% Real Meat", xcor+10, ycor+50);
-   text("$"+empire.getFarm(i).getCostPerPatty()+" per patty", xcor+10, ycor+75);
-   fill(#00FF00);
-   text("SELECT FARM", xcor+10, ycor+170);
-   }
-   xcor+=240;
-   if (i==2) {
-   xcor=60;
-   ycor=500;
-   }
-   }*/
+  
   fill(#00FF00);
   textSize(20);
   rect(15, 15, 60, 30);
