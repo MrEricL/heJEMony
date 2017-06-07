@@ -1,6 +1,6 @@
 import java.util.ArrayList; 
 //****state variables
-int state=0;//state begins at starter screen
+int state;//state begins at starter screen
 boolean hasBeenSetUp;//variable for whether the minigame has been setup, which is important for the draw function which will either setup minigame or run it
 
 
@@ -26,6 +26,8 @@ PImage noAd;
 boolean ecoliState;//if you have ecoli
 
 /*  STATES
+ -1=instructions
+ 
  0=starter scren
  
  1= minigame
@@ -113,6 +115,11 @@ void setup() {
   if (state==0) {
     //img = loadImage("hegemony splash art 2.png");
     image(img, 0, 0);
+    fill(#0000FF);
+    rect(282, 500, 185, 105);//instructions
+    fill(#FF0000);
+    textSize(24);
+    text("Instructions", 300, 540);
   } else if (state==1) {
     setupMinigame();
   } else if (state==2) {
@@ -125,7 +132,16 @@ void setup() {
 void draw() {
 
   //if (empire!=null)System.out.println(empire.getBudget());
-  if (state==2) {//if empire home screen
+  if (state==-1) {
+    instructionsScreen();
+  } else if (state==0) {
+    image(img, 0, 0);
+    fill(#0000FF);
+    rect(282, 500, 185, 105);//instructions
+    fill(#FF0000);
+    textSize(24);
+    text("Instructions", 300, 540);
+  } else if (state==2) {//if empire home screen
     image(emp, 0, 0);
     runEmpire();
     printBudget();
@@ -212,6 +228,9 @@ void mouseClicked() {
         playedMinigame=true;
       }
     }
+  } else if (state==-1) {//instructions
+    if (overButton(5, 520, 50, 40))
+      state=0;
   }
 
   //IF YOU CLICK PLAY BUTTON ON MENU
@@ -219,6 +238,8 @@ void mouseClicked() {
     if (overButton(282, 369, 185, 105)) {
       state=1;
       setupMinigame();
+    } else if (overButton(282, 500, 185, 105)) {
+      state=-1;
     }
   }
   //END MENU PLAY
@@ -445,7 +466,7 @@ void updateStoresScreen() {
 //converts dollar double to string w $
 public String dollarToStr(double d) {
   if (d>9999999)
-    return ("$"+d).substring(0,5)+"e"+(""+d).substring((""+d).length()-1);
+    return ("$"+d).substring(0, 5)+"e"+(""+d).substring((""+d).length()-1);
   String s = ""+d;
   s=s.substring(0, s.indexOf(".")+2);
   if (s.length()-s.indexOf(".")==2) {
@@ -825,4 +846,23 @@ void adButtons() {//checks three boxes and back button for if you want to buy ad
     if (currAd!=2) empire.addAction(4);
   } else if (overButton(314, 690, 122, 75)) 
     state=4;
+}
+
+void instructionsScreen() {
+  background(0);
+  fill(255);
+  textSize(12);
+  text("Instructions", 300, 50);
+  text("0. Press play", 10, 100);
+  text("1. Build burgers as per the Orders list on the side screen by pressing appropriate buttons and pressing 'Finish' button when\nthey are complete", 10, 150);
+  text("2. When you have completed all 10 orders, press 'Finish Game' and you will be brought to the Empire!", 10, 200);
+  text("3. Click on the store, the top left button, where you can buy new stores, or click on a store to see more detailed information\nabout it.", 10, 250);
+  text("4. You can click on the farm, the bottom left, to choose between farms. Better farms are unlocked as you buy new stores. You\nneed to remember to keep stocking patties. A red triangle will appear when you are out of patties and you will lose money", 10, 300);
+  text("5. You can click on the burger to replay the minigame", 10, 350);
+  text("6. The question mark is a general info tab", 10, 400);
+  text("7. From an individual store you can buy advertisements after you have 4 or more stores. These ads should be targeted based\non whether you are choosing cheap patties or high quality patties.", 10, 450);
+  text("8. Random events like e coli might derail you, and workers might go on strike. Be careful!", 10, 500);
+  rect(5, 520, 50, 40);
+  fill(0);
+  text("BACK", 10, 550);
 }
