@@ -20,6 +20,8 @@ PImage out;
 PImage clean;
 PImage adScreen;
 PImage farmChange;
+PImage addAd;
+PImage noAd;
 
 boolean ecoliState;//if you have ecoli
 
@@ -98,6 +100,8 @@ void setup() {
   clean = loadImage("clean.png");
   adScreen=loadImage("ads2.png");
   farmChange=loadImage("farmchange.png");
+  addAd = loadImage ("ad pic.png");
+  noAd = loadImage ("noad.png");
 
   ecoliState=false;
   strikeBoo=false;
@@ -296,8 +300,9 @@ boolean overButton(int x, int y, int width, int height) {
 //cheat code -- press s for 100k
 void keyPressed() {
   if (key==97) currOrdNum=11;
-  if (key==115) empire.setBudget(100000);
-  if (key==98) {
+  else if (key==115 && empire!=null) empire.setBudget(10000000);
+  else if (key==116 && empire!=null) empire.setBudget(-10000000);
+  else if (key==98) {
     ecoliState=true;
   }
 }
@@ -620,6 +625,13 @@ void printQ(int s) {
       text("Changing\nFarm", 72+offset, ycor+20);
       textSize(20);*/
     }
+    else if (temp==4){
+      image(addAd, 70+offset,ycor);
+      
+    }
+    else if (temp==3) {
+      image(noAd, 70+offset,ycor);
+    }
     offset+=100;
   }
 }
@@ -801,15 +813,20 @@ void runAdScreen() {
 }
 
 void adButtons() {//checks three boxes and back button for if you want to buy ads
-  if (overButton(32, 425, 185, 164))
+  int currAd = currStore.getAdType();
+  if (overButton(32, 425, 185, 164)){
     currStore.setAd(0);
+    if (currAd!=0) empire.addAction(3);
+  }
   else if (overButton(275, 425, 185, 164)){
     currStore.setAd(1);
     empire.setBudget(-20000);
+    if (currAd!=1) empire.addAction(4);
   }
   else if (overButton(533, 425, 185, 164)){
    empire.setBudget(-20000); 
     currStore.setAd(2);
+    if (currAd!=2) empire.addAction(4);
   }
   else if (overButton(314, 690, 122, 75)) 
     state=4;
