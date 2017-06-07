@@ -320,8 +320,8 @@ boolean overButton(int x, int y, int width, int height) {
 //cheat code -- press s for 100k
 void keyPressed() {
   if (key==97) currOrdNum=11;
-  else if (key==115 && empire!=null) empire.setBudget(10000000);
-  else if (key==116 && empire!=null) empire.setBudget(-10000000);
+  else if (key==115 && empire!=null) empire.setBudget(100000);
+  else if (key==116 && empire!=null) empire.setBudget(-100000);
   else if (key==98) {
     ecoliState=true;
   }
