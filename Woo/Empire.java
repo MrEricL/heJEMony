@@ -9,7 +9,6 @@ public class Empire {
   private int _totalCustomerSatisfaction;//determines revenue
   private ALQueue<Integer> _actionsList; //better to have codes + modifiers for different actions 
   //buy store = 1
-  private Deque<String> _milestones;//will be used as a stack
   private int _patties;
   private int[] _pattiesArray; //0=.5, 1=.6,2=.7,3=.8,4=.9,5=1.0
   private ALHeap<Farm> _farmHeap;
