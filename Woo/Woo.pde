@@ -19,10 +19,9 @@ PImage win;
 PImage out;
 PImage clean;
 PImage adScreen;
+PImage farmChange;
 
-boolean ecoliState;
-//boolean ecoliEffect=false;
-//int ecoliTimer=0;
+boolean ecoliState;//if you have ecoli
 
 /*  STATES
  0=starter scren
@@ -54,6 +53,7 @@ boolean ecoliState;
  7 = close store
  5 = hire employee
  6=fix ecoli
+ 11=choose farm
  **/
 
 /** Sizes
@@ -77,13 +77,14 @@ int currStoreNum; //for removing store (index in list)
 
 int storeClosedScreenStartTime=0;//for big red screen that flashes for 1.5 seconds when a store is closed
 
-boolean playedMinigame;
+boolean playedMinigame;//if minigame played for the first time, function is for playing minigame while empire is running, too
 boolean strikeBoo;//true if a strike happens
 boolean changingFarm;//
 /*********EMPIRE VARIABLES************/
 
 
 void setup() {
+  //load images, has to happen in setup
   img=loadImage("hegemony splash art 2.png");
   emp=loadImage("main.png");
   store=loadImage("store.png");
@@ -96,6 +97,7 @@ void setup() {
   strike=loadImage("strike.png");
   clean = loadImage("clean.png");
   adScreen=loadImage("ads2.png");
+  farmChange=loadImage("farmchange.png");
 
   ecoliState=false;
   strikeBoo=false;
@@ -128,7 +130,7 @@ void draw() {
     hasBeenSetUp=true;
   } else if (state==1 && hasBeenSetUp && !playedMinigame) {//if minigame has been set up, run minigame
     drawMinigame();
-  } else if (state==1 && hasBeenSetUp && playedMinigame) {
+  } else if (state==1 && hasBeenSetUp && playedMinigame) {//if minigame has's been played before
     runEmpire();
     drawMinigame();
   } else if (state==0) {//start screen
@@ -141,7 +143,7 @@ void draw() {
     runIndividualStore(currStore);
   } else if (state==5) {//STORE CLOSED screen
     runEmpire();
-    if (storeClosedScreenStartTime<22) {
+    if (storeClosedScreenStartTime<22) {//store closed screen runs for 22/6 seconds
       storeClosed();
       //empire.setBudget(storeSell);
       //storeSell*=1.1;
@@ -150,25 +152,25 @@ void draw() {
       storeClosedScreenStartTime=0;
       currStore=null;
     }
-  } else if (state==6) {//farm, to be implemented
+  } else if (state==6) {//farm
     runEmpire();
     drawFarm();
-  } else if (state==7) {
+  } else if (state==7) {//victory screen
     background(#00FF00);
     textSize(100);
     text("YOU\nWIN!", 300, 300);
-  } else if (state==8) {
+  } else if (state==8) {//lose screen
     background(#FF0000);
     textSize(100);
     text("YOU\nLOSE :(", 300, 300);
-  } else if (state == 9) { 
+  } else if (state == 9) { //info screen
     runEmpire();
     loadInfo();
-  } else if (state==10) {
+  } else if (state==10) {//ads screen
     runEmpire();
     runAdScreen();
   }
-  if (empire!=null) {
+  if (empire!=null) {//checking for victory/defeat
     if (empire.size()==10 && empire.getBudget()>=999999) {//victory
       state=7;
     }
@@ -185,7 +187,7 @@ void draw() {
   if (state==2) printQ(0);
   else if (state==3 || state==6 || state==4 || state==10 || state==9) printQ(1);
 
-  if (ecoliState) {
+  if (ecoliState) {//if you have ecoli you lose cash and customer happiness and stuff
     ecoliRun();
   }
 }
@@ -194,7 +196,7 @@ void draw() {
 
 //SAME METHOD FOR ALL
 void mouseClicked() {
-  if (state==1) {
+  if (state==1) {//minigame
     if (currOrder.size()<9) {
       buttons();
     }
@@ -209,7 +211,7 @@ void mouseClicked() {
   }
 
   //IF YOU CLICK PLAY BUTTON ON MENU
-  else if (state==0) {
+  else if (state==0) {//first screen
     if (overButton(282, 369, 185, 105)) {
       state=1;
       setupMinigame();
@@ -229,7 +231,7 @@ void mouseClicked() {
     } else if (overButton (500, 314, 154, 168)) { 
       state = 9;
     }
-  } else if (state==3) {//individual stores
+  } else if (state==3) {//all the stores
     if (overButton(253, 544, 246, 120)&&empire.size()<10) {//a new store
       if (empire.getBudget()-storeCost>0 && empire.retQ().size()<6) {
         empire.queueBuyStore(storeCost);//10=buy store
@@ -243,7 +245,7 @@ void mouseClicked() {
     } else {//check if you want to see an individual store
       checkStoreButtons();
     }
-  } else if (state==4) {
+  } else if (state==4) {//individual store
     if (overButton(10, 10, 90, 60)) {//go back
       state=3;
     } else if (overButton(10, 395, 240, 45)&&currStore.numEmployees()<6) {//hire employee
@@ -261,15 +263,15 @@ void mouseClicked() {
       state=10;
     }
     fireEmployeeButton(currStore);//check if you fired an employee
-  } else if (state==6) {
+  } else if (state==6) {//farms
     farmButtons();
-  } else if (state==9) {
-    if (overButton(325, 700, 50, 40))
+  } else if (state==9) {//info screen
+    if (overButton(325, 700, 50, 40))//go back
       state=2;
-  } else if (state==10) {
+  } else if (state==10) {//ads
     adButtons();
   }
-  if (ecoliState) {
+  if (ecoliState) {//ecoli
     ecoliButton();
   }
 }
@@ -336,27 +338,23 @@ void runEmpire() {
       if (action == timeAction) {
         timeAction=0;
         empire.popActions();
-        if (action==10) {
+        if (action==10) {//buy store
           empire.buyStore(new Store(totalTime));
 
           if (empire.numUnlockedFarms() < 6) { 
             empire.accessNewFarm();
           }
-        } else if (action==7) {
-          //System.out.println("yo");
-          //currStore=null;
+        } else if (action==7) {//close store
+          
           empire.setBudget(storeSell);
-          //empire.closeStore(currStoreNum);
           currStoreNum=0;
           storeSell*=1.1;
-          //state=5;
-        } else if (action==5) {
-          //if (currStore!=null)
-          //currStore.hire(new Employee(retName()));
-        } else if (action==6) {
+        } else if (action==5) {//hire employee
+          //this is just here to maintain timing function of queue, explained more in depth in devlog bugs
+        } else if (action==6) {//e coli
           empire.modifyBudget(-10000);//cost to get rid of e coli
           ecoliState=false;
-        } else if (action==11) {
+        } else if (action==11) {//change farm
           empire.getFarm(farmToToggle).toggleChosen();
           empire.toggleAllOtherFarmsChosen(farmToToggle);
           empire.setSelectedFarm (empire.getFarm(farmToToggle));
@@ -366,10 +364,6 @@ void runEmpire() {
       }
     }
   }
-}
-
-String retName() {
-  return "Eric";
 }
 
 
@@ -539,7 +533,7 @@ void runIndividualStore(Store s) {
   if (s==null)
     return;
   setupIndividualStore(s);
-  if (s.striking()) {
+  if (s.striking()) {//if workers on strike
     image(strike, 100, 20);
   }
   fill(#030939);
@@ -549,16 +543,11 @@ void runIndividualStore(Store s) {
   if (s.numEmployees()==0) {//if no employees, enqueue an action to actionlist to close it. can only close one store at a time
     empire.addAction(7);
     empire.closeStore(currStoreNum);
-    //empire.queueStoreToClose(currStoreNum);
     state=5;
-    //timeAction=0;
-    //currStore=null;
-    //empire.closeStore(currStoreNum);
-    //state=5;
   }
 }
 
-//checks all the buttons of individual stores
+//checks all the buttons of individual stores so you can see them
 void checkStoreButtons() {
   int i=0;
   int xcor=57;//of size 100 w/ 25 spacing
@@ -623,12 +612,13 @@ void printQ(int s) {
        text("Cleaning\nEcoli", 72+offset, ycor+20);
        textSize(20);*/
     } else if (temp==11) {
-      fill(#FF0000);
+      image(farmChange,70+offset,ycor);
+      /*fill(#FF0000);
       rect(70+offset, ycor, 90, 83);
       fill(255);
       textSize(16);
       text("Changing\nFarm", 72+offset, ycor+20);
-      textSize(20);
+      textSize(20);*/
     }
     offset+=100;
   }
@@ -640,8 +630,8 @@ void setupFarm() {
   //farm = loadImage("farm.png");
   image(farm, 0, 0);
   fill(#FF0000); 
-  rect (170, 200, 250, 50); 
-  rect (36, 200, 120, 50); 
+  rect (170, 200, 250, 50); //num patties
+  rect (36, 200, 120, 50); //buy patties
   fill(0); 
   text("Buy patties", 40, 240); 
   text("Patties available: " + empire.getPatties(), 175, 240); 
@@ -684,7 +674,7 @@ void drawFarm() {
   for (int i=0; i<6; i++) {
     fill(#12490C);
     rect(xcor, ycor, 160, 190);
-    if (i<empire.numUnlockedFarms()) {
+    if (i<empire.numUnlockedFarms()) {//if the i corresponds to a farm it will print that farm's info in the corresponding box
       textSize(18);
       if (empire.getFarm(i).isChosen())
         fill(#00FF00);
@@ -706,6 +696,7 @@ void drawFarm() {
   text(dollarToStr(empire.getBudget()).substring(1), 307, 76);
 }
 
+//checks farm buttons (toggling farms)
 void farmButtons() {
   if (overButton(15, 15, 60, 30)) {
     state=2;
@@ -717,14 +708,11 @@ void farmButtons() {
   int ycor=300;
   int i=0;
   while (i<empire.numUnlockedFarms()) {
+    //changes the farm to this one
     if (overButton(xcor, ycor+145, 160, 45) && !changingFarm && !empire.getFarm(i).isChosen() ) {
       empire.addAction(11);
       farmToToggle=i;
       changingFarm=true;
-      //System.out.println(empire.getFarm(i).getName());
-      /*empire.getFarm(i).toggleChosen();
-       empire.toggleAllOtherFarmsChosen(i);
-       empire.setSelectedFarm (empire.getFarm(i));*/
       break;
     }
     i++;
@@ -738,33 +726,24 @@ void farmButtons() {
 }
 
 
-void ecoliRun() {
-  //ecoliEffect=true;
-  //if (ecoliTimer < 180) 
+void ecoliRun() {//runs ecoli image
+ 
   image(ecoli, 120, 150);
   image(ecoli, 120, 150);
   image(ecoli, 120, 150);
-  //ecoliTimer+=1;
-
-  /*
-  else if (ecoliTimer >= 180){
-   ecoliTimer=0;
-   }*/
 
   if (ecoliState&& totalTime%30 == 0) {
     empire.ecoli(2);
   }
 
-  //change farm and payout
 }
 
-void ecoliButton() {
+void ecoliButton() {//click on e coli image to fix it
   if (overButton(200, 200, 500, 500)) {
     empire.addAction(6);
-
-    //ecoliEffect=false;
   }
 }
+//info screen
 void loadInfo() { 
   background(#00FF00);
   fill(#D4DD20);
@@ -794,7 +773,7 @@ add coords
  w=185
  */
 
-
+//sets up screen for ads
 void runAdScreen() {
   image(adScreen, 0, 0);
   textSize(24);
@@ -809,9 +788,11 @@ void runAdScreen() {
   if (currStore.getAdType()==0) fill(#14750A);
   text("No\nAds", 90, 506);
   fill(0);
+  text("$20,000",283,480);
   if (currStore.getAdType()==1) fill(#14750A);
   text("Advertise\nPrice", 283, 506);
   fill(0);
+  text("$20,000",541,480);
   if (currStore.getAdType()==2) fill(#14750A);
   text("Advertise\nMeat Quality", 541, 506);
   textSize(20);
@@ -819,7 +800,7 @@ void runAdScreen() {
   text(dollarToStr(empire.getBudget()).substring(1), 296, 80);
 }
 
-void adButtons() {
+void adButtons() {//checks three boxes and back button for if you want to buy ads
   if (overButton(32, 425, 185, 164))
     currStore.setAd(0);
   else if (overButton(275, 425, 185, 164)){
