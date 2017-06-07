@@ -350,7 +350,7 @@ void runEmpire() {
             empire.accessNewFarm();
           }
         } else if (action==7) {//close store
-          
+
           empire.setBudget(storeSell);
           currStoreNum=0;
           storeSell*=1.1;
@@ -415,7 +415,7 @@ void updateStoresScreen() {
     if (i<empire.size()) {
       fill(255);
       if (empire.getStore(i).striking()) { 
-        fill (#FF0000); 
+        fill (#FF0000);
       } 
       text(empire.getStore(i).getName()/*"Store "+(i+1)*/, xcor+10, ycor+40);
     }
@@ -444,6 +444,8 @@ void updateStoresScreen() {
 
 //converts dollar double to string w $
 public String dollarToStr(double d) {
+  if (d>9999999)
+    return ("$"+d).substring(0,5)+"e"+(""+d).substring((""+d).length()-1);
   String s = ""+d;
   s=s.substring(0, s.indexOf(".")+2);
   if (s.length()-s.indexOf(".")==2) {
@@ -617,20 +619,17 @@ void printQ(int s) {
        text("Cleaning\nEcoli", 72+offset, ycor+20);
        textSize(20);*/
     } else if (temp==11) {
-      image(farmChange,70+offset,ycor);
+      image(farmChange, 70+offset, ycor);
       /*fill(#FF0000);
-      rect(70+offset, ycor, 90, 83);
-      fill(255);
-      textSize(16);
-      text("Changing\nFarm", 72+offset, ycor+20);
-      textSize(20);*/
-    }
-    else if (temp==4){
-      image(addAd, 70+offset,ycor);
-      
-    }
-    else if (temp==3) {
-      image(noAd, 70+offset,ycor);
+       rect(70+offset, ycor, 90, 83);
+       fill(255);
+       textSize(16);
+       text("Changing\nFarm", 72+offset, ycor+20);
+       textSize(20);*/
+    } else if (temp==4) {
+      image(addAd, 70+offset, ycor);
+    } else if (temp==3) {
+      image(noAd, 70+offset, ycor);
     }
     offset+=100;
   }
@@ -739,7 +738,7 @@ void farmButtons() {
 
 
 void ecoliRun() {//runs ecoli image
- 
+
   image(ecoli, 120, 150);
   image(ecoli, 120, 150);
   image(ecoli, 120, 150);
@@ -747,7 +746,6 @@ void ecoliRun() {//runs ecoli image
   if (ecoliState&& totalTime%30 == 0) {
     empire.ecoli(2);
   }
-
 }
 
 void ecoliButton() {//click on e coli image to fix it
@@ -800,11 +798,11 @@ void runAdScreen() {
   if (currStore.getAdType()==0) fill(#14750A);
   text("No\nAds", 90, 506);
   fill(0);
-  text("$20,000",283,480);
+  text("$20,000", 283, 480);
   if (currStore.getAdType()==1) fill(#14750A);
   text("Advertise\nPrice", 283, 506);
   fill(0);
-  text("$20,000",541,480);
+  text("$20,000", 541, 480);
   if (currStore.getAdType()==2) fill(#14750A);
   text("Advertise\nMeat Quality", 541, 506);
   textSize(20);
@@ -814,20 +812,17 @@ void runAdScreen() {
 
 void adButtons() {//checks three boxes and back button for if you want to buy ads
   int currAd = currStore.getAdType();
-  if (overButton(32, 425, 185, 164)){
+  if (overButton(32, 425, 185, 164)) {
     currStore.setAd(0);
     if (currAd!=0) empire.addAction(3);
-  }
-  else if (overButton(275, 425, 185, 164)){
+  } else if (overButton(275, 425, 185, 164)) {
     currStore.setAd(1);
     empire.setBudget(-20000);
     if (currAd!=1) empire.addAction(4);
-  }
-  else if (overButton(533, 425, 185, 164)){
-   empire.setBudget(-20000); 
+  } else if (overButton(533, 425, 185, 164)) {
+    empire.setBudget(-20000); 
     currStore.setAd(2);
     if (currAd!=2) empire.addAction(4);
-  }
-  else if (overButton(314, 690, 122, 75)) 
+  } else if (overButton(314, 690, 122, 75)) 
     state=4;
 }
