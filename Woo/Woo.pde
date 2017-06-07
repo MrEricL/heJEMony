@@ -481,7 +481,7 @@ void setupIndividualStore(Store s) {
   text("Daily", 15, 285);
   text("Operations Cost", 15, 315);
   text("Customer\nSatisfaction", 535, 220);
-  text("$4 Raise", 535, 425);
+  text("$4 Raise", 575, 425);
   text(""+s.getCustomerSatisfaction(), 535, 300);
   fill(#00FF00);//lime, hire box
   rect(10, 395, 240, 45);//hire rectangle

@@ -88,7 +88,7 @@ void drawMinigame() {
   }
   fill(0);
   rect(40, 50, 100, 40);//total cash rectangle
-  rect(160, 50, 100, 40);//burger price rectangle
+  rect(160, 50, 300, 40);//burger price rectangle
   fill(#00FF00);
   textSize(24);
 
@@ -100,9 +100,9 @@ void drawMinigame() {
     if (realPrice < 0) { 
       realPrice = 0;
     }
-    text(dollarToStr(realPrice), 165, 75);
+    text("Burger Price: "+dollarToStr(realPrice), 165, 75);
   } else if (_orders.size()>0)
-    text(dollarToStr(_orders.peekFirst().getPrice()), 165, 75);
+    text("Burger Price: "+dollarToStr(_orders.peekFirst().getPrice()), 165, 75);
   //**end of code printing price of current order
 
 
