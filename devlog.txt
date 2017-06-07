@@ -6,29 +6,13 @@ pd 3
 ---------------------
 burger heJEMony
 
-
-Suggested usage: 
-* Replace all fields, angle brackets included, with specified info.
-  eg, pd <pd#> --> pd 3
-* Delete these instructions once all teammates understand usage.
-
-devlog--
-Use keyboard shortcut to jump to end,
- replicate entry template,
- modify appropriately.
-
-zone of reflection--
-Flesh out each category whenever necessary, appropriate.
- Need not be fully filled in until end of project,
- but best done as you go along.
-
-
 /////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Our code wasn't running at one point, the draw() method just froze entirely. We made our code more efficient by closing loops as soon as possible and changing if to else if chains, and we put all the loadImage() commands in the setup() method.
 - We thought it froze again later on, but it was actually just the patty counter we had implemented working
+- Lots of issues with math, dividing by zero, variables not being instantiated, because there was so much code. commenting and really understanding how everything fit together was important in finding our mistakes
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,16 +29,19 @@ MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Changed Farm screen from deciding meat percentage to choosing between farms
 - Made e. coli much simpler, you just pay a fine and get rid of it
-- Did not use a Stack of milestones, just had some if statements which was more convenient
+- Did not use a Stack of milestones, just had some if statements which was more convenient, since there aren't many milestones
 - Implemented a Heap and HeapSort for accessing new farms; heap is based on percentage of real meat in each patty
 -Added advertisement features last-minute for each store to increase/decrease customer satisfaction
+- decided not to use priorityQueue for the queue of actions because it was too complicated and difficult to decide how the user would input their decision
+
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 tales of wisdom gained...
 ||||||||||||||||||||||||||||||||||||||||||
 - Organize code. We had some really long processing files and java classes as well a large number of classes for the whole game and it was difficult to locate method/variable names easily without code organized with comments and white space
-
+- team work is a real JEM!
+- having a flow chart and a plan was so, so, so helpful. Thanks mr brown and stuy cs for teaching us how to do these things so we weren't rushing in not knowing what to do. the plan, which followed the many flow charts we made, was the best possible thing we could have made for ease.
 
 
  ______   ______   __   __   __       ______   _______     
@@ -200,7 +187,7 @@ Matteo :: implemented advertisements in Store.java with adType variable and modi
 --------------------------------------------------------------
 Eric :: making ads cost money
 Jenny :: making ads cost money, devlog 
-Matteo :: making ads cost money, fixing bug with naming stores, fixing bug with dividing by zero in removing stores, fixed bug in minigame with timing, added printing cost of current order to minigame
+Matteo :: making ads cost money, fixing bug with naming stores, fixing bug with dividing by zero in removing stores, fixed bug in minigame with timing, added printing cost of current order to minigame, added instructions screen, README, devlog, uml, flow
 ==============================================================
 
 
